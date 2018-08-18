@@ -34,7 +34,7 @@ public class PlayersDocument {
         this.links = new Links();
         this.links.self = ClubPlayersLinkBuilder.build(builder.clubId, builder.pageNumber, builder.pageSize);
         this.links.first = ClubPlayersLinkBuilder.build(builder.clubId, 0, builder.pageSize);
-        this.links.last = ClubPlayersLinkBuilder.build(builder.clubId, builder.totalPages - 1, builder.pageSize);
+        this.links.last = ClubPlayersLinkBuilder.build(builder.clubId, builder.getLastPage(), builder.pageSize);
 
         if (builder.pageNumber < builder.totalPages - 1) {
             this.links.next = ClubPlayersLinkBuilder.build(builder.clubId, builder.pageNumber + 1, builder.pageSize);
@@ -145,6 +145,13 @@ public class PlayersDocument {
         public PlayersDocumentBuilder setTotalPages(int totalPages) {
             this.totalPages = totalPages;
             return this;
+        }
+
+        public int getLastPage() {
+            if (totalPages < 1) {
+                return 0;
+            }
+            return totalPages - 1;
         }
 
         public PlayersDocument build() {

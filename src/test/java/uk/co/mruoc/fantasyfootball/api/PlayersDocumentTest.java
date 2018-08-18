@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayersDocumentTest {
@@ -46,7 +47,17 @@ public class PlayersDocumentTest {
     @Test
     public void shouldSerializeToJsonCorrectlyWhenPartOfMultiplePages() throws JsonProcessingException  {
         String expectedJson = FileContentLoader.load("/playersDocumentWithMultiplePages.json");
-        PlayersDocument document = buildPlayersDocument(1, 2, 6, 3);
+        PlayersDocument document = buildPlayersDocument(1, 2, 6, 3, buildPlayerData());
+
+        String json = mapper.writeValueAsString(document);
+
+        assertThat(json).isEqualToIgnoringWhitespace(expectedJson);
+    }
+
+    @Test
+    public void shouldSerializeToJsonCorrectlyWhenNoDataPresent() throws JsonProcessingException  {
+        String expectedJson = FileContentLoader.load("/playersDocumentWithNoData.json");
+        PlayersDocument document = buildPlayersDocument(0, 2, 0, 0, emptyList());
 
         String json = mapper.writeValueAsString(document);
 
@@ -64,11 +75,11 @@ public class PlayersDocumentTest {
     }
 
     private static PlayersDocument buildPlayersDocument() {
-        return buildPlayersDocument(0, 2,2, 1);
+        return buildPlayersDocument(0, 2,2, 1, buildPlayerData());
     }
 
-    private static PlayersDocument buildPlayersDocument(int pageNumber, int pageSize, int totalPlayers, int totalPages) {
-        List<PlayerDocument.Data> players = Arrays.asList(
+    private static List<PlayerDocument.Data> buildPlayerData() {
+        return Arrays.asList(
                 new PlayerDocumentBuilder()
                         .setId(1122L)
                         .setFirstName("Michael")
@@ -88,7 +99,9 @@ public class PlayersDocumentTest {
                         .build()
                         .getData()
         );
+    }
 
+    private static PlayersDocument buildPlayersDocument(int pageNumber, int pageSize, int totalPlayers, int totalPages, List<PlayerDocument.Data> players) {
         return new PlayersDocumentBuilder()
                 .setClubId(CLUB_ID)
                 .setData(players)

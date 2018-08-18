@@ -6,7 +6,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 public class ClubPlayersLinkBuilder {
 
-    private static final int DEFAULT_PAGE_NUMBER = 1;
+    private static final int DEFAULT_PAGE_NUMBER = 0;
     private static final int DEFAULT_PAGE_SIZE = 10;
 
     public static String build(long clubId) {
