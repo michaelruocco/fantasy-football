@@ -9,8 +9,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.Optional;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-
 public class PlayerDocument {
 
     @NotNull
@@ -31,10 +29,15 @@ public class PlayerDocument {
         data.attributes.position = builder.position;
         data.attributes.value = builder.value;
 
+        if (!builder.hasClubId()) {
+            return;
+        }
+
         data.relationships = new Relationships();
         data.relationships.club = new Relation();
         data.relationships.club.links = new Links();
-        data.relationships.club.links.related = ClubPlayersLinkBuilder.build(builder.clubId);
+
+        data.relationships.club.links.related = ClubLinkBuilder.build(builder.clubId);
         data.relationships.club.data = new RelationData();
         data.relationships.club.data.type = "clubs";
         data.relationships.club.data.id = builder.clubId;
@@ -223,7 +226,7 @@ public class PlayerDocument {
         private String lastName;
         private String position;
         private Integer value;
-        private long clubId;
+        private Long clubId;
 
         public PlayerDocumentBuilder setId(Long id) {
             this.id = id;
@@ -253,6 +256,10 @@ public class PlayerDocument {
         public PlayerDocumentBuilder setClubId(long clubId) {
             this.clubId = clubId;
             return this;
+        }
+
+        public boolean hasClubId() {
+            return clubId != null;
         }
 
         public PlayerDocument build() {

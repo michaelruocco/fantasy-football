@@ -1,0 +1,23 @@
+{
+  "data": {
+    "id": 9999,
+    "type": "players",
+    "attributes": {
+      "firstName": "Michael",
+      "lastName": "Ruocco",
+      "position": "STRIKER",
+      "value": 10000000
+    },
+    "relationships": {
+      "club": {
+        "links": {
+          "related": "http://localhost/clubs/4321"
+        },
+        "data": {
+          "type": "clubs",
+          "id": 4321
+        }
+      }
+    }
+  }
+}

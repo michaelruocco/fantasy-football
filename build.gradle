@@ -31,6 +31,7 @@ dependencies {
     testCompile 'org.assertj:assertj-core:3.10.0'
     testCompile 'org.mockito:mockito-core:2.19.0'
     testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'com.github.michaelruocco:file-loader:3.0.3'
 }
 
 bootJar {

@@ -1,0 +1,12 @@
+{
+  "data": {
+    "id": 9999,
+    "type": "players",
+    "attributes": {
+      "firstName": "Michael",
+      "lastName": "Ruocco",
+      "position": "STRIKER",
+      "value": 10000000
+    }
+  }
+}
