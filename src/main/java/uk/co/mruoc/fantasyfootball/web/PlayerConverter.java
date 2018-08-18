@@ -32,7 +32,7 @@ public class PlayerConverter {
                 .setClubId(clubId)
                 .setData(players)
                 .setTotalPlayers(page.getTotalElements())
-                .setPageNumber(page.getNumber())
+                .setPageNumber(page.getNumber() + 1)
                 .setTotalPages(page.getTotalPages())
                 .build();
     }

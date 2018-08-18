@@ -20,6 +20,10 @@ public class PlayersDocument {
     @Valid
     private Links links;
 
+    public PlayersDocument() {
+        // required by spring
+    }
+
     public PlayersDocument(PlayersDocumentBuilder builder) {
         this.data = builder.data;
 
@@ -31,8 +35,14 @@ public class PlayersDocument {
         this.links.self = ClubPlayersLinkBuilder.build(builder.clubId, builder.pageNumber, builder.data.size());
         this.links.first = ClubPlayersLinkBuilder.build(builder.clubId, 1, builder.data.size());
         this.links.last = ClubPlayersLinkBuilder.build(builder.clubId, builder.totalPages, builder.data.size());
-        this.links.next = ClubPlayersLinkBuilder.build(builder.clubId, builder.pageNumber + 1, builder.data.size());
-        this.links.previous = ClubPlayersLinkBuilder.build(builder.clubId, builder.pageNumber - 1, builder.data.size());
+
+        if (builder.pageNumber < builder.totalPages) {
+            this.links.next = ClubPlayersLinkBuilder.build(builder.clubId, builder.pageNumber + 1, builder.data.size());
+        }
+
+        if (builder.pageNumber > 1) {
+            this.links.previous = ClubPlayersLinkBuilder.build(builder.clubId, builder.pageNumber - 1, builder.data.size());
+        }
     }
 
     public Meta getMeta() {

@@ -1,0 +1,57 @@
+{
+  "meta": {
+    "totalPages": 3,
+    "totalPlayers": 6
+  },
+  "data": [
+    {
+      "id": 1122,
+      "type": "players",
+      "attributes": {
+        "firstName": "Michael",
+        "lastName": "Ruocco",
+        "position": "STRIKER",
+        "value": 10000000
+      },
+      "relationships": {
+        "club": {
+          "links": {
+            "related": "http://localhost/clubs/2323"
+          },
+          "data": {
+            "type": "clubs",
+            "id": 2323
+          }
+        }
+      }
+    },
+    {
+      "id": 1133,
+      "type": "players",
+      "attributes": {
+        "firstName": "Joe",
+        "lastName": "Bloggs",
+        "position": "DEFENDER",
+        "value": 500000
+      },
+      "relationships": {
+        "club": {
+          "links": {
+            "related": "http://localhost/clubs/2323"
+          },
+          "data": {
+            "type": "clubs",
+            "id": 2323
+          }
+        }
+      }
+    }
+  ],
+  "links": {
+    "self": "http://localhost/clubs/2323/players?pageNumber=2&pageSize=2",
+    "first": "http://localhost/clubs/2323/players?pageNumber=1&pageSize=2",
+    "last": "http://localhost/clubs/2323/players?pageNumber=3&pageSize=2",
+    "next": "http://localhost/clubs/2323/players?pageNumber=3&pageSize=2",
+    "previous": "http://localhost/clubs/2323/players?pageNumber=1&pageSize=2"
+  }
+}
