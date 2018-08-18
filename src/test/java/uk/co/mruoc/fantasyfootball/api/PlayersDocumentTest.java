@@ -36,7 +36,7 @@ public class PlayersDocumentTest {
     @Test
     public void shouldSerializeToJsonCorrectly() throws JsonProcessingException  {
         String expectedJson = FileContentLoader.load("/playersDocument.json");
-        PlayersDocument document = buildPlayersDocument(1, 2, 1);
+        PlayersDocument document = buildPlayersDocument();
 
         String json = mapper.writeValueAsString(document);
 
@@ -46,7 +46,7 @@ public class PlayersDocumentTest {
     @Test
     public void shouldSerializeToJsonCorrectlyWhenPartOfMultiplePages() throws JsonProcessingException  {
         String expectedJson = FileContentLoader.load("/playersDocumentWithMultiplePages.json");
-        PlayersDocument document = buildPlayersDocument(2, 6, 3);
+        PlayersDocument document = buildPlayersDocument(1, 2, 6, 3);
 
         String json = mapper.writeValueAsString(document);
 
@@ -64,10 +64,10 @@ public class PlayersDocumentTest {
     }
 
     private static PlayersDocument buildPlayersDocument() {
-        return buildPlayersDocument(1, 2, 1);
+        return buildPlayersDocument(0, 2,2, 1);
     }
 
-    private static PlayersDocument buildPlayersDocument(int pageNumber, int totalPlayers, int totalPages) {
+    private static PlayersDocument buildPlayersDocument(int pageNumber, int pageSize, int totalPlayers, int totalPages) {
         List<PlayerDocument.Data> players = Arrays.asList(
                 new PlayerDocumentBuilder()
                         .setId(1122L)
@@ -94,6 +94,7 @@ public class PlayersDocumentTest {
                 .setData(players)
                 .setTotalPlayers(totalPlayers)
                 .setPageNumber(pageNumber)
+                .setPageSize(pageSize)
                 .setTotalPages(totalPages)
                 .build();
     }

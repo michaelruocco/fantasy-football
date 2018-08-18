@@ -32,16 +32,16 @@ public class PlayersDocument {
         this.meta.totalPlayers = builder.totalPlayers;
 
         this.links = new Links();
-        this.links.self = ClubPlayersLinkBuilder.build(builder.clubId, builder.pageNumber, builder.data.size());
-        this.links.first = ClubPlayersLinkBuilder.build(builder.clubId, 1, builder.data.size());
-        this.links.last = ClubPlayersLinkBuilder.build(builder.clubId, builder.totalPages, builder.data.size());
+        this.links.self = ClubPlayersLinkBuilder.build(builder.clubId, builder.pageNumber, builder.pageSize);
+        this.links.first = ClubPlayersLinkBuilder.build(builder.clubId, 0, builder.pageSize);
+        this.links.last = ClubPlayersLinkBuilder.build(builder.clubId, builder.totalPages - 1, builder.pageSize);
 
-        if (builder.pageNumber < builder.totalPages) {
-            this.links.next = ClubPlayersLinkBuilder.build(builder.clubId, builder.pageNumber + 1, builder.data.size());
+        if (builder.pageNumber < builder.totalPages - 1) {
+            this.links.next = ClubPlayersLinkBuilder.build(builder.clubId, builder.pageNumber + 1, builder.pageSize);
         }
 
-        if (builder.pageNumber > 1) {
-            this.links.previous = ClubPlayersLinkBuilder.build(builder.clubId, builder.pageNumber - 1, builder.data.size());
+        if (builder.pageNumber > 0) {
+            this.links.previous = ClubPlayersLinkBuilder.build(builder.clubId, builder.pageNumber - 1, builder.pageSize);
         }
     }
 
@@ -113,6 +113,7 @@ public class PlayersDocument {
         private long clubId;
         private long totalPlayers;
         private int pageNumber;
+        private int pageSize;
         private int totalPages;
         private List<Data> data;
 
@@ -128,6 +129,11 @@ public class PlayersDocument {
 
         public PlayersDocumentBuilder setPageNumber(int pageNumber) {
             this.pageNumber = pageNumber;
+            return this;
+        }
+
+        public PlayersDocumentBuilder setPageSize(int pageSize) {
+            this.pageSize = pageSize;
             return this;
         }
 

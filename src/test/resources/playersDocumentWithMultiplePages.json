@@ -48,10 +48,10 @@
     }
   ],
   "links": {
-    "self": "http://localhost/clubs/2323/players?pageNumber=2&pageSize=2",
-    "first": "http://localhost/clubs/2323/players?pageNumber=1&pageSize=2",
-    "last": "http://localhost/clubs/2323/players?pageNumber=3&pageSize=2",
-    "next": "http://localhost/clubs/2323/players?pageNumber=3&pageSize=2",
-    "previous": "http://localhost/clubs/2323/players?pageNumber=1&pageSize=2"
+    "self": "http://localhost/clubs/2323/players?pageNumber=1&pageSize=2",
+    "first": "http://localhost/clubs/2323/players?pageNumber=0&pageSize=2",
+    "last": "http://localhost/clubs/2323/players?pageNumber=2&pageSize=2",
+    "next": "http://localhost/clubs/2323/players?pageNumber=2&pageSize=2",
+    "previous": "http://localhost/clubs/2323/players?pageNumber=0&pageSize=2"
   }
 }

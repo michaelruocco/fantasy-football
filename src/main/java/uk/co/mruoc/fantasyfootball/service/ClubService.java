@@ -36,8 +36,8 @@ public class ClubService {
         return read(club.getId());
     }
 
-    public Page<Player> readPlayersByClubId(long clubId) {
-        Pageable pageable = PageRequest.of(0, 10);
+    public Page<Player> readPlayersByClubId(long clubId, int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
         Club club = new Club(clubId);
         return playerRepository.findByClub(club, pageable);
     }

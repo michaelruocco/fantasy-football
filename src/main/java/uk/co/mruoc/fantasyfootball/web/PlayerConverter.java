@@ -5,6 +5,7 @@ import uk.co.mruoc.fantasyfootball.api.PlayerDocument;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument.Data;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument.PlayerDocumentBuilder;
 import uk.co.mruoc.fantasyfootball.api.PlayersDocument;
+import uk.co.mruoc.fantasyfootball.api.PlayersDocument.PlayersDocumentBuilder;
 import uk.co.mruoc.fantasyfootball.dao.Club;
 import uk.co.mruoc.fantasyfootball.dao.Player;
 import uk.co.mruoc.fantasyfootball.FreeAgentClub;
@@ -28,11 +29,12 @@ public class PlayerConverter {
 
     public PlayersDocument toDocument(long clubId, Page<Player> page) {
         List<Data> players = page.stream().map(player -> toDocument(player).getData()).collect(Collectors.toList());
-        return new PlayersDocument.PlayersDocumentBuilder()
+        return new PlayersDocumentBuilder()
                 .setClubId(clubId)
                 .setData(players)
                 .setTotalPlayers(page.getTotalElements())
-                .setPageNumber(page.getNumber() + 1)
+                .setPageNumber(page.getNumber())
+                .setPageSize(page.getSize())
                 .setTotalPages(page.getTotalPages())
                 .build();
     }

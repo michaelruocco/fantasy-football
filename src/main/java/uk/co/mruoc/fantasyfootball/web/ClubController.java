@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.mruoc.fantasyfootball.api.ClubDocument;
@@ -46,8 +47,10 @@ public class ClubController {
     }
 
     @GetMapping("/{id}/players")
-    public @ResponseBody PlayersDocument readPlayers(@PathVariable("id") long id) {
-        Page<Player> players = service.readPlayersByClubId(id);
+    public @ResponseBody PlayersDocument readPlayers(@PathVariable("id") long id,
+                                                     @RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
+                                                     @RequestParam(name = "pageSize", defaultValue = "10") int pageSize) {
+        Page<Player> players = service.readPlayersByClubId(id, pageNumber, pageSize);
         return playerConverter.toDocument(id, players);
     }
 
