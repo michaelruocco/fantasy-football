@@ -1,3 +1,4 @@
-1. embedded database if mysql not running
-2. unit testing
-3. cucumber testing
+1. handle query string args for page number and size
+2. embedded database if mysql not running
+3. unit testing
+4. cucumber testing
