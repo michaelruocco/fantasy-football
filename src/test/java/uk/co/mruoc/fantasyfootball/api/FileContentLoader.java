@@ -1,4 +1,4 @@
-package uk.co.mruoc.fantasyfootball.web;
+package uk.co.mruoc.fantasyfootball.api;
 
 import uk.co.mruoc.properties.ClasspathFileContentLoader;
 

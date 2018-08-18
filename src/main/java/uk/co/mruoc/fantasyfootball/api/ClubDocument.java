@@ -1,4 +1,4 @@
-package uk.co.mruoc.fantasyfootball.web;
+package uk.co.mruoc.fantasyfootball.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Length;

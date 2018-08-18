@@ -1,4 +1,4 @@
-package uk.co.mruoc.fantasyfootball.web;
+package uk.co.mruoc.fantasyfootball.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import uk.co.mruoc.fantasyfootball.web.ClubDocument.ClubDocumentBuilder;
+import uk.co.mruoc.fantasyfootball.api.ClubDocument.ClubDocumentBuilder;
 
 import java.io.IOException;
 

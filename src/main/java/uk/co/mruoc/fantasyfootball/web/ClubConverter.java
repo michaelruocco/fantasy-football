@@ -1,11 +1,13 @@
 package uk.co.mruoc.fantasyfootball.web;
 
+import uk.co.mruoc.fantasyfootball.api.ClubDocument;
+import uk.co.mruoc.fantasyfootball.api.ClubDocument.ClubDocumentBuilder;
 import uk.co.mruoc.fantasyfootball.dao.Club;
 
 public class ClubConverter {
 
     public ClubDocument toDocument(Club club) {
-        return new ClubDocument.ClubDocumentBuilder()
+        return new ClubDocumentBuilder()
                 .setId(club.getId())
                 .setName(club.getName())
                 .build();

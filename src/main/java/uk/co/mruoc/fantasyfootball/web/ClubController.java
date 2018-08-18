@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import uk.co.mruoc.fantasyfootball.api.ClubDocument;
+import uk.co.mruoc.fantasyfootball.api.PlayersDocument;
 import uk.co.mruoc.fantasyfootball.dao.Club;
 import uk.co.mruoc.fantasyfootball.dao.Player;
 import uk.co.mruoc.fantasyfootball.service.ClubService;
@@ -30,7 +32,8 @@ public class ClubController {
     }
 
     @PostMapping
-    public @ResponseBody ClubDocument create(@Valid @RequestBody ClubDocument document) {
+    public @ResponseBody
+    ClubDocument create(@Valid @RequestBody ClubDocument document) {
         Club club = clubConverter.toClub(document);
         Club createdClub = service.save(club);
         return clubConverter.toDocument(createdClub);

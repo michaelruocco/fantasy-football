@@ -1,10 +1,10 @@
-package uk.co.mruoc.fantasyfootball.web;
+package uk.co.mruoc.fantasyfootball.api;
+
+import uk.co.mruoc.fantasyfootball.api.PlayerDocument.Data;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-
-import static uk.co.mruoc.fantasyfootball.web.PlayerDocument.*;
 
 public class PlayersDocument {
 
