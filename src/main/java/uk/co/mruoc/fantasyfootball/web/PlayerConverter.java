@@ -4,8 +4,8 @@ import org.springframework.data.domain.Page;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument.Data;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument.PlayerDocumentBuilder;
-import uk.co.mruoc.fantasyfootball.api.PlayersDocument;
-import uk.co.mruoc.fantasyfootball.api.PlayersDocument.PlayersDocumentBuilder;
+import uk.co.mruoc.fantasyfootball.api.ClubPlayersDocument;
+import uk.co.mruoc.fantasyfootball.api.ClubPlayersDocument.PlayersDocumentBuilder;
 import uk.co.mruoc.fantasyfootball.dao.Club;
 import uk.co.mruoc.fantasyfootball.dao.Player;
 import uk.co.mruoc.fantasyfootball.FreeAgentClub;
@@ -27,7 +27,7 @@ public class PlayerConverter {
                 .build();
     }
 
-    public PlayersDocument toDocument(long clubId, Page<Player> page) {
+    public ClubPlayersDocument toDocument(long clubId, Page<Player> page) {
         List<Data> players = page.stream().map(player -> toDocument(player).getData()).collect(Collectors.toList());
         return new PlayersDocumentBuilder()
                 .setClubId(clubId)

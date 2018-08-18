@@ -9,7 +9,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument.PlayerDocumentBuilder;
-import uk.co.mruoc.fantasyfootball.api.PlayersDocument.PlayersDocumentBuilder;
+import uk.co.mruoc.fantasyfootball.api.ClubPlayersDocument.PlayersDocumentBuilder;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -18,7 +18,7 @@ import java.util.List;
 import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PlayersDocumentTest {
+public class ClubPlayersDocumentTest {
 
     private static final long CLUB_ID = 2323;
 
@@ -37,7 +37,7 @@ public class PlayersDocumentTest {
     @Test
     public void shouldSerializeToJsonCorrectly() throws JsonProcessingException  {
         String expectedJson = FileContentLoader.load("/playersDocument.json");
-        PlayersDocument document = buildPlayersDocument();
+        ClubPlayersDocument document = buildPlayersDocument();
 
         String json = mapper.writeValueAsString(document);
 
@@ -47,7 +47,7 @@ public class PlayersDocumentTest {
     @Test
     public void shouldSerializeToJsonCorrectlyWhenPartOfMultiplePages() throws JsonProcessingException  {
         String expectedJson = FileContentLoader.load("/playersDocumentWithMultiplePages.json");
-        PlayersDocument document = buildPlayersDocument(1, 2, 6, 3, buildPlayerData());
+        ClubPlayersDocument document = buildPlayersDocument(1, 2, 6, 3, buildPlayerData());
 
         String json = mapper.writeValueAsString(document);
 
@@ -57,7 +57,7 @@ public class PlayersDocumentTest {
     @Test
     public void shouldSerializeToJsonCorrectlyWhenNoDataPresent() throws JsonProcessingException  {
         String expectedJson = FileContentLoader.load("/playersDocumentWithNoData.json");
-        PlayersDocument document = buildPlayersDocument(0, 2, 0, 0, emptyList());
+        ClubPlayersDocument document = buildPlayersDocument(0, 2, 0, 0, emptyList());
 
         String json = mapper.writeValueAsString(document);
 
@@ -66,15 +66,15 @@ public class PlayersDocumentTest {
 
     @Test
     public void shouldDeserializeFromJsonCorrectly() throws IOException {
-        PlayersDocument expectedDocument = buildPlayersDocument();
+        ClubPlayersDocument expectedDocument = buildPlayersDocument();
         String json = FileContentLoader.load("/playersDocument.json");
 
-        PlayersDocument document = mapper.readValue(json, PlayersDocument.class);
+        ClubPlayersDocument document = mapper.readValue(json, ClubPlayersDocument.class);
 
         assertThat(document).isEqualToComparingFieldByFieldRecursively(expectedDocument);
     }
 
-    private static PlayersDocument buildPlayersDocument() {
+    private static ClubPlayersDocument buildPlayersDocument() {
         return buildPlayersDocument(0, 2,2, 1, buildPlayerData());
     }
 
@@ -101,7 +101,7 @@ public class PlayersDocumentTest {
         );
     }
 
-    private static PlayersDocument buildPlayersDocument(int pageNumber, int pageSize, int totalPlayers, int totalPages, List<PlayerDocument.Data> players) {
+    private static ClubPlayersDocument buildPlayersDocument(int pageNumber, int pageSize, int totalPlayers, int totalPages, List<PlayerDocument.Data> players) {
         return new PlayersDocumentBuilder()
                 .setClubId(CLUB_ID)
                 .setData(players)

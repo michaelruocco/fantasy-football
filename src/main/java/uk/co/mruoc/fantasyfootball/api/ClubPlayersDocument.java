@@ -6,7 +6,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-public class PlayersDocument {
+public class ClubPlayersDocument {
 
     @NotNull
     @Valid
@@ -20,11 +20,11 @@ public class PlayersDocument {
     @Valid
     private Links links;
 
-    public PlayersDocument() {
+    public ClubPlayersDocument() {
         // required by spring
     }
 
-    public PlayersDocument(PlayersDocumentBuilder builder) {
+    public ClubPlayersDocument(PlayersDocumentBuilder builder) {
         this.data = builder.data;
 
         this.meta = new Meta();
@@ -154,8 +154,8 @@ public class PlayersDocument {
             return totalPages - 1;
         }
 
-        public PlayersDocument build() {
-            return new PlayersDocument(this);
+        public ClubPlayersDocument build() {
+            return new ClubPlayersDocument(this);
         }
 
     }
