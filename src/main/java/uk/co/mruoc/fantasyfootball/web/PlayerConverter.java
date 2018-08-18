@@ -54,7 +54,7 @@ public class PlayerConverter {
 
     private long extractClubId(PlayerDocument document) {
         Optional<Long> clubId = document.getClubId();
-        return clubId.orElseGet(() -> FreeAgentClub.ID);
+        return clubId.orElse(FreeAgentClub.ID);
     }
 
 }

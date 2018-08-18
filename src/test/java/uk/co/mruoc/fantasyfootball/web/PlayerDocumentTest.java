@@ -10,7 +10,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import uk.co.mruoc.fantasyfootball.web.PlayerDocument.PlayerDocumentBuilder;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -26,7 +25,7 @@ public class PlayerDocumentTest {
     private static final long CLUB_ID = 4321;
 
     private final ObjectMapper mapper = JacksonMapperSingleton.get();
-    
+
     private final PlayerDocumentBuilder builder = new PlayerDocumentBuilder()
             .setId(ID)
             .setFirstName(FIRST_NAME)
@@ -37,9 +36,7 @@ public class PlayerDocumentTest {
 
     @Before
     public void setup() {
-        HttpServletRequest mockRequest = new MockHttpServletRequest();
-        ServletRequestAttributes servletRequestAttributes = new ServletRequestAttributes(mockRequest);
-        RequestContextHolder.setRequestAttributes(servletRequestAttributes);
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(new MockHttpServletRequest()));
     }
 
     @After

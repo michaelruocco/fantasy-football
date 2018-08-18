@@ -10,7 +10,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import uk.co.mruoc.fantasyfootball.web.ClubDocument.ClubDocumentBuilder;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,9 +28,7 @@ public class ClubDocumentTest {
 
     @Before
     public void setup() {
-        HttpServletRequest mockRequest = new MockHttpServletRequest();
-        ServletRequestAttributes servletRequestAttributes = new ServletRequestAttributes(mockRequest);
-        RequestContextHolder.setRequestAttributes(servletRequestAttributes);
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(new MockHttpServletRequest()));
     }
 
     @After
