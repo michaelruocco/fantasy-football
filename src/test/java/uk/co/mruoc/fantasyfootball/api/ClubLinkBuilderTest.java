@@ -1,0 +1,34 @@
+package uk.co.mruoc.fantasyfootball.api;
+
+import org.junit.Test;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class ClubLinkBuilderTest {
+
+    private static final long CLUB_ID = 2222;
+
+    @Test
+    public void shouldReturnEmptyStringIfCurrentRequestCannotBeFound() {
+        String link = ClubLinkBuilder.build(CLUB_ID);
+
+        assertThat(link).isEmpty();
+    }
+
+    @Test
+    public void shouldReturnLinkIfCurrentRequestIsSetup() {
+        try {
+            RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(new MockHttpServletRequest()));
+
+            String link = ClubLinkBuilder.build(CLUB_ID);
+
+            assertThat(link).isEqualTo("http://localhost/clubs/2222");
+        } finally {
+            RequestContextHolder.resetRequestAttributes();
+        }
+    }
+
+}
