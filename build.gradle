@@ -35,7 +35,6 @@ dependencies {
     testCompile 'org.mockito:mockito-core:2.19.0'
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'com.github.michaelruocco:file-loader:3.0.3'
-    testCompile 'com.h2database:h2:1.4.197'
 }
 
 bootJar {

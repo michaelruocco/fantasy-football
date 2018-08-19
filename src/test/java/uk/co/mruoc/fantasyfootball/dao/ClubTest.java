@@ -2,8 +2,6 @@ package uk.co.mruoc.fantasyfootball.dao;
 
 import org.junit.Test;
 
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ClubTest {
