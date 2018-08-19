@@ -16,7 +16,7 @@ public class Player {
     private Long id;
     private String firstName;
     private String lastName;
-    private String position;
+    private Position position;
     private int value;
 
     @ManyToOne
@@ -55,11 +55,11 @@ public class Player {
         this.lastName = lastName;
     }
 
-    public String getPosition() {
+    public Position getPosition() {
         return position;
     }
 
-    public void setPosition(String position) {
+    public void setPosition(Position position) {
         this.position = position;
     }
 

@@ -8,6 +8,7 @@ import uk.co.mruoc.fantasyfootball.api.ClubPlayersDocument;
 import uk.co.mruoc.fantasyfootball.api.ClubPlayersDocument.PlayersDocumentBuilder;
 import uk.co.mruoc.fantasyfootball.dao.Club;
 import uk.co.mruoc.fantasyfootball.dao.Player;
+import uk.co.mruoc.fantasyfootball.dao.Position;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +21,7 @@ public class PlayerConverter {
                 .setId(player.getId())
                 .setFirstName(player.getFirstName())
                 .setLastName(player.getLastName())
-                .setPosition(player.getPosition())
+                .setPosition(player.getPosition().name())
                 .setValue(player.getValue());
         Optional<Long> clubId = player.getClubId();
         clubId.ifPresent(builder::setClubId);
@@ -50,7 +51,7 @@ public class PlayerConverter {
         player.setId(document.getId());
         player.setFirstName(document.getFirstName());
         player.setLastName(document.getLastName());
-        player.setPosition(document.getPosition());
+        player.setPosition(Position.valueOf(document.getPosition()));
         player.setValue(document.getValue());
         player.setClub(extractClub(document));
         return player;

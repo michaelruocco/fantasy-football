@@ -53,7 +53,7 @@ public class PlayerTest {
 
     @Test
     public void shouldReturnPosition() {
-        String position = "DEFENDER";
+        Position position = Position.DEFENDER;
 
         player.setPosition(position);
 

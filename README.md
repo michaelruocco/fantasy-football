@@ -1,5 +1,4 @@
-1. make post for club and player idempotent
-2. use enum for position
-3. embedded database if mysql not running
-4. unit testing
-5. cucumber testing
+1. make post for club and player idempotent and change to use arrays
+2. embedded database if mysql not running
+3. unit testing
+4. cucumber testing
