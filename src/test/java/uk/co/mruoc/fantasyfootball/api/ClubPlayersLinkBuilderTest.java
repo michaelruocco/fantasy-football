@@ -13,7 +13,7 @@ public class ClubPlayersLinkBuilderTest {
 
     @Test
     public void shouldReturnEmptyStringIfCurrentRequestCannotBeFound() {
-        String link = ClubLinkBuilder.build(CLUB_ID);
+        String link = ClubPlayersLinkBuilder.build(CLUB_ID);
 
         assertThat(link).isEmpty();
     }
