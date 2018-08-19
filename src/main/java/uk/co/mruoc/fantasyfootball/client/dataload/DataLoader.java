@@ -1,7 +1,9 @@
-package uk.co.mruoc.fantasyfootball.client;
+package uk.co.mruoc.fantasyfootball.client.dataload;
 
 import uk.co.mruoc.fantasyfootball.api.ClubDocument;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument;
+import uk.co.mruoc.fantasyfootball.client.Client;
+import uk.co.mruoc.fantasyfootball.client.DefaultClient;
 
 import java.util.List;
 
