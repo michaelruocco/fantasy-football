@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.util.Optional;
 
 @Entity(name = "player")
 public class Player {
@@ -78,8 +79,15 @@ public class Player {
         this.club = club;
     }
 
-    public long getClubId() {
-        return club.getId();
+    public Optional<Long> getClubId() {
+        if (club == null) {
+            return Optional.empty();
+        }
+        return Optional.of(club.getId());
+    }
+
+    public boolean hasClub() {
+        return club != null;
     }
 
 }

@@ -26,6 +26,9 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile 'mysql:mysql-connector-java'
     compile 'org.springframework.hateoas:spring-hateoas:0.19.0.RELEASE'
+    compile 'com.github.michaelruocco:http-client:4.0.4'
+    compile 'org.apache.commons:commons-csv:1.5'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.assertj:assertj-core:3.10.0'

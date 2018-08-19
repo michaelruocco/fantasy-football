@@ -71,7 +71,9 @@ public class ClubDocument {
             return attributes;
         }
 
-        public Relationships getRelationships() { return relationships; }
+        public Relationships getRelationships() {
+            return relationships;
+        }
 
     }
 
@@ -89,7 +91,6 @@ public class ClubDocument {
 
     public static class Relationships {
 
-        @NotNull
         @Valid
         private Relation players;
 
@@ -112,7 +113,6 @@ public class ClubDocument {
 
     public static class Links {
 
-        @NotNull
         private String related;
 
         public String getRelated() {

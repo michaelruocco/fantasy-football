@@ -8,7 +8,6 @@ import uk.co.mruoc.fantasyfootball.api.ClubPlayersDocument;
 import uk.co.mruoc.fantasyfootball.api.ClubPlayersDocument.PlayersDocumentBuilder;
 import uk.co.mruoc.fantasyfootball.dao.Club;
 import uk.co.mruoc.fantasyfootball.dao.Player;
-import uk.co.mruoc.fantasyfootball.FreeAgentClub;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,14 +16,15 @@ import java.util.stream.Collectors;
 public class PlayerConverter {
 
     public PlayerDocument toDocument(Player player) {
-        return new PlayerDocumentBuilder()
+        PlayerDocumentBuilder builder = new PlayerDocumentBuilder()
                 .setId(player.getId())
                 .setFirstName(player.getFirstName())
                 .setLastName(player.getLastName())
                 .setPosition(player.getPosition())
-                .setValue(player.getValue())
-                .setClubId(player.getClubId())
-                .build();
+                .setValue(player.getValue());
+        Optional<Long> clubId = player.getClubId();
+        clubId.ifPresent(builder::setClubId);
+        return builder.build();
     }
 
     public ClubPlayersDocument toDocument(long clubId, Page<Player> page) {
@@ -52,13 +52,13 @@ public class PlayerConverter {
         player.setLastName(document.getLastName());
         player.setPosition(document.getPosition());
         player.setValue(document.getValue());
-        player.setClub(new Club(extractClubId(document)));
+        player.setClub(extractClub(document));
         return player;
     }
 
-    private long extractClubId(PlayerDocument document) {
+    private Club extractClub(PlayerDocument document) {
         Optional<Long> clubId = document.getClubId();
-        return clubId.orElse(FreeAgentClub.ID);
+        return clubId.map(Club::new).orElse(null);
     }
 
 }

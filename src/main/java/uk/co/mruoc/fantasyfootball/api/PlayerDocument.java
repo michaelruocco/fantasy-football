@@ -2,6 +2,8 @@ package uk.co.mruoc.fantasyfootball.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Length;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
@@ -10,6 +12,8 @@ import javax.validation.constraints.Pattern;
 import java.util.Optional;
 
 public class PlayerDocument {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClubDocument.class);
 
     @NotNull
     @Valid
@@ -36,7 +40,6 @@ public class PlayerDocument {
         data.relationships = new Relationships();
         data.relationships.club = new Relation();
         data.relationships.club.links = new Links();
-
         data.relationships.club.links.related = ClubLinkBuilder.build(builder.clubId);
         data.relationships.club.data = new RelationData();
         data.relationships.club.data.type = "clubs";
@@ -161,7 +164,6 @@ public class PlayerDocument {
 
     public static class Relationships {
 
-        @NotNull
         @Valid
         private Relation club;
 
@@ -173,11 +175,8 @@ public class PlayerDocument {
 
     public static class Relation {
 
-        @Valid
         private Links links;
 
-        @NotNull
-        @Valid
         private RelationData data;
 
         public Links getLinks() {
@@ -192,7 +191,6 @@ public class PlayerDocument {
 
     public static class Links {
 
-        @NotNull
         private String related;
 
         public String getRelated() {
@@ -203,10 +201,7 @@ public class PlayerDocument {
 
     public static class RelationData {
 
-        @NotNull
         private String type;
-
-        @NotNull
         private long id;
 
         public String getType() {
@@ -253,7 +248,7 @@ public class PlayerDocument {
             return this;
         }
 
-        public PlayerDocumentBuilder setClubId(long clubId) {
+        public PlayerDocumentBuilder setClubId(Long clubId) {
             this.clubId = clubId;
             return this;
         }
