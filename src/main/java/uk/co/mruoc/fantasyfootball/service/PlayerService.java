@@ -18,14 +18,6 @@ public class PlayerService {
     }
 
     public Player create(Player player) {
-        if (!player.hasId()) {
-            return repository.save(player);
-        }
-
-        if (repository.existsById(player.getId())) {
-            throw new PlayerAlreadyExistsException(player.getId());
-        }
-
         return repository.save(player);
     }
 

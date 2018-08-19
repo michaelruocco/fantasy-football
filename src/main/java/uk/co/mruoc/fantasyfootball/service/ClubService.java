@@ -32,8 +32,7 @@ public class ClubService {
     }
 
     public Club save(Club club) {
-        clubRepository.save(club);
-        return read(club.getId());
+        return clubRepository.save(club);
     }
 
     public Page<Player> readPlayersByClubId(long clubId, int pageNumber, int pageSize) {
