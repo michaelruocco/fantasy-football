@@ -8,7 +8,9 @@ import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import uk.co.mruoc.fantasyfootball.api.PlayerDocument.PlayerDocumentBuilder;
+import uk.co.mruoc.fantasyfootball.FakePlayerFactory;
+import uk.co.mruoc.fantasyfootball.PlayerData;
+import uk.co.mruoc.fantasyfootball.PlayerData1;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -17,22 +19,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerDocumentTest {
 
-    private static final long ID = 9999;
-    private static final String FIRST_NAME = "Michael";
-    private static final String LAST_NAME = "Ruocco";
-    private static final String POSITION = "STRIKER";
-    private static final int VALUE = 10000000;
-    private static final long CLUB_ID = 4321;
+    private static final PlayerData PLAYER_DATA1 = new PlayerData1();
 
     private final ObjectMapper mapper = JacksonMapperSingleton.get();
-
-    private final PlayerDocumentBuilder builder = new PlayerDocumentBuilder()
-            .setId(ID)
-            .setFirstName(FIRST_NAME)
-            .setLastName(LAST_NAME)
-            .setPosition(POSITION)
-            .setValue(VALUE)
-            .setClubId(CLUB_ID);
 
     @Before
     public void setup() {
@@ -47,7 +36,7 @@ public class PlayerDocumentTest {
     @Test
     public void shouldSerializeToJsonCorrectly() throws JsonProcessingException  {
         String expectedJson = FileContentLoader.load("/playerDocument.json");
-        PlayerDocument document = builder.build();
+        PlayerDocument document = FakePlayerFactory.buildPlayerDocument1();
 
         String json = mapper.writeValueAsString(document);
 
@@ -56,7 +45,7 @@ public class PlayerDocumentTest {
 
     @Test
     public void shouldDeserializeFromJsonCorrectly() throws IOException {
-        PlayerDocument expectedDocument = builder.build();
+        PlayerDocument expectedDocument = FakePlayerFactory.buildPlayerDocument1();
         String json = FileContentLoader.load("/playerDocument.json");
 
         PlayerDocument document = mapper.readValue(json, PlayerDocument.class);
@@ -65,15 +54,9 @@ public class PlayerDocumentTest {
     }
 
     @Test
-    public void shouldSerializeToJsonCorrectlyIfClubIdNotSet() throws JsonProcessingException {
+    public void shouldSerializePlayerWithoutClubToJsonCorrectly() throws JsonProcessingException {
         String expectedJson = FileContentLoader.load("/playerDocumentWithoutClub.json");
-        PlayerDocument document = new PlayerDocumentBuilder()
-                .setId(ID)
-                .setFirstName(FIRST_NAME)
-                .setLastName(LAST_NAME)
-                .setPosition(POSITION)
-                .setValue(VALUE)
-                .build();
+        PlayerDocument document = FakePlayerFactory.buildPlayerDocumentWithoutClub();
 
         String json = mapper.writeValueAsString(document);
 
@@ -82,49 +65,49 @@ public class PlayerDocumentTest {
 
     @Test
     public void shouldReturnId() {
-        PlayerDocument document = builder.build();
+        PlayerDocument document = FakePlayerFactory.buildPlayerDocument(PLAYER_DATA1);
 
-        assertThat(document.getId()).isEqualTo(ID);
+        assertThat(document.getId()).isEqualTo(PLAYER_DATA1.getId());
     }
 
     @Test
     public void shouldReturnFirstName() {
-        PlayerDocument document = builder.build();
+        PlayerDocument document = FakePlayerFactory.buildPlayerDocument(PLAYER_DATA1);
 
-        assertThat(document.getFirstName()).isEqualTo(FIRST_NAME);
+        assertThat(document.getFirstName()).isEqualTo(PLAYER_DATA1.getFirstName());
     }
 
     @Test
     public void shouldReturnLastName() {
-        PlayerDocument document = builder.build();
+        PlayerDocument document = FakePlayerFactory.buildPlayerDocument(PLAYER_DATA1);
 
-        assertThat(document.getLastName()).isEqualTo(LAST_NAME);
+        assertThat(document.getLastName()).isEqualTo(PLAYER_DATA1.getLastName());
     }
 
     @Test
     public void shouldReturnPosition() {
-        PlayerDocument document = builder.build();
+        PlayerDocument document = FakePlayerFactory.buildPlayerDocument(PLAYER_DATA1);
 
-        assertThat(document.getPosition()).isEqualTo(POSITION);
+        assertThat(document.getPosition()).isEqualTo(PLAYER_DATA1.getPositionName());
     }
 
     @Test
     public void shouldReturnValue() {
-        PlayerDocument document = builder.build();
+        PlayerDocument document = FakePlayerFactory.buildPlayerDocument(PLAYER_DATA1);
 
-        assertThat(document.getValue()).isEqualTo(VALUE);
+        assertThat(document.getValue()).isEqualTo(PLAYER_DATA1.getValue());
     }
 
     @Test
     public void shouldReturnClubId() {
-        PlayerDocument document = builder.build();
+        PlayerDocument document = FakePlayerFactory.buildPlayerDocument(PLAYER_DATA1);
 
-        assertThat(document.getClubId()).isEqualTo(Optional.of(CLUB_ID));
+        assertThat(document.getClubId()).isEqualTo(Optional.of(PLAYER_DATA1.getClubId()));
     }
 
     @Test
     public void shouldReturnEmptyOptionalIfClubIdNotSet() {
-        PlayerDocument document = new PlayerDocumentBuilder().build();
+        PlayerDocument document = FakePlayerFactory.buildPlayerDocumentWithoutClub();
 
         assertThat(document.getClubId()).isEqualTo(Optional.empty());
     }

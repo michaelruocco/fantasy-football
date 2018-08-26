@@ -8,7 +8,9 @@ import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import uk.co.mruoc.fantasyfootball.api.ClubDocument.ClubDocumentBuilder;
+import uk.co.mruoc.fantasyfootball.ClubData;
+import uk.co.mruoc.fantasyfootball.FakeClubData;
+import uk.co.mruoc.fantasyfootball.FakeClubFactory;
 
 import java.io.IOException;
 
@@ -16,15 +18,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ClubDocumentTest {
 
+    private static final ClubData CLUB_DATA = new FakeClubData();
+
     private static final String JSON = FileContentLoader.load("/clubDocument.json");
 
-    private static final long ID = 1234;
-    private static final String NAME = "Test Club";
-
     private final ObjectMapper mapper = new ObjectMapper();
-    private final ClubDocumentBuilder builder = new ClubDocumentBuilder()
-            .setId(ID)
-            .setName(NAME);
 
     @Before
     public void setup() {
@@ -38,7 +36,7 @@ public class ClubDocumentTest {
 
     @Test
     public void shouldSerializeToJsonCorrectly() throws JsonProcessingException  {
-        ClubDocument document = builder.build();
+        ClubDocument document = FakeClubFactory.buildClubDocument();
 
         String json = mapper.writeValueAsString(document);
 
@@ -47,7 +45,7 @@ public class ClubDocumentTest {
 
     @Test
     public void shouldDeserializeFromJsonCorrectly() throws IOException {
-        ClubDocument expectedDocument = builder.build();
+        ClubDocument expectedDocument = FakeClubFactory.buildClubDocument();
 
         ClubDocument document = mapper.readValue(JSON, ClubDocument.class);
 
@@ -56,16 +54,16 @@ public class ClubDocumentTest {
 
     @Test
     public void shouldReturnId() {
-        ClubDocument document = builder.build();
+        ClubDocument document = FakeClubFactory.buildClubDocument(CLUB_DATA);
 
-        assertThat(document.getId()).isEqualTo(ID);
+        assertThat(document.getId()).isEqualTo(CLUB_DATA.getId());
     }
 
     @Test
     public void shouldReturnName() {
-        ClubDocument document = builder.build();
+        ClubDocument document = FakeClubFactory.buildClubDocument();
 
-        assertThat(document.getName()).isEqualTo(NAME);
+        assertThat(document.getName()).isEqualTo(CLUB_DATA.getName());
     }
 
 }

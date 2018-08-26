@@ -5,6 +5,27 @@
   },
   "data": [
     {
+      "id": 1133,
+      "type": "players",
+      "attributes": {
+        "firstName": "Joe",
+        "lastName": "Bloggs",
+        "position": "DEFENDER",
+        "value": 50000000
+      },
+      "relationships": {
+        "club": {
+          "links": {
+            "related": "http://localhost/clubs/1234"
+          },
+          "data": {
+            "type": "clubs",
+            "id": 1234
+          }
+        }
+      }
+    },
+    {
       "id": 1122,
       "type": "players",
       "attributes": {
@@ -16,42 +37,21 @@
       "relationships": {
         "club": {
           "links": {
-            "related": "http://localhost/clubs/2323"
+            "related": "http://localhost/clubs/1234"
           },
           "data": {
             "type": "clubs",
-            "id": 2323
-          }
-        }
-      }
-    },
-    {
-      "id": 1133,
-      "type": "players",
-      "attributes": {
-        "firstName": "Joe",
-        "lastName": "Bloggs",
-        "position": "DEFENDER",
-        "value": 500000
-      },
-      "relationships": {
-        "club": {
-          "links": {
-            "related": "http://localhost/clubs/2323"
-          },
-          "data": {
-            "type": "clubs",
-            "id": 2323
+            "id": 1234
           }
         }
       }
     }
   ],
   "links": {
-    "self": "http://localhost/clubs/2323/players?pageNumber=1&pageSize=2",
-    "first": "http://localhost/clubs/2323/players?pageNumber=0&pageSize=2",
-    "last": "http://localhost/clubs/2323/players?pageNumber=2&pageSize=2",
-    "next": "http://localhost/clubs/2323/players?pageNumber=2&pageSize=2",
-    "previous": "http://localhost/clubs/2323/players?pageNumber=0&pageSize=2"
+    "self": "http://localhost/clubs/1234/players?pageNumber=1&pageSize=2",
+    "first": "http://localhost/clubs/1234/players?pageNumber=0&pageSize=2",
+    "last": "http://localhost/clubs/1234/players?pageNumber=2&pageSize=2",
+    "next": "http://localhost/clubs/1234/players?pageNumber=2&pageSize=2",
+    "previous": "http://localhost/clubs/1234/players?pageNumber=0&pageSize=2"
   }
 }

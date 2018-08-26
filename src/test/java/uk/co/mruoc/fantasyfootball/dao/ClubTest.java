@@ -1,29 +1,28 @@
 package uk.co.mruoc.fantasyfootball.dao;
 
 import org.junit.Test;
+import uk.co.mruoc.fantasyfootball.ClubData;
+import uk.co.mruoc.fantasyfootball.FakeClubData;
+import uk.co.mruoc.fantasyfootball.FakeClubFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ClubTest {
 
-    private Club club = new Club();
+    private static final ClubData CLUB_DATA = new FakeClubData();
 
     @Test
     public void shouldReturnId() {
-        long id = 4444;
+        Club club = FakeClubFactory.buildClub(CLUB_DATA);
 
-        club.setId(id);
-
-        assertThat(club.getId()).isEqualTo(id);
+        assertThat(club.getId()).isEqualTo(CLUB_DATA.getId());
     }
 
     @Test
     public void shouldReturnName() {
-        String name = "Test Club";
+        Club club = FakeClubFactory.buildClub(CLUB_DATA);
 
-        club.setName(name);
-
-        assertThat(club.getName()).isEqualTo(name);
+        assertThat(club.getName()).isEqualTo(CLUB_DATA.getName());
     }
 
 }

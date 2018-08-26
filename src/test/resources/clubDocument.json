@@ -3,7 +3,7 @@
     "id": 1234,
     "type": "clubs",
     "attributes": {
-      "name": "Test Club"
+      "name": "Fake Club"
     },
     "relationships": {
       "players": {

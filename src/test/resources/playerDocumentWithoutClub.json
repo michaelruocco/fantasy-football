@@ -1,12 +1,12 @@
 {
   "data": {
-    "id": 9999,
+    "id": 1144,
     "type": "players",
     "attributes": {
-      "firstName": "Michael",
-      "lastName": "Ruocco",
-      "position": "STRIKER",
-      "value": 10000000
+      "firstName": "Homer",
+      "lastName": "Simpson",
+      "position": "MIDFIELDER",
+      "value": 5000000
     }
   }
 }

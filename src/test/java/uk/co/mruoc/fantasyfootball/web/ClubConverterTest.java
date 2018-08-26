@@ -1,53 +1,50 @@
 package uk.co.mruoc.fantasyfootball.web;
 
 import org.junit.Test;
+import uk.co.mruoc.fantasyfootball.FakeClubFactory;
 import uk.co.mruoc.fantasyfootball.api.ClubDocument;
-import uk.co.mruoc.fantasyfootball.api.ClubDocument.ClubDocumentBuilder;
 import uk.co.mruoc.fantasyfootball.dao.Club;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ClubConverterTest {
 
-    private static final long ID = 6565;
-    private static final String NAME = "Test Club";
-
     private final ClubConverter converter = new ClubConverter();
 
     @Test
     public void shouldConvertIdToDocument() {
-        Club club = new Club(ID);
+        Club club = FakeClubFactory.buildClub();
 
         ClubDocument document = converter.toDocument(club);
 
-        assertThat(document.getId()).isEqualTo(ID);
+        assertThat(document.getId()).isEqualTo(club.getId());
     }
 
     @Test
     public void shouldConvertNameToDocument() {
-        Club club = new Club(ID, NAME);
+        Club club = FakeClubFactory.buildClub();
 
         ClubDocument document = converter.toDocument(club);
 
-        assertThat(document.getName()).isEqualTo(NAME);
+        assertThat(document.getName()).isEqualTo(club.getName());
     }
 
     @Test
     public void shouldConvertIdFromDocument() {
-        ClubDocument document = new ClubDocumentBuilder().setId(ID).build();
+        ClubDocument document = FakeClubFactory.buildClubDocument();
 
         Club club = converter.toClub(document);
 
-        assertThat(club.getId()).isEqualTo(ID);
+        assertThat(club.getId()).isEqualTo(document.getId());
     }
 
     @Test
     public void shouldConvertNameFromDocument() {
-        ClubDocument document = new ClubDocumentBuilder().setId(ID).setName(NAME).build();
+        ClubDocument document = FakeClubFactory.buildClubDocument();
 
         Club club = converter.toClub(document);
 
-        assertThat(club.getName()).isEqualTo(NAME);
+        assertThat(club.getName()).isEqualTo(document.getName());
     }
 
 }
