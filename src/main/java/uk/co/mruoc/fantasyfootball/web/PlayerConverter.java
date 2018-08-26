@@ -1,6 +1,7 @@
 package uk.co.mruoc.fantasyfootball.web;
 
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Component;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument.Data;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument.PlayerDocumentBuilder;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Component
 public class PlayerConverter {
 
     public PlayerDocument toDocument(Player player) {

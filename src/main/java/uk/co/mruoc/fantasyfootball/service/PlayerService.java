@@ -11,7 +11,7 @@ import java.util.Optional;
 public class PlayerService {
 
     @Autowired
-    private PlayerRepository repository;
+    private final PlayerRepository repository;
 
     public PlayerService(PlayerRepository repository) {
         this.repository = repository;

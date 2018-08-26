@@ -19,33 +19,33 @@ import javax.validation.Valid;
 @RequestMapping(path= "/players")
 public class PlayerController {
 
-    private final PlayerConverter playerConverter = new PlayerConverter();
-
     @Autowired
-    private PlayerService playerService;
+    private final PlayerService service;
+    private final PlayerConverter converter;
 
-    public PlayerController(PlayerService playerService) {
-        this.playerService = playerService;
+    public PlayerController(PlayerService service, PlayerConverter converter) {
+        this.service = service;
+        this.converter = converter;
     }
 
     @PostMapping
     public @ResponseBody PlayerDocument create(@Valid @RequestBody PlayerDocument document) {
-        Player player = playerConverter.toPlayer(document);
-        Player createdPlayer = playerService.create(player);
-        return playerConverter.toDocument(createdPlayer);
+        Player player = converter.toPlayer(document);
+        Player createdPlayer = service.create(player);
+        return converter.toDocument(createdPlayer);
     }
 
     @PutMapping("/{id}")
     public @ResponseBody PlayerDocument update(@Valid @PathVariable("id") long id, @RequestBody PlayerDocument document) {
-        Player player = playerConverter.toPlayer(id, document);
-        Player createdPlayer = playerService.update(player);
-        return playerConverter.toDocument(createdPlayer);
+        Player player = converter.toPlayer(id, document);
+        Player updatedPlayer = service.update(player);
+        return converter.toDocument(updatedPlayer);
     }
 
     @GetMapping("/{id}")
     public @ResponseBody PlayerDocument read(@PathVariable("id") long id) {
-        Player player = playerService.read(id);
-        return playerConverter.toDocument(player);
+        Player player = service.read(id);
+        return converter.toDocument(player);
     }
 
 }

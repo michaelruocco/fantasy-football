@@ -22,21 +22,22 @@ import javax.validation.Valid;
 @RequestMapping(path= "/clubs")
 public class ClubController {
 
-    private final ClubConverter clubConverter = new ClubConverter();
-    private final PlayerConverter playerConverter = new PlayerConverter();
-
     @Autowired
     private final ClubService service;
+    private final ClubConverter clubConverter;
+    private final PlayerConverter playerConverter;
 
-    public ClubController(ClubService service) {
+    public ClubController(ClubService service, ClubConverter clubConverter, PlayerConverter playerConverter) {
         this.service = service;
+        this.clubConverter = clubConverter;
+        this.playerConverter = playerConverter;
     }
 
     @PostMapping
     public @ResponseBody
     ClubDocument create(@Valid @RequestBody ClubDocument document) {
         Club club = clubConverter.toClub(document);
-        Club createdClub = service.save(club);
+        Club createdClub = service.create(club);
         return clubConverter.toDocument(createdClub);
     }
 
