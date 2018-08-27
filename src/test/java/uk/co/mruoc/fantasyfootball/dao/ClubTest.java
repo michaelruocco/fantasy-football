@@ -13,14 +13,14 @@ public class ClubTest {
 
     @Test
     public void shouldReturnId() {
-        Club club = FakeClubFactory.buildClub(CLUB_DATA);
+        final Club club = FakeClubFactory.buildClub(CLUB_DATA);
 
         assertThat(club.getId()).isEqualTo(CLUB_DATA.getId());
     }
 
     @Test
     public void shouldReturnName() {
-        Club club = FakeClubFactory.buildClub(CLUB_DATA);
+        final Club club = FakeClubFactory.buildClub(CLUB_DATA);
 
         assertThat(club.getName()).isEqualTo(CLUB_DATA.getName());
     }

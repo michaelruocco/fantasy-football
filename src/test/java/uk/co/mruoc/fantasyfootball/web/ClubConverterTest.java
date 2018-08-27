@@ -13,36 +13,36 @@ public class ClubConverterTest {
 
     @Test
     public void shouldConvertIdToDocument() {
-        Club club = FakeClubFactory.buildClub();
+        final Club club = FakeClubFactory.buildClub();
 
-        ClubDocument document = converter.toDocument(club);
+        final ClubDocument document = converter.toDocument(club);
 
         assertThat(document.getId()).isEqualTo(club.getId());
     }
 
     @Test
     public void shouldConvertNameToDocument() {
-        Club club = FakeClubFactory.buildClub();
+        final Club club = FakeClubFactory.buildClub();
 
-        ClubDocument document = converter.toDocument(club);
+        final ClubDocument document = converter.toDocument(club);
 
         assertThat(document.getName()).isEqualTo(club.getName());
     }
 
     @Test
     public void shouldConvertIdFromDocument() {
-        ClubDocument document = FakeClubFactory.buildClubDocument();
+        final ClubDocument document = FakeClubFactory.buildClubDocument();
 
-        Club club = converter.toClub(document);
+        final Club club = converter.toClub(document);
 
         assertThat(club.getId()).isEqualTo(document.getId());
     }
 
     @Test
     public void shouldConvertNameFromDocument() {
-        ClubDocument document = FakeClubFactory.buildClubDocument();
+        final ClubDocument document = FakeClubFactory.buildClubDocument();
 
-        Club club = converter.toClub(document);
+        final Club club = converter.toClub(document);
 
         assertThat(club.getName()).isEqualTo(document.getName());
     }

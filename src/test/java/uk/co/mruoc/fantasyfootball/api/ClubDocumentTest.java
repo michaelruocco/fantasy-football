@@ -36,32 +36,32 @@ public class ClubDocumentTest {
 
     @Test
     public void shouldSerializeToJsonCorrectly() throws JsonProcessingException  {
-        ClubDocument document = FakeClubFactory.buildClubDocument();
+        final ClubDocument document = FakeClubFactory.buildClubDocument();
 
-        String json = mapper.writeValueAsString(document);
+        final String json = mapper.writeValueAsString(document);
 
         assertThat(json).isEqualToIgnoringWhitespace(JSON);
     }
 
     @Test
     public void shouldDeserializeFromJsonCorrectly() throws IOException {
-        ClubDocument expectedDocument = FakeClubFactory.buildClubDocument();
+        final ClubDocument expectedDocument = FakeClubFactory.buildClubDocument();
 
-        ClubDocument document = mapper.readValue(JSON, ClubDocument.class);
+        final ClubDocument document = mapper.readValue(JSON, ClubDocument.class);
 
         assertThat(document).isEqualToComparingFieldByFieldRecursively(expectedDocument);
     }
 
     @Test
     public void shouldReturnId() {
-        ClubDocument document = FakeClubFactory.buildClubDocument(CLUB_DATA);
+        final ClubDocument document = FakeClubFactory.buildClubDocument(CLUB_DATA);
 
         assertThat(document.getId()).isEqualTo(CLUB_DATA.getId());
     }
 
     @Test
     public void shouldReturnName() {
-        ClubDocument document = FakeClubFactory.buildClubDocument();
+        final ClubDocument document = FakeClubFactory.buildClubDocument();
 
         assertThat(document.getName()).isEqualTo(CLUB_DATA.getName());
     }

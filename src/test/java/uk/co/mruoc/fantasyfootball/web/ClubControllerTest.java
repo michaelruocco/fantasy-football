@@ -23,48 +23,48 @@ public class ClubControllerTest {
     private final ClubDocument document = new ClubDocument();
     private final Club club = new Club();
 
-    private ClubController controller = new ClubController(service, clubConverter, playerConverter);
+    private final ClubController controller = new ClubController(service, clubConverter, playerConverter);
 
     @Test
     public void shouldCreateClub() {
-        Club createdClub = new Club();
-        ClubDocument expectedDocument = new ClubDocument();
+        final Club createdClub = new Club();
+        final ClubDocument expectedDocument = new ClubDocument();
 
         given(clubConverter.toClub(document)).willReturn(club);
         given(service.upsert(club)).willReturn(createdClub);
         given(clubConverter.toDocument(createdClub)).willReturn(expectedDocument);
 
-        ClubDocument resultDocument = controller.create(document);
+        final ClubDocument resultDocument = controller.create(document);
 
         assertThat(resultDocument).isEqualTo(expectedDocument);
     }
 
     @Test
     public void shouldReadClub() {
-        long id = 1212;
-        Club club = new Club();
-        ClubDocument expectedDocument = new ClubDocument();
+        final long id = 1212;
+        final Club club = new Club();
+        final ClubDocument expectedDocument = new ClubDocument();
 
         given(service.read(id)).willReturn(club);
         given(clubConverter.toDocument(club)).willReturn(expectedDocument);
 
-        ClubDocument resultDocument = controller.read(id);
+        final ClubDocument resultDocument = controller.read(id);
 
         assertThat(resultDocument).isEqualTo(expectedDocument);
     }
 
     @Test
     public void shouldReadClubPlayers() {
-        long clubId = 1212;
-        int pageNumber = 0;
-        int pageSize = 2;
-        Page<Player> page = new PageImpl<>(singletonList(new Player()));
-        ClubPlayersDocument expectedDocument = new ClubPlayersDocument();
+        final long clubId = 1212;
+        final int pageNumber = 0;
+        final int pageSize = 2;
+        final Page<Player> page = new PageImpl<>(singletonList(new Player()));
+        final ClubPlayersDocument expectedDocument = new ClubPlayersDocument();
 
         given(service.readPlayersByClubId(clubId, pageNumber, pageSize)).willReturn(page);
         given(playerConverter.toDocument(clubId, page)).willReturn(expectedDocument);
 
-        ClubPlayersDocument resultDocument = controller.readPlayers(clubId, pageNumber, pageSize);
+        final ClubPlayersDocument resultDocument = controller.readPlayers(clubId, pageNumber, pageSize);
 
         assertThat(resultDocument).isEqualTo(expectedDocument);
     }

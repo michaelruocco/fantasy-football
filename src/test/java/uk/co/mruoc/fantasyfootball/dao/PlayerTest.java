@@ -8,11 +8,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerTest {
 
-    private Player player = new Player();
+    private final Player player = new Player();
 
     @Test
     public void shouldReturnId() {
-        long id = 1111;
+        final long id = 1111;
 
         player.setId(id);
 
@@ -21,7 +21,7 @@ public class PlayerTest {
 
     @Test
     public void shouldReturnTrueIfPlayerHasId() {
-        long id = 1111;
+        final long id = 1111;
 
         player.setId(id);
 
@@ -35,7 +35,7 @@ public class PlayerTest {
 
     @Test
     public void shouldReturnFirstName() {
-        String firstName = "Joe";
+        final String firstName = "Joe";
 
         player.setFirstName(firstName);
 
@@ -44,7 +44,7 @@ public class PlayerTest {
 
     @Test
     public void shouldReturnLastName() {
-        String lastName = "Bloggs";
+        final String lastName = "Bloggs";
 
         player.setLastName(lastName);
 
@@ -53,7 +53,7 @@ public class PlayerTest {
 
     @Test
     public void shouldReturnPosition() {
-        Position position = Position.DEFENDER;
+        final Position position = Position.DEFENDER;
 
         player.setPosition(position);
 
@@ -62,7 +62,7 @@ public class PlayerTest {
 
     @Test
     public void shouldReturnValue() {
-        int value = 500000;
+        final int value = 500000;
 
         player.setValue(value);
 
@@ -71,7 +71,7 @@ public class PlayerTest {
 
     @Test
     public void shouldReturnClub() {
-        Club club = new Club();
+        final Club club = new Club();
 
         player.setClub(club);
 
@@ -80,7 +80,7 @@ public class PlayerTest {
 
     @Test
     public void shouldReturnTrueIfPlayerHasClub() {
-        Club club = new Club();
+        final Club club = new Club();
 
         player.setClub(club);
 
@@ -89,7 +89,7 @@ public class PlayerTest {
 
     @Test
     public void shouldReturnClubIdIfPlayerHasClub() {
-        Club club = new Club(9797);
+        final Club club = new Club(9797);
 
         player.setClub(club);
 

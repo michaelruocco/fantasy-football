@@ -17,49 +17,48 @@ public class PlayerControllerTest {
     private final PlayerDocument document = new PlayerDocument();
     private final Player player = new Player();
 
-    private PlayerController controller = new PlayerController(service, converter);
+    private final PlayerController controller = new PlayerController(service, converter);
 
     @Test
     public void shouldCreatePlayer() {
-        Player createdPlayer = new Player();
-        PlayerDocument expectedDocument = new PlayerDocument();
+        final Player createdPlayer = new Player();
+        final PlayerDocument expectedDocument = new PlayerDocument();
 
         given(converter.toPlayer(document)).willReturn(player);
         given(service.upsert(player)).willReturn(createdPlayer);
         given(converter.toDocument(createdPlayer)).willReturn(expectedDocument);
 
-        PlayerDocument resultDocument = controller.create(document);
+        final PlayerDocument resultDocument = controller.create(document);
 
         assertThat(resultDocument).isEqualTo(expectedDocument);
     }
 
     @Test
     public void shouldUpdatePlayer() {
-        long id = 1212;
-        Player updatedPlayer = new Player();
-        PlayerDocument expectedDocument = new PlayerDocument();
+        final long id = 1212;
+        final Player updatedPlayer = new Player();
+        final PlayerDocument expectedDocument = new PlayerDocument();
 
         given(converter.toPlayer(id, document)).willReturn(player);
         given(service.update(player)).willReturn(updatedPlayer);
         given(converter.toDocument(updatedPlayer)).willReturn(expectedDocument);
 
-        PlayerDocument resultDocument = controller.update(id, document);
+        final PlayerDocument resultDocument = controller.update(id, document);
 
         assertThat(resultDocument).isEqualTo(expectedDocument);
     }
 
     @Test
     public void shouldReadPlayer() {
-        long id = 1212;
-        PlayerDocument expectedDocument = new PlayerDocument();
+        final long id = 1212;
+        final PlayerDocument expectedDocument = new PlayerDocument();
 
         given(service.read(id)).willReturn(player);
         given(converter.toDocument(player)).willReturn(expectedDocument);
 
-        PlayerDocument resultDocument = controller.read(id);
+        final PlayerDocument resultDocument = controller.read(id);
 
         assertThat(resultDocument).isEqualTo(expectedDocument);
     }
-
 
 }

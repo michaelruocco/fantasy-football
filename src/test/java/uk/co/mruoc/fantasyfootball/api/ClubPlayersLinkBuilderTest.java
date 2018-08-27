@@ -15,7 +15,7 @@ public class ClubPlayersLinkBuilderTest {
 
     @Test
     public void shouldReturnEmptyStringIfCurrentRequestCannotBeFound() {
-        String link = ClubPlayersLinkBuilder.build(CLUB_ID, PAGE_NUMBER, PAGE_SIZE);
+        final String link = ClubPlayersLinkBuilder.build(CLUB_ID, PAGE_NUMBER, PAGE_SIZE);
 
         assertThat(link).isEmpty();
     }
@@ -25,7 +25,7 @@ public class ClubPlayersLinkBuilderTest {
         try {
             RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(new MockHttpServletRequest()));
 
-            String link = ClubPlayersLinkBuilder.build(CLUB_ID, PAGE_NUMBER, PAGE_SIZE);
+            final String link = ClubPlayersLinkBuilder.build(CLUB_ID, PAGE_NUMBER, PAGE_SIZE);
 
             assertThat(link).isEqualTo("http://localhost/clubs/2222/players?pageNumber=0&pageSize=10");
         } finally {

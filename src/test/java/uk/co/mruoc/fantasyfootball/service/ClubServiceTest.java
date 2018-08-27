@@ -31,10 +31,10 @@ public class ClubServiceTest {
 
     @Test
     public void shouldReturnClubIfFound() {
-        Club expectedClub = mock(Club.class);
+        final Club expectedClub = mock(Club.class);
         given(clubRepository.findById(CLUB_ID)).willReturn(Optional.of(expectedClub));
 
-        Club club = service.read(CLUB_ID);
+        final Club club = service.read(CLUB_ID);
 
         assertThat(club).isEqualTo(expectedClub);
     }
@@ -42,9 +42,9 @@ public class ClubServiceTest {
     @Test
     public void shouldThrowExceptionIfClubNotFound() {
         given(clubRepository.findById(CLUB_ID)).willReturn(Optional.empty());
-        String expectedMessage = String.format("club with id %d not found", CLUB_ID);
+        final String expectedMessage = String.format("club with id %d not found", CLUB_ID);
 
-        Throwable thrown = catchThrowable(() -> { service.read(CLUB_ID); });
+        final Throwable thrown = catchThrowable(() -> service.read(CLUB_ID));
 
         assertThat(thrown).isInstanceOf(ClubNotFoundException.class)
                 .hasNoCause()
@@ -53,31 +53,31 @@ public class ClubServiceTest {
 
     @Test
     public void shouldUpsertClub() {
-        Club club = mock(Club.class);
-        Club expectedClub = mock(Club.class);
+        final Club club = mock(Club.class);
+        final Club expectedClub = mock(Club.class);
         given(clubRepository.save(club)).willReturn(expectedClub);
 
-        Club resultClub = service.upsert(club);
+        final Club resultClub = service.upsert(club);
 
         assertThat(resultClub).isEqualTo(expectedClub);
     }
 
     @Test
     public void shouldReadPageOfClubPlayers() {
-        Page<Player> expectedPage = new PageImpl<>(emptyList());
+        final Page<Player> expectedPage = new PageImpl<>(emptyList());
         given(playerRepository.findByClub(any(Club.class), any(Pageable.class))).willReturn(expectedPage);
 
-        Page<Player> page = service.readPlayersByClubId(CLUB_ID, 1, 2);
+        final Page<Player> page = service.readPlayersByClubId(CLUB_ID, 1, 2);
 
         assertThat(page).isEqualTo(expectedPage);
     }
 
     @Test
     public void shouldPassCorrectArgumentsWhenReadingPageOfClubPlayers() {
-        int pageNumber = 1;
-        int pageSize = 2;
-        ArgumentCaptor<Club> club = ArgumentCaptor.forClass(Club.class);
-        ArgumentCaptor<Pageable> page = ArgumentCaptor.forClass(Pageable.class);
+        final int pageNumber = 1;
+        final int pageSize = 2;
+        final ArgumentCaptor<Club> club = ArgumentCaptor.forClass(Club.class);
+        final ArgumentCaptor<Pageable> page = ArgumentCaptor.forClass(Pageable.class);
 
         service.readPlayersByClubId(CLUB_ID, pageNumber, pageSize);
 

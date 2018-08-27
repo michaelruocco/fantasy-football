@@ -30,40 +30,40 @@ public class ClubPlayersDocumentTest {
 
     @Test
     public void shouldSerializeToJsonCorrectly() throws JsonProcessingException  {
-        String expectedJson = FileContentLoader.load("/playersDocument.json");
-        ClubPlayersDocument document = FakePlayerFactory.buildClubPlayersDocument();
+        final String expectedJson = FileContentLoader.load("/playersDocument.json");
+        final ClubPlayersDocument document = FakePlayerFactory.buildClubPlayersDocument();
 
-        String json = mapper.writeValueAsString(document);
+        final String json = mapper.writeValueAsString(document);
 
         assertThat(json).isEqualToIgnoringWhitespace(expectedJson);
     }
 
     @Test
     public void shouldSerializeToJsonCorrectlyWhenPartOfMultiplePages() throws JsonProcessingException  {
-        String expectedJson = FileContentLoader.load("/playersDocumentWithMultiplePages.json");
-        ClubPlayersDocument document = FakePlayerFactory.buildClubPlayersDocumentWithMultiplePages();
+        final String expectedJson = FileContentLoader.load("/playersDocumentWithMultiplePages.json");
+        final ClubPlayersDocument document = FakePlayerFactory.buildClubPlayersDocumentWithMultiplePages();
 
-        String json = mapper.writeValueAsString(document);
+        final String json = mapper.writeValueAsString(document);
 
         assertThat(json).isEqualToIgnoringWhitespace(expectedJson);
     }
 
     @Test
     public void shouldSerializeToJsonCorrectlyWhenNoDataPresent() throws JsonProcessingException  {
-        String expectedJson = FileContentLoader.load("/playersDocumentWithNoData.json");
-        ClubPlayersDocument document = FakePlayerFactory.buildClubPlayersDocumentWithNoData();
+        final String expectedJson = FileContentLoader.load("/playersDocumentWithNoData.json");
+        final ClubPlayersDocument document = FakePlayerFactory.buildClubPlayersDocumentWithNoData();
 
-        String json = mapper.writeValueAsString(document);
+        final String json = mapper.writeValueAsString(document);
 
         assertThat(json).isEqualToIgnoringWhitespace(expectedJson);
     }
 
     @Test
     public void shouldDeserializeFromJsonCorrectly() throws IOException {
-        String json = FileContentLoader.load("/playersDocument.json");
-        ClubPlayersDocument expectedDocument = FakePlayerFactory.buildClubPlayersDocument();
+        final String json = FileContentLoader.load("/playersDocument.json");
+        final ClubPlayersDocument expectedDocument = FakePlayerFactory.buildClubPlayersDocument();
 
-        ClubPlayersDocument document = mapper.readValue(json, ClubPlayersDocument.class);
+        final ClubPlayersDocument document = mapper.readValue(json, ClubPlayersDocument.class);
 
         assertThat(document).isEqualToComparingFieldByFieldRecursively(expectedDocument);
     }

@@ -13,7 +13,7 @@ public class ClubLinkBuilderTest {
 
     @Test
     public void shouldReturnEmptyStringIfCurrentRequestCannotBeFound() {
-        String link = ClubLinkBuilder.build(CLUB_ID);
+        final String link = ClubLinkBuilder.build(CLUB_ID);
 
         assertThat(link).isEmpty();
     }
@@ -23,7 +23,7 @@ public class ClubLinkBuilderTest {
         try {
             RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(new MockHttpServletRequest()));
 
-            String link = ClubLinkBuilder.build(CLUB_ID);
+            final String link = ClubLinkBuilder.build(CLUB_ID);
 
             assertThat(link).isEqualTo("http://localhost/clubs/2222");
         } finally {
