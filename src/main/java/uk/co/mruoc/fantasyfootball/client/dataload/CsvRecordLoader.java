@@ -14,8 +14,8 @@ public class CsvRecordLoader {
 
     public List<CSVRecord> load(String path) {
         try {
-            Reader in = new FileReader(path);
-            Iterable<CSVRecord> records = CSVFormat.DEFAULT.parse(in);
+            final Reader in = new FileReader(path);
+            final Iterable<CSVRecord> records = CSVFormat.DEFAULT.parse(in);
             return Lists.newArrayList(records);
         } catch (IOException e) {
             throw new UncheckedIOException(e);

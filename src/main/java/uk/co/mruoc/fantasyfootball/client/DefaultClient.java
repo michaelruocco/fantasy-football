@@ -23,15 +23,15 @@ public class DefaultClient implements Client {
 
     @Override
     public ClubDocument create(ClubDocument clubDocument) {
-        String json = converter.toJson(clubDocument);
-        Response response = httpClient.post(baseUrl + "/clubs", json);
+        final String json = converter.toJson(clubDocument);
+        final Response response = httpClient.post(baseUrl + "/clubs", json);
         return converter.fromJson(response.getBody(), ClubDocument.class);
     }
 
     @Override
     public PlayerDocument create(PlayerDocument playerDocument) {
-        String json = converter.toJson(playerDocument);
-        Response response = httpClient.post(baseUrl + "/players", json);
+        final String json = converter.toJson(playerDocument);
+        final Response response = httpClient.post(baseUrl + "/players", json);
         return converter.fromJson(response.getBody(), PlayerDocument.class);
     }
 

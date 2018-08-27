@@ -13,20 +13,20 @@ public class PlayerService {
     @Autowired
     private final PlayerRepository repository;
 
-    public PlayerService(PlayerRepository repository) {
+    public PlayerService(final PlayerRepository repository) {
         this.repository = repository;
     }
 
-    public Player read(long id) {
-        Optional<Player> player = repository.findById(id);
+    public Player read(final long id) {
+        final Optional<Player> player = repository.findById(id);
         return player.orElseThrow(() -> new PlayerNotFoundException(id));
     }
 
-    public Player upsert(Player player) {
+    public Player upsert(final Player player) {
         return repository.save(player);
     }
 
-    public Player update(Player player) {
+    public Player update(final Player player) {
         if (!player.hasId()) {
             throw new IllegalArgumentException("cannot update player without id");
         }

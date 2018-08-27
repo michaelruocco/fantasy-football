@@ -10,13 +10,6 @@ public class ClubPlayersLinkBuilder {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClubPlayersLinkBuilder.class);
 
-    private static final int DEFAULT_PAGE_NUMBER = 0;
-    private static final int DEFAULT_PAGE_SIZE = 10;
-
-    public static String build(long clubId) {
-        return build(clubId, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
-    }
-
     public static String build(long clubId, int pageNumber, int pageSize) {
         try {
             return linkTo(ClubController.class)

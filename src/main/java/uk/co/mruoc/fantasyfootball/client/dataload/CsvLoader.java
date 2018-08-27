@@ -15,7 +15,7 @@ public class CsvLoader<T> {
     }
 
     public List<T> load(String path) {
-        List<CSVRecord> records = loader.load(path);
+        final List<CSVRecord> records = loader.load(path);
         return converter.convert(records);
     }
 

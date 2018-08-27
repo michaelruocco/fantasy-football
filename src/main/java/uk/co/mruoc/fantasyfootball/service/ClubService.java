@@ -16,28 +16,28 @@ import java.util.Optional;
 public class ClubService {
 
     @Autowired
-    private ClubRepository clubRepository;
+    private final ClubRepository clubRepository;
 
     @Autowired
-    private PlayerRepository playerRepository;
+    private final PlayerRepository playerRepository;
 
-    public ClubService(ClubRepository clubRepository, PlayerRepository playerRepository) {
+    public ClubService(final ClubRepository clubRepository, final PlayerRepository playerRepository) {
         this.clubRepository = clubRepository;
         this.playerRepository = playerRepository;
     }
 
-    public Club read(long id) {
-        Optional<Club> club = clubRepository.findById(id);
+    public Club read(final long id) {
+        final Optional<Club> club = clubRepository.findById(id);
         return club.orElseThrow(() -> new ClubNotFoundException(id));
     }
 
-    public Club upsert(Club club) {
+    public Club upsert(final Club club) {
         return clubRepository.save(club);
     }
 
     public Page<Player> readPlayersByClubId(long clubId, int pageNumber, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Club club = new Club(clubId);
+        final Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        final Club club = new Club(clubId);
         return playerRepository.findByClub(club, pageable);
     }
 

@@ -29,22 +29,22 @@ public class PlayerController {
     }
 
     @PostMapping
-    public @ResponseBody PlayerDocument create(@Valid @RequestBody PlayerDocument document) {
-        Player player = converter.toPlayer(document);
-        Player createdPlayer = service.upsert(player);
+    public @ResponseBody PlayerDocument create(@Valid @RequestBody final PlayerDocument document) {
+        final Player player = converter.toPlayer(document);
+        final Player createdPlayer = service.upsert(player);
         return converter.toDocument(createdPlayer);
     }
 
     @PutMapping("/{id}")
-    public @ResponseBody PlayerDocument update(@Valid @PathVariable("id") long id, @RequestBody PlayerDocument document) {
-        Player player = converter.toPlayer(id, document);
-        Player updatedPlayer = service.update(player);
+    public @ResponseBody PlayerDocument update(@Valid @PathVariable("id") long id, @RequestBody final PlayerDocument document) {
+        final Player player = converter.toPlayer(id, document);
+        final Player updatedPlayer = service.update(player);
         return converter.toDocument(updatedPlayer);
     }
 
     @GetMapping("/{id}")
     public @ResponseBody PlayerDocument read(@PathVariable("id") long id) {
-        Player player = service.read(id);
+        final Player player = service.read(id);
         return converter.toDocument(player);
     }
 

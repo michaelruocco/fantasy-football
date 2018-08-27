@@ -19,19 +19,19 @@ import java.util.stream.Collectors;
 public class PlayerConverter {
 
     public PlayerDocument toDocument(Player player) {
-        PlayerDocumentBuilder builder = new PlayerDocumentBuilder()
+        final PlayerDocumentBuilder builder = new PlayerDocumentBuilder()
                 .setId(player.getId())
                 .setFirstName(player.getFirstName())
                 .setLastName(player.getLastName())
                 .setPosition(player.getPosition().name())
                 .setValue(player.getValue());
-        Optional<Long> clubId = player.getClubId();
+        final Optional<Long> clubId = player.getClubId();
         clubId.ifPresent(builder::setClubId);
         return builder.build();
     }
 
     public ClubPlayersDocument toDocument(long clubId, Page<Player> page) {
-        List<Data> players = page.stream().map(player -> toDocument(player).getData()).collect(Collectors.toList());
+        final List<Data> players = page.stream().map(player -> toDocument(player).getData()).collect(Collectors.toList());
         return new PlayersDocumentBuilder()
                 .setClubId(clubId)
                 .setData(players)
@@ -43,13 +43,13 @@ public class PlayerConverter {
     }
 
     public Player toPlayer(long id, PlayerDocument document) {
-        Player player = toPlayer(document);
+        final Player player = toPlayer(document);
         player.setId(id);
         return player;
     }
 
     public Player toPlayer(PlayerDocument document) {
-        Player player = new Player();
+        final Player player = new Player();
         player.setId(document.getId());
         player.setFirstName(document.getFirstName());
         player.setLastName(document.getLastName());
@@ -60,7 +60,7 @@ public class PlayerConverter {
     }
 
     private Club extractClub(PlayerDocument document) {
-        Optional<Long> clubId = document.getClubId();
+        final Optional<Long> clubId = document.getClubId();
         return clubId.map(Club::new).orElse(null);
     }
 

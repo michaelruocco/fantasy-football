@@ -12,7 +12,7 @@ public class JacksonMapperSingleton {
     }
 
     private static ObjectMapper createMapper() {
-        ObjectMapper mapper = new ObjectMapper();
+        final ObjectMapper mapper = new ObjectMapper();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         return mapper;
     }

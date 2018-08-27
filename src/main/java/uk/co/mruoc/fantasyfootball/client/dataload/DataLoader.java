@@ -20,17 +20,17 @@ public class DataLoader {
     }
 
     public void loadClubs() {
-        List<ClubDocument> clubs = clubCsvLoader.load("data/clubs.csv");
+        final List<ClubDocument> clubs = clubCsvLoader.load("data/clubs.csv");
         clubs.forEach(client::create);
     }
 
     public void loadPlayers() {
-        List<PlayerDocument> players = playerCsvLoader.load("data/players.csv");
+        final List<PlayerDocument> players = playerCsvLoader.load("data/players.csv");
         players.forEach(client::create);
     }
 
     public static void main(String[] args) {
-        DataLoader loader = new DataLoader();
+        final DataLoader loader = new DataLoader();
         loader.load();
     }
 

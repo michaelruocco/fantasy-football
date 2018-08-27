@@ -27,7 +27,7 @@ public class ClubDocument {
         data.relationships = new Relationships();
         data.relationships.players = new Relation();
         data.relationships.players.links = new Links();
-        data.relationships.players.links.related = ClubPlayersLinkBuilder.build(builder.id);
+        data.relationships.players.links.related = builder.buildLink();
     }
 
     public Data getData() {
@@ -125,6 +125,8 @@ public class ClubDocument {
 
         private Long id;
         private String name;
+        private int playersPageSize;
+        private int playersPageNumber;
 
         public ClubDocumentBuilder setId(Long id) {
             this.id = id;
@@ -136,8 +138,22 @@ public class ClubDocument {
             return this;
         }
 
+        public ClubDocumentBuilder setPlayersPageSize(int playersPageSize) {
+            this.playersPageSize = playersPageSize;
+            return this;
+        }
+
+        public ClubDocumentBuilder setPlayersPageNumber(int playersPageNumber) {
+            this.playersPageNumber = playersPageNumber;
+            return this;
+        }
+
         public ClubDocument build() {
             return new ClubDocument(this);
+        }
+
+        private String buildLink() {
+            return ClubPlayersLinkBuilder.build(id, playersPageNumber, playersPageSize);
         }
 
     }

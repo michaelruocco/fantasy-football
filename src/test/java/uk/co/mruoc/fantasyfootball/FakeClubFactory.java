@@ -7,6 +7,9 @@ import static uk.co.mruoc.fantasyfootball.api.ClubDocument.*;
 
 public class FakeClubFactory {
 
+    private static final int DEFAULT_PAGE_NUMBER = 0;
+    private static final int DEFAULT_PAGE_SIZE = 10;
+
     private static final ClubData CLUB_DATA = new FakeClubData();
 
     public static Club buildClub() {
@@ -22,9 +25,19 @@ public class FakeClubFactory {
     }
 
     public static ClubDocument buildClubDocument(ClubData data) {
+        return buildClubDocument(data, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
+    }
+
+    public static ClubDocument buildClubDocument(int pageNumber, int pageSize) {
+        return buildClubDocument(CLUB_DATA, pageNumber, pageSize);
+    }
+
+    public static ClubDocument buildClubDocument(ClubData data, int pageNumber, int pageSize) {
         return new ClubDocumentBuilder()
                 .setId(data.getId())
                 .setName(data.getName())
+                .setPlayersPageNumber(pageNumber)
+                .setPlayersPageSize(pageSize)
                 .build();
     }
 
