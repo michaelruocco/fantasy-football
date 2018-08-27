@@ -17,13 +17,18 @@ public class PlayerService {
         this.repository = repository;
     }
 
-    public Player create(Player player) {
+    public Player read(long id) {
+        Optional<Player> player = repository.findById(id);
+        return player.orElseThrow(() -> new PlayerNotFoundException(id));
+    }
+
+    public Player upsert(Player player) {
         return repository.save(player);
     }
 
     public Player update(Player player) {
         if (!player.hasId()) {
-            throw new IllegalArgumentException("cannot update player with id not set");
+            throw new IllegalArgumentException("cannot update player without id");
         }
 
         if (!repository.existsById(player.getId())) {
@@ -31,11 +36,6 @@ public class PlayerService {
         }
 
         return repository.save(player);
-    }
-
-    public Player read(long id) {
-        Optional<Player> player = repository.findById(id);
-        return player.orElseThrow(() -> new PlayerNotFoundException(id));
     }
 
 }

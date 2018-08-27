@@ -31,7 +31,7 @@ public class PlayerController {
     @PostMapping
     public @ResponseBody PlayerDocument create(@Valid @RequestBody PlayerDocument document) {
         Player player = converter.toPlayer(document);
-        Player createdPlayer = service.create(player);
+        Player createdPlayer = service.upsert(player);
         return converter.toDocument(createdPlayer);
     }
 

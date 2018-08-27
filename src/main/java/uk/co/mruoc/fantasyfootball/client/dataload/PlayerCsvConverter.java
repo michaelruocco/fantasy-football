@@ -3,7 +3,6 @@ package uk.co.mruoc.fantasyfootball.client.dataload;
 import org.apache.commons.csv.CSVRecord;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument.PlayerDocumentBuilder;
-import uk.co.mruoc.fantasyfootball.client.dataload.CsvRecordConverter;
 
 public class PlayerCsvConverter implements CsvRecordConverter<PlayerDocument> {
 

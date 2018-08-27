@@ -31,7 +31,7 @@ public class ClubControllerTest {
         ClubDocument expectedDocument = new ClubDocument();
 
         given(clubConverter.toClub(document)).willReturn(club);
-        given(service.create(club)).willReturn(createdClub);
+        given(service.upsert(club)).willReturn(createdClub);
         given(clubConverter.toDocument(createdClub)).willReturn(expectedDocument);
 
         ClubDocument resultDocument = controller.create(document);

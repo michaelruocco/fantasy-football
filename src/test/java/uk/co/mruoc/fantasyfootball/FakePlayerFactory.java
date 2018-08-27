@@ -23,6 +23,7 @@ public class FakePlayerFactory {
     public static List<Player> buildPlayers() {
         return Arrays.asList(buildPlayer1(), buildPlayer2());
     }
+
     public static Player buildPlayer1() {
         return buildPlayer(PLAYER_DATA1);
     }

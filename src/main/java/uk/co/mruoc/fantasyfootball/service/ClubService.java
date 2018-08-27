@@ -31,7 +31,7 @@ public class ClubService {
         return club.orElseThrow(() -> new ClubNotFoundException(id));
     }
 
-    public Club create(Club club) {
+    public Club upsert(Club club) {
         return clubRepository.save(club);
     }
 

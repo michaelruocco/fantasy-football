@@ -37,7 +37,7 @@ public class ClubController {
     public @ResponseBody
     ClubDocument create(@Valid @RequestBody ClubDocument document) {
         Club club = clubConverter.toClub(document);
-        Club createdClub = service.create(club);
+        Club createdClub = service.upsert(club);
         return clubConverter.toDocument(createdClub);
     }
 

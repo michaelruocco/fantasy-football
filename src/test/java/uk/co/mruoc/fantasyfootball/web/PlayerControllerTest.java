@@ -25,7 +25,7 @@ public class PlayerControllerTest {
         PlayerDocument expectedDocument = new PlayerDocument();
 
         given(converter.toPlayer(document)).willReturn(player);
-        given(service.create(player)).willReturn(createdPlayer);
+        given(service.upsert(player)).willReturn(createdPlayer);
         given(converter.toDocument(createdPlayer)).willReturn(expectedDocument);
 
         PlayerDocument resultDocument = controller.create(document);
