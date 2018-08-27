@@ -17,7 +17,7 @@ public class ClubPlayersLinkBuilderTest {
     public void shouldReturnEmptyStringIfCurrentRequestCannotBeFound() {
         final String link = ClubPlayersLinkBuilder.build(CLUB_ID, PAGE_NUMBER, PAGE_SIZE);
 
-        assertThat(link).isEmpty();
+        assertThat(link).isEqualTo("/clubs/2222/players?pageNumber=0&pageSize=10");
     }
 
     @Test

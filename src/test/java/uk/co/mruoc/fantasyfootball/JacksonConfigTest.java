@@ -7,9 +7,9 @@ import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class JacksonConfigurationTest {
+public class JacksonConfigTest {
 
-    private final JacksonConfiguration configuration = new JacksonConfiguration();
+    private final JacksonConfig configuration = new JacksonConfig();
 
     @Test
     public void shouldIgnoreNullsWhenSerializingObjects() throws IOException {

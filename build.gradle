@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.3.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.4.RELEASE")
     }
 }
 
@@ -25,12 +25,13 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile 'mysql:mysql-connector-java'
-    compile 'org.springframework.hateoas:spring-hateoas:0.19.0.RELEASE'
+    compile 'org.springframework.hateoas:spring-hateoas:0.25.0.RELEASE'
     compile 'com.github.michaelruocco:http-client:4.0.4'
     compile 'org.apache.commons:commons-csv:1.5'
     compile 'org.slf4j:slf4j-api:1.7.25'
-    compile 'com.google.guava:guava-collections:r03'
     compile 'com.h2database:h2:1.4.197'
+    compile 'io.springfox:springfox-swagger2:2.9.2'
+    compile 'io.springfox:springfox-swagger-ui:2.9.2'
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.assertj:assertj-core:3.10.0'

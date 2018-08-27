@@ -3,6 +3,7 @@ package uk.co.mruoc.fantasyfootball.web;
 import org.junit.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import uk.co.mruoc.fantasyfootball.FakePlayerFactory;
 import uk.co.mruoc.fantasyfootball.api.ClubPlayersDocument;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument;
@@ -134,8 +135,8 @@ public class PlayerConverterTest {
 
     @Test
     public void shouldConvertPageOfPlayersIntoClubPlayersDocument() {
-        final long clubId = 8282;
-        final Page<Player> page = new PageImpl<>(FakePlayerFactory.buildPlayers());
+        final long clubId = 1234;
+        final Page<Player> page = new PageImpl<>(FakePlayerFactory.buildPlayers(), PageRequest.of(0, 2), 2);
 
         final ClubPlayersDocument document = converter.toDocument(clubId, page);
 

@@ -15,7 +15,7 @@ public class ClubLinkBuilderTest {
     public void shouldReturnEmptyStringIfCurrentRequestCannotBeFound() {
         final String link = ClubLinkBuilder.build(CLUB_ID);
 
-        assertThat(link).isEmpty();
+        assertThat(link).isEqualTo("/clubs/2222");
     }
 
     @Test
