@@ -51,4 +51,11 @@ public class ClubDocumentTest {
         assertThat(document.getName()).isEqualTo(CLUB_DATA.getName());
     }
 
+    @Test
+    public void shouldReturnSelfLink() {
+        final ClubDocument document = FakeClubFactory.buildClubDocument1();
+
+        assertThat(document.getSelfLink()).isEqualTo("/clubs/" + document.getId());
+    }
+
 }

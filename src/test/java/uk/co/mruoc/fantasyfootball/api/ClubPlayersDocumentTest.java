@@ -53,4 +53,39 @@ public class ClubPlayersDocumentTest {
         assertThat(document).isEqualToComparingFieldByFieldRecursively(expectedDocument);
     }
 
+    @Test
+    public void shouldReturnClubId() {
+        final ClubPlayersDocument document = FakePlayerFactory.buildClubPlayersDocument();
+
+        assertThat(document.getClubId()).isEqualTo(1234);
+    }
+
+    @Test
+    public void shouldReturnPageNumber() {
+        final ClubPlayersDocument document = FakePlayerFactory.buildClubPlayersDocument();
+
+        assertThat(document.getPageNumber()).isEqualTo(0);
+    }
+
+    @Test
+    public void shouldReturnPageSize() {
+        final ClubPlayersDocument document = FakePlayerFactory.buildClubPlayersDocument();
+
+        assertThat(document.getPageSize()).isEqualTo(2);
+    }
+
+    @Test
+    public void shouldReturnTotalNumberOfPages() {
+        final ClubPlayersDocument document = FakePlayerFactory.buildClubPlayersDocument();
+
+        assertThat(document.getTotalPages()).isEqualTo(1);
+    }
+
+    @Test
+    public void shouldReturnTotalPlayers() {
+        final ClubPlayersDocument document = FakePlayerFactory.buildClubPlayersDocument();
+
+        assertThat(document.getTotalPlayers()).isEqualTo(2);
+    }
+
 }
