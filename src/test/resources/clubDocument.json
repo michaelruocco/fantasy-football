@@ -3,12 +3,12 @@
     "id": 1234,
     "type": "clubs",
     "attributes": {
-      "name": "Fake Club"
+      "name": "Fake Club 1"
     },
     "relationships": {
       "players": {
         "links": {
-          "related": "http://localhost/clubs/1234/players?pageNumber=0&pageSize=10"
+          "related": "/clubs/1234/players?pageNumber=0&pageSize=10"
         }
       }
     }

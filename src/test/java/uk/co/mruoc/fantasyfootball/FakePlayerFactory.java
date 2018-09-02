@@ -14,7 +14,7 @@ import static uk.co.mruoc.fantasyfootball.api.PlayerDocument.PlayerDocumentBuild
 
 public class FakePlayerFactory {
 
-    private static final ClubData CLUB_DATA = new FakeClubData();
+    private static final ClubData CLUB_DATA = new FakeClubData1();
 
     private static final PlayerData PLAYER_DATA1 = new PlayerData1();
     private static final PlayerData PLAYER_DATA2 = new PlayerData2();

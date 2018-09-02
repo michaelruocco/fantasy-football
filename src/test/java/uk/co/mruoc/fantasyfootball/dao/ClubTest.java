@@ -2,14 +2,14 @@ package uk.co.mruoc.fantasyfootball.dao;
 
 import org.junit.Test;
 import uk.co.mruoc.fantasyfootball.ClubData;
-import uk.co.mruoc.fantasyfootball.FakeClubData;
+import uk.co.mruoc.fantasyfootball.FakeClubData1;
 import uk.co.mruoc.fantasyfootball.FakeClubFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ClubTest {
 
-    private static final ClubData CLUB_DATA = new FakeClubData();
+    private static final ClubData CLUB_DATA = new FakeClubData1();
 
     @Test
     public void shouldReturnId() {

@@ -11,7 +11,7 @@
     "relationships": {
       "club": {
         "links": {
-          "related": "http://localhost/clubs/1234"
+          "related": "/clubs/1234"
         },
         "data": {
           "type": "clubs",

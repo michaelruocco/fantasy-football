@@ -2,8 +2,8 @@ package uk.co.mruoc.fantasyfootball.client.dataload;
 
 import uk.co.mruoc.fantasyfootball.api.ClubDocument;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument;
-import uk.co.mruoc.fantasyfootball.client.Client;
-import uk.co.mruoc.fantasyfootball.client.DefaultClient;
+import uk.co.mruoc.fantasyfootball.client.DefaultFantasyFootballClient;
+import uk.co.mruoc.fantasyfootball.client.FantasyFootballClient;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class DataLoader {
     private final ClubCsvLoader clubCsvLoader = new ClubCsvLoader();
     private final PlayerCsvLoader playerCsvLoader = new PlayerCsvLoader();
 
-    private final Client client = new DefaultClient("http://localhost:8080");
+    private final FantasyFootballClient client = new DefaultFantasyFootballClient("http://localhost:8080");
 
     private void load() {
         loadClubs();

@@ -1,6 +1,6 @@
 package uk.co.mruoc.fantasyfootball;
 
-public class FakeClubData implements ClubData {
+public class FakeClubData1 implements ClubData {
 
     @Override
     public Long getId() {
@@ -9,7 +9,7 @@ public class FakeClubData implements ClubData {
 
     @Override
     public String getName() {
-        return "Fake Club";
+        return "Fake Club 1";
     }
 
 }

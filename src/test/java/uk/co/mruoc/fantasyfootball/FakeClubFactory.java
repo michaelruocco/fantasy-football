@@ -10,18 +10,18 @@ public class FakeClubFactory {
     private static final int DEFAULT_PAGE_NUMBER = 0;
     private static final int DEFAULT_PAGE_SIZE = 10;
 
-    private static final ClubData CLUB_DATA = new FakeClubData();
+    private static final ClubData CLUB_DATA1 = new FakeClubData1();
 
-    public static Club buildClub() {
-        return buildClub(CLUB_DATA);
+    public static Club buildClub1() {
+        return buildClub(CLUB_DATA1);
     }
 
     public static Club buildClub(ClubData data) {
         return new Club(data.getId(), data.getName());
     }
 
-    public static ClubDocument buildClubDocument() {
-        return buildClubDocument(CLUB_DATA);
+    public static ClubDocument buildClubDocument1() {
+        return buildClubDocument(CLUB_DATA1);
     }
 
     public static ClubDocument buildClubDocument(ClubData data) {
@@ -29,7 +29,7 @@ public class FakeClubFactory {
     }
 
     public static ClubDocument buildClubDocument(int pageNumber, int pageSize) {
-        return buildClubDocument(CLUB_DATA, pageNumber, pageSize);
+        return buildClubDocument(CLUB_DATA1, pageNumber, pageSize);
     }
 
     public static ClubDocument buildClubDocument(ClubData data, int pageNumber, int pageSize) {

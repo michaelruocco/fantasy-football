@@ -13,7 +13,7 @@ public class ClubConverterTest {
 
     @Test
     public void shouldConvertIdToDocument() {
-        final Club club = FakeClubFactory.buildClub();
+        final Club club = FakeClubFactory.buildClub1();
 
         final ClubDocument document = converter.toDocument(club);
 
@@ -22,7 +22,7 @@ public class ClubConverterTest {
 
     @Test
     public void shouldConvertNameToDocument() {
-        final Club club = FakeClubFactory.buildClub();
+        final Club club = FakeClubFactory.buildClub1();
 
         final ClubDocument document = converter.toDocument(club);
 
@@ -31,7 +31,7 @@ public class ClubConverterTest {
 
     @Test
     public void shouldConvertIdFromDocument() {
-        final ClubDocument document = FakeClubFactory.buildClubDocument();
+        final ClubDocument document = FakeClubFactory.buildClubDocument1();
 
         final Club club = converter.toClub(document);
 
@@ -40,7 +40,7 @@ public class ClubConverterTest {
 
     @Test
     public void shouldConvertNameFromDocument() {
-        final ClubDocument document = FakeClubFactory.buildClubDocument();
+        final ClubDocument document = FakeClubFactory.buildClubDocument1();
 
         final Club club = converter.toClub(document);
 

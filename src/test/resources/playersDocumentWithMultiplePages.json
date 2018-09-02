@@ -16,7 +16,7 @@
       "relationships": {
         "club": {
           "links": {
-            "related": "http://localhost/clubs/1234"
+            "related": "/clubs/1234"
           },
           "data": {
             "type": "clubs",
@@ -37,7 +37,7 @@
       "relationships": {
         "club": {
           "links": {
-            "related": "http://localhost/clubs/1234"
+            "related": "/clubs/1234"
           },
           "data": {
             "type": "clubs",
@@ -48,10 +48,10 @@
     }
   ],
   "links": {
-    "self": "http://localhost/clubs/1234/players?pageNumber=1&pageSize=2",
-    "first": "http://localhost/clubs/1234/players?pageNumber=0&pageSize=2",
-    "last": "http://localhost/clubs/1234/players?pageNumber=2&pageSize=2",
-    "next": "http://localhost/clubs/1234/players?pageNumber=2&pageSize=2",
-    "previous": "http://localhost/clubs/1234/players?pageNumber=0&pageSize=2"
+    "self": "/clubs/1234/players?pageNumber=1&pageSize=2",
+    "first": "/clubs/1234/players?pageNumber=0&pageSize=2",
+    "last": "/clubs/1234/players?pageNumber=2&pageSize=2",
+    "next": "/clubs/1234/players?pageNumber=2&pageSize=2",
+    "previous": "/clubs/1234/players?pageNumber=0&pageSize=2"
   }
 }
