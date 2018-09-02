@@ -19,10 +19,10 @@ import javax.validation.Valid;
 @RequestMapping(path= "/players")
 public class PlayerController {
 
-    @Autowired
     private final PlayerService service;
     private final PlayerConverter converter;
 
+    @Autowired
     public PlayerController(PlayerService service, PlayerConverter converter) {
         this.service = service;
         this.converter = converter;

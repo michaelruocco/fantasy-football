@@ -1,7 +1,10 @@
 {
   "meta": {
     "totalPages": 1,
-    "totalPlayers": 2
+    "totalPlayers": 2,
+    "pageNumber": 0,
+    "pageSize": 2,
+    "clubId": 1234
   },
   "data": [
     {

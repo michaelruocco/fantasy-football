@@ -17,11 +17,11 @@ public class Club {
         // required by spring data
     }
 
-    public Club(long id) {
+    public Club(Long id) {
         this(id, "");
     }
 
-    public Club(long id, String name) {
+    public Club(Long id, String name) {
         this.id = id;
         this.name = name;
     }

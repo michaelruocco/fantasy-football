@@ -11,6 +11,9 @@
           "related": "/clubs/1234/players?pageNumber=0&pageSize=10"
         }
       }
+    },
+    "links": {
+      "self": "/clubs/1234"
     }
   }
 }

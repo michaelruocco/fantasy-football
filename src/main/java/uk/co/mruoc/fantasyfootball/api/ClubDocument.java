@@ -8,7 +8,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-public class ClubDocument {
+public class ClubDocument implements JsonApiDocument {
 
     @Valid
     private Data data;
@@ -24,10 +24,13 @@ public class ClubDocument {
         data.attributes = new Attributes();
         data.attributes.name = builder.name;
 
+        data.links = new Links();
+        data.links.self = builder.buildSelfLink();
+
         data.relationships = new Relationships();
         data.relationships.players = new Relation();
-        data.relationships.players.links = new Links();
-        data.relationships.players.links.related = builder.buildLink();
+        data.relationships.players.links = new RelatedLinks();
+        data.relationships.players.links.related = builder.buildClubPlayersLink();
     }
 
     public Data getData() {
@@ -42,6 +45,12 @@ public class ClubDocument {
     @JsonIgnore
     public String getName() {
         return data.attributes.name;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getSelfLink() {
+        return data.links.self;
     }
 
     private static class Data {
@@ -59,6 +68,9 @@ public class ClubDocument {
         @Valid
         private Relationships relationships;
 
+        @Valid
+        private Links links;
+
         public Long getId() {
             return id;
         }
@@ -75,6 +87,10 @@ public class ClubDocument {
             return relationships;
         }
 
+        public Links getLinks() {
+            return links;
+        }
+
     }
 
     public static class Attributes {
@@ -85,6 +101,16 @@ public class ClubDocument {
 
         public String getName() {
             return name;
+        }
+
+    }
+
+    public static class Links {
+
+        private String self;
+
+        public String getSelf() {
+            return self;
         }
 
     }
@@ -103,15 +129,15 @@ public class ClubDocument {
     public static class Relation {
 
         @Valid
-        private Links links;
+        private RelatedLinks links;
 
-        public Links getLinks() {
+        public RelatedLinks getLinks() {
             return links;
         }
 
     }
 
-    public static class Links {
+    public static class RelatedLinks {
 
         private String related;
 
@@ -152,7 +178,11 @@ public class ClubDocument {
             return new ClubDocument(this);
         }
 
-        private String buildLink() {
+        private String buildSelfLink() {
+            return ClubLinkBuilder.build(id);
+        }
+
+        private String buildClubPlayersLink() {
             return ClubPlayersLinkBuilder.build(id, playersPageNumber, playersPageSize);
         }
 

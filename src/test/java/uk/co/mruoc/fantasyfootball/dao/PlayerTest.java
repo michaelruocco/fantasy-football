@@ -89,7 +89,7 @@ public class PlayerTest {
 
     @Test
     public void shouldReturnClubIdIfPlayerHasClub() {
-        final Club club = new Club(9797);
+        final Club club = new Club(9797L);
 
         player.setClub(club);
 

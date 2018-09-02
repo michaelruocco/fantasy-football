@@ -9,13 +9,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ClubConverterTest {
 
+    private static final String PAGE_SIZE = "10";
+
     private final ClubConverter converter = new ClubConverter();
 
     @Test
     public void shouldConvertIdToDocument() {
         final Club club = FakeClubFactory.buildClub1();
 
-        final ClubDocument document = converter.toDocument(club);
+        final ClubDocument document = converter.toDocument(club, PAGE_SIZE);
 
         assertThat(document.getId()).isEqualTo(club.getId());
     }
@@ -24,7 +26,7 @@ public class ClubConverterTest {
     public void shouldConvertNameToDocument() {
         final Club club = FakeClubFactory.buildClub1();
 
-        final ClubDocument document = converter.toDocument(club);
+        final ClubDocument document = converter.toDocument(club, PAGE_SIZE);
 
         assertThat(document.getName()).isEqualTo(club.getName());
     }

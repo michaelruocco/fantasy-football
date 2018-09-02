@@ -1,5 +1,6 @@
 package uk.co.mruoc.fantasyfootball.api;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument.Data;
 
 import javax.validation.Valid;
@@ -30,6 +31,9 @@ public class ClubPlayersDocument {
         this.meta = new Meta();
         this.meta.totalPages = builder.totalPages;
         this.meta.totalPlayers = builder.totalPlayers;
+        this.meta.pageNumber = builder.pageNumber;
+        this.meta.pageSize = builder.pageSize;
+        this.meta.clubId = builder.clubId;
 
         this.links = new Links();
         this.links.self = ClubPlayersLinkBuilder.build(builder.clubId, builder.pageNumber, builder.pageSize);
@@ -57,17 +61,53 @@ public class ClubPlayersDocument {
         return links;
     }
 
+    @JsonIgnore
+    public long getTotalPages() {
+        return meta.getTotalPages();
+    }
+
+    @JsonIgnore
+    public long getTotalPlayers() {
+        return meta.getTotalPlayers();
+    }
+
+    @JsonIgnore
+    public int getPageNumber() {
+        return meta.getPageNumber();
+    }
+
+    @JsonIgnore
+    public int getPageSize() {
+        return meta.getPageSize();
+    }
+
+    @JsonIgnore
+    public long getClubId() {
+        return meta.getClubId();
+    }
+
     private static class Meta {
 
-        private int totalPages;
+        private long totalPages;
         private long totalPlayers;
+        private int pageNumber;
+        private int pageSize;
+        private long clubId;
 
-        public int getTotalPages() {
+        public long getTotalPages() {
             return totalPages;
         }
 
         public long getTotalPlayers() {
             return totalPlayers;
+        }
+
+        public int getPageNumber() { return pageNumber; }
+
+        public int getPageSize() { return pageSize; }
+
+        public long getClubId() {
+            return clubId;
         }
 
     }
@@ -114,7 +154,7 @@ public class ClubPlayersDocument {
         private long totalPlayers;
         private int pageNumber;
         private int pageSize;
-        private int totalPages;
+        private long totalPages;
         private List<Data> data;
 
         public PlayersDocumentBuilder setClubId(long clubId) {
@@ -147,7 +187,7 @@ public class ClubPlayersDocument {
             return this;
         }
 
-        public int getLastPage() {
+        public long getLastPage() {
             if (totalPages < 1) {
                 return 0;
             }
