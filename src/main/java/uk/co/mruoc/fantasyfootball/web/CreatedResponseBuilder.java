@@ -20,7 +20,7 @@ public class CreatedResponseBuilder<T extends JsonApiDocument> {
         try {
             return new URI(document.getSelfLink());
         } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+            throw new InvalidLinkException(e);
         }
     }
 }
