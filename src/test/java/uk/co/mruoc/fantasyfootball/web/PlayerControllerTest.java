@@ -1,64 +1,97 @@
 package uk.co.mruoc.fantasyfootball.web;
 
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import uk.co.mruoc.fantasyfootball.FakePlayerFactory;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument;
 import uk.co.mruoc.fantasyfootball.dao.Player;
 import uk.co.mruoc.fantasyfootball.service.PlayerService;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class PlayerControllerTest {
 
     private final PlayerService service = mock(PlayerService.class);
-    private final PlayerConverter converter = mock(PlayerConverter.class);
 
-    private final PlayerDocument document = new PlayerDocument();
-    private final Player player = new Player();
+    private final PlayerDocument document = FakePlayerFactory.buildPlayerDocument1();
+    private final Player player = FakePlayerFactory.buildPlayer1();
 
-    private final PlayerController controller = new PlayerController(service, converter);
+    private final PlayerController controller = new PlayerController(service);
 
     @Test
-    public void shouldCreatePlayer() {
-        final Player createdPlayer = new Player();
-        final PlayerDocument expectedDocument = new PlayerDocument();
+    public void shouldConvertDocumentToPlayerOnCreate() {
+        final ArgumentCaptor<Player> playerCaptor = ArgumentCaptor.forClass(Player.class);
+        given(service.upsert(any(Player.class))).willReturn(player);
 
-        given(converter.toPlayer(document)).willReturn(player);
-        given(service.upsert(player)).willReturn(createdPlayer);
-        given(converter.toDocument(createdPlayer)).willReturn(expectedDocument);
+        controller.create(document);
 
-        final PlayerDocument resultDocument = controller.create(document);
-
-        assertThat(resultDocument).isEqualTo(expectedDocument);
+        verify(service).upsert(playerCaptor.capture());
+        assertThat(playerCaptor.getValue()).isEqualToComparingFieldByFieldRecursively(player);
     }
 
     @Test
-    public void shouldUpdatePlayer() {
-        final long id = 1212;
-        final Player updatedPlayer = new Player();
-        final PlayerDocument expectedDocument = new PlayerDocument();
+    public void shouldConverterCreatedPlayerIntoDocument() {
+        given(service.upsert(any(Player.class))).willReturn(player);
 
-        given(converter.toPlayer(id, document)).willReturn(player);
-        given(service.update(player)).willReturn(updatedPlayer);
-        given(converter.toDocument(updatedPlayer)).willReturn(expectedDocument);
+        final ResponseEntity<PlayerDocument> entity = controller.create(document);
 
-        final PlayerDocument resultDocument = controller.update(id, document);
+        assertThat(entity.getBody()).isEqualToComparingFieldByFieldRecursively(document);
+    }
 
-        assertThat(resultDocument).isEqualTo(expectedDocument);
+    @Test
+    public void shouldReturnCreatedStatusCode() {
+        given(service.upsert(any(Player.class))).willReturn(player);
+
+        final ResponseEntity<PlayerDocument> entity = controller.create(document);
+
+        assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+    }
+
+    @Test
+    public void shouldReturnLocationHeaderWithNewResourceUrl() {
+        given(service.upsert(any(Player.class))).willReturn(player);
+
+        final ResponseEntity<PlayerDocument> entity = controller.create(document);
+
+        final HttpHeaders headers = entity.getHeaders();
+
+        assertThat(headers.get("Location")).containsExactly("/players/1133");
+    }
+
+    @Test
+    public void shouldConvertDocumentToPlayerOnUpdate() {
+        final ArgumentCaptor<Player> playerCaptor = ArgumentCaptor.forClass(Player.class);
+        given(service.update(any(Player.class))).willReturn(player);
+
+        controller.update(document.getId(), document);
+
+        verify(service).update(playerCaptor.capture());
+        assertThat(playerCaptor.getValue()).isEqualToComparingFieldByFieldRecursively(player);
+    }
+
+    @Test
+    public void shouldConverterUpdatedPlayerIntoDocument() {
+        given(service.update(any(Player.class))).willReturn(player);
+
+        final PlayerDocument resultDocument = controller.update(document.getId(), document);
+
+        assertThat(resultDocument).isEqualToComparingFieldByFieldRecursively(document);
     }
 
     @Test
     public void shouldReadPlayer() {
-        final long id = 1212;
-        final PlayerDocument expectedDocument = new PlayerDocument();
+        given(service.read(document.getId())).willReturn(player);
 
-        given(service.read(id)).willReturn(player);
-        given(converter.toDocument(player)).willReturn(expectedDocument);
+        final PlayerDocument resultDocument = controller.read(document.getId());
 
-        final PlayerDocument resultDocument = controller.read(id);
-
-        assertThat(resultDocument).isEqualTo(expectedDocument);
+        assertThat(resultDocument).isEqualToComparingFieldByFieldRecursively(document);
     }
 
 }

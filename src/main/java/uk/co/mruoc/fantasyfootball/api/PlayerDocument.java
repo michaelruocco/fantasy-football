@@ -2,8 +2,6 @@ package uk.co.mruoc.fantasyfootball.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Length;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
@@ -11,9 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.Optional;
 
-public class PlayerDocument {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ClubDocument.class);
+public class PlayerDocument implements JsonApiDocument {
 
     @NotNull
     @Valid
@@ -33,13 +29,16 @@ public class PlayerDocument {
         data.attributes.position = builder.position;
         data.attributes.value = builder.value;
 
+        data.links = new Links();
+        data.links.self = PlayerLinkBuilder.build(builder.id);
+
         if (!builder.hasClubId()) {
             return;
         }
 
         data.relationships = new Relationships();
         data.relationships.club = new Relation();
-        data.relationships.club.links = new Links();
+        data.relationships.club.links = new RelationLinks();
         data.relationships.club.links.related = ClubLinkBuilder.build(builder.clubId);
         data.relationships.club.data = new RelationData();
         data.relationships.club.data.type = "clubs";
@@ -80,6 +79,12 @@ public class PlayerDocument {
         return data.getClubId();
     }
 
+    @Override
+    @JsonIgnore
+    public String getSelfLink() {
+        return data.links.self;
+    }
+
     public static class Data {
 
         @Min(1)
@@ -95,6 +100,9 @@ public class PlayerDocument {
         @Valid
         private Relationships relationships;
 
+        @Valid
+        private Links links;
+
         public Long getId() {
             return id;
         }
@@ -109,6 +117,10 @@ public class PlayerDocument {
 
         public Relationships getRelationships() {
             return relationships;
+        }
+
+        public Links getLinks() {
+            return links;
         }
 
         @JsonIgnore
@@ -162,6 +174,16 @@ public class PlayerDocument {
 
     }
 
+    public static class Links {
+
+        private String self;
+
+        public String getSelf() {
+            return self;
+        }
+
+    }
+
     public static class Relationships {
 
         @Valid
@@ -175,11 +197,11 @@ public class PlayerDocument {
 
     public static class Relation {
 
-        private Links links;
+        private RelationLinks links;
 
         private RelationData data;
 
-        public Links getLinks() {
+        public RelationLinks getLinks() {
             return links;
         }
 
@@ -189,7 +211,7 @@ public class PlayerDocument {
 
     }
 
-    public static class Links {
+    public static class RelationLinks {
 
         private String related;
 

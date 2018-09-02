@@ -7,6 +7,9 @@
       "lastName": "Simpson",
       "position": "MIDFIELDER",
       "value": 5000000
+    },
+    "links": {
+      "self": "/players/1144"
     }
   }
 }

@@ -30,6 +30,10 @@ public class ClubController {
     private final PlayerConverter playerConverter;
     private final CreatedResponseBuilder<ClubDocument> createdResponseBuilder = new CreatedResponseBuilder<>();
 
+    public ClubController(ClubService service) {
+        this(service, new ClubConverter(), new PlayerConverter());
+    }
+
     @Autowired
     public ClubController(ClubService service, ClubConverter clubConverter, PlayerConverter playerConverter) {
         this.service = service;

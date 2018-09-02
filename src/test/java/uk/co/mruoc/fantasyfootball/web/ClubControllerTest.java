@@ -27,25 +27,24 @@ public class ClubControllerTest {
 
     private final ClubService service = mock(ClubService.class);
 
-    private final ClubController controller = new ClubController(service, new ClubConverter(), new PlayerConverter());
+    private final ClubDocument document = FakeClubFactory.buildClubDocument1();
+    private final Club club = FakeClubFactory.buildClub1();
+
+    private final ClubController controller = new ClubController(service);
 
     @Test
     public void shouldConvertDocumentToClubOnCreate() {
-        final ClubDocument document = FakeClubFactory.buildClubDocument1();
-        final Club expectedClub = FakeClubFactory.buildClub1();
-        final ArgumentCaptor<Club> club = ArgumentCaptor.forClass(Club.class);
-        given(service.upsert(any(Club.class))).willReturn(expectedClub);
+        final ArgumentCaptor<Club> clubCaptor = ArgumentCaptor.forClass(Club.class);
+        given(service.upsert(any(Club.class))).willReturn(club);
 
         controller.create(document);
 
-        verify(service).upsert(club.capture());
-        assertThat(club.getValue()).isEqualToComparingFieldByFieldRecursively(expectedClub);
+        verify(service).upsert(clubCaptor.capture());
+        assertThat(clubCaptor.getValue()).isEqualToComparingFieldByFieldRecursively(club);
     }
 
     @Test
     public void shouldConverterCreatedClubIntoDocument() {
-        final ClubDocument document = FakeClubFactory.buildClubDocument1();
-        final Club club = FakeClubFactory.buildClub1();
         given(service.upsert(any(Club.class))).willReturn(club);
 
         final ResponseEntity<ClubDocument> entity = controller.create(document);
@@ -55,8 +54,6 @@ public class ClubControllerTest {
 
     @Test
     public void shouldReturnCreatedStatusCode() {
-        final ClubDocument document = FakeClubFactory.buildClubDocument1();
-        final Club club = FakeClubFactory.buildClub1();
         given(service.upsert(any(Club.class))).willReturn(club);
 
         final ResponseEntity<ClubDocument> entity = controller.create(document);
@@ -66,8 +63,6 @@ public class ClubControllerTest {
 
     @Test
     public void shouldReturnLocationHeaderWithNewResourceUrl() {
-        final ClubDocument document = FakeClubFactory.buildClubDocument1();
-        final Club club = FakeClubFactory.buildClub1();
         given(service.upsert(any(Club.class))).willReturn(club);
 
         final ResponseEntity<ClubDocument> entity = controller.create(document);
@@ -79,13 +74,11 @@ public class ClubControllerTest {
 
     @Test
     public void shouldReadClub() {
-        final ClubDocument expectedDocument = FakeClubFactory.buildClubDocument1();
-        final Club club = FakeClubFactory.buildClub1();
-        given(service.read(expectedDocument.getId())).willReturn(club);
+        given(service.read(document.getId())).willReturn(club);
 
-        final ClubDocument resultDocument = controller.read(expectedDocument.getId());
+        final ClubDocument resultDocument = controller.read(document.getId());
 
-        assertThat(resultDocument).isEqualToComparingFieldByFieldRecursively(expectedDocument);
+        assertThat(resultDocument).isEqualToComparingFieldByFieldRecursively(document);
     }
 
     @Test
