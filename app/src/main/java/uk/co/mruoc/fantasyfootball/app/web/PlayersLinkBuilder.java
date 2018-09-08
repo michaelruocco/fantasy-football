@@ -4,7 +4,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 public class PlayersLinkBuilder {
 
-    public static String build(long clubId, long pageNumber, long pageSize) {
+    public static String build(long clubId, int pageNumber, int pageSize) {
         return linkTo(ClubController.class)
                 .slash(clubId)
                 .slash("players")
@@ -14,7 +14,7 @@ public class PlayersLinkBuilder {
                 .toUriString();
     }
 
-    public static String build(long pageNumber, long pageSize) {
+    public static String build(int pageNumber, int pageSize) {
         return linkTo(PlayerController.class)
                 .toUriComponentsBuilder()
                 .queryParam("pageNumber", pageNumber)

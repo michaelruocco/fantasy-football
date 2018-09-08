@@ -59,7 +59,7 @@ public class ClubDocument implements JsonApiDocument {
         return data.relationships.players.links.related;
     }
 
-    private static class ClubData {
+    public static class ClubData {
 
         @Min(1)
         private Long id;

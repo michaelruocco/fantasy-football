@@ -6,7 +6,7 @@ import uk.co.mruoc.fantasyfootball.api.PlayerDocument;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument.PlayerData;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument.PlayerDocumentBuilder;
 import uk.co.mruoc.fantasyfootball.api.PlayersDocument;
-import uk.co.mruoc.fantasyfootball.api.PlayersDocument.ClubPlayersDocumentBuilder;
+import uk.co.mruoc.fantasyfootball.api.PlayersDocument.PlayersDocumentBuilder;
 import uk.co.mruoc.fantasyfootball.app.dao.Club;
 import uk.co.mruoc.fantasyfootball.app.dao.Player;
 import uk.co.mruoc.fantasyfootball.app.dao.Position;
@@ -37,7 +37,7 @@ public class PlayerConverter {
 
     public PlayersDocument toDocument(long clubId, Page<Player> page) {
         final List<PlayerData> players = page.stream().map(player -> toDocument(player).getData()).collect(Collectors.toList());
-        ClubPlayersDocumentBuilder builder = new ClubPlayersDocumentBuilder()
+        PlayersDocumentBuilder builder = new PlayersDocumentBuilder()
                 .setClubId(clubId)
                 .setData(players)
                 .setTotalPlayers(page.getTotalElements())
@@ -61,7 +61,7 @@ public class PlayerConverter {
 
     public PlayersDocument toPlayersDocument(Page<Player> page) {
         final List<PlayerData> players = page.stream().map(player -> toDocument(player).getData()).collect(Collectors.toList());
-        ClubPlayersDocumentBuilder builder = new ClubPlayersDocumentBuilder()
+        PlayersDocumentBuilder builder = new PlayersDocumentBuilder()
                 .setData(players)
                 .setTotalPlayers(page.getTotalElements())
                 .setPageNumber(page.getNumber())

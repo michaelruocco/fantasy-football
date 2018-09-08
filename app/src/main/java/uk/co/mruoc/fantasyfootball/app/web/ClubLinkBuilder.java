@@ -10,4 +10,12 @@ public class ClubLinkBuilder {
                 .toString();
     }
 
+    public static String build(int pageNumber, int pageSize) {
+        return linkTo(ClubController.class)
+                .toUriComponentsBuilder()
+                .queryParam("pageNumber", pageNumber)
+                .queryParam("pageSize", pageSize)
+                .toUriString();
+    }
+
 }

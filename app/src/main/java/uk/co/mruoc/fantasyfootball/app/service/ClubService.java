@@ -26,6 +26,11 @@ public class ClubService {
         this.playerRepository = playerRepository;
     }
 
+    public Page<Club> read(int pageNumber, int pageSize) {
+        final Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        return clubRepository.findAll(pageable);
+    }
+
     public Club read(final long id) {
         final Optional<Club> club = clubRepository.findById(id);
         return club.orElseThrow(() -> new ClubNotFoundException(id));

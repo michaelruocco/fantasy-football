@@ -1,39 +1,38 @@
 package uk.co.mruoc.fantasyfootball.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import uk.co.mruoc.fantasyfootball.api.PlayerDocument.PlayerData;
+import uk.co.mruoc.fantasyfootball.api.ClubDocument.ClubData;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-public class PlayersDocument {
+public class ClubsDocument {
 
     @NotNull
     @Valid
-    private PlayerMeta meta;
+    private ClubMeta meta;
 
     @NotNull
     @Valid
-    private List<PlayerData> data;
+    private List<ClubData> data;
 
     @NotNull
     @Valid
     private Links links;
 
-    public PlayersDocument() {
+    public ClubsDocument() {
         // required by spring
     }
 
-    public PlayersDocument(PlayersDocumentBuilder builder) {
+    public ClubsDocument(ClubsDocumentBuilder builder) {
         this.data = builder.data;
 
-        this.meta = new PlayerMeta();
+        this.meta = new ClubMeta();
         this.meta.totalPages = builder.totalPages;
         this.meta.totalPlayers = builder.totalPlayers;
         this.meta.pageNumber = builder.pageNumber;
         this.meta.pageSize = builder.pageSize;
-        this.meta.clubId = builder.clubId;
 
         this.links = new Links();
         this.links.self = builder.selfLink;
@@ -43,11 +42,11 @@ public class PlayersDocument {
         this.links.previous = builder.previousLink;
     }
 
-    public PlayerMeta getMeta() {
+    public ClubMeta getMeta() {
         return meta;
     }
 
-    public List<PlayerData> getData() {
+    public List<ClubData> getData() {
         return data;
     }
 
@@ -75,18 +74,12 @@ public class PlayersDocument {
         return meta.getPageSize();
     }
 
-    @JsonIgnore
-    public long getClubId() {
-        return meta.getClubId();
-    }
-
-    private static class PlayerMeta {
+    private static class ClubMeta {
 
         private long totalPages;
         private long totalPlayers;
         private int pageNumber;
         private int pageSize;
-        private Long clubId;
 
         public long getTotalPages() {
             return totalPages;
@@ -99,10 +92,6 @@ public class PlayersDocument {
         public int getPageNumber() { return pageNumber; }
 
         public int getPageSize() { return pageSize; }
-
-        public Long getClubId() {
-            return clubId;
-        }
 
     }
 
@@ -142,10 +131,9 @@ public class PlayersDocument {
 
     }
 
-    public static class PlayersDocumentBuilder {
+    public static class ClubsDocumentBuilder {
 
-        private Long clubId;
-        private List<PlayerData> data;
+        private List<ClubData> data;
 
         private int totalPages;
         private long totalPlayers;
@@ -158,63 +146,58 @@ public class PlayersDocument {
         private String nextLink;
         private String previousLink;
 
-        public PlayersDocumentBuilder setClubId(Long clubId) {
-            this.clubId = clubId;
-            return this;
-        }
-
-        public PlayersDocumentBuilder setData(List<PlayerData> data) {
+        public ClubsDocumentBuilder setData(List<ClubData> data) {
             this.data = data;
             return this;
         }
 
-        public PlayersDocumentBuilder setTotalPages(int totalPages) {
+        public ClubsDocumentBuilder setTotalPages(int totalPages) {
             this.totalPages = totalPages;
             return this;
         }
 
-        public PlayersDocumentBuilder setTotalPlayers(long totalPlayers) {
+        public ClubsDocumentBuilder setTotalPlayers(long totalPlayers) {
             this.totalPlayers = totalPlayers;
             return this;
         }
 
-        public PlayersDocumentBuilder setPageNumber(int pageNumber) {
+        public ClubsDocumentBuilder setPageNumber(int pageNumber) {
             this.pageNumber = pageNumber;
             return this;
         }
 
-        public PlayersDocumentBuilder setPageSize(int pageSize) {
+        public ClubsDocumentBuilder setPageSize(int pageSize) {
             this.pageSize = pageSize;
             return this;
         }
 
-        public PlayersDocumentBuilder setSelfLink(String selfLink) {
+        public ClubsDocumentBuilder setSelfLink(String selfLink) {
             this.selfLink = selfLink;
             return this;
         }
 
-        public PlayersDocumentBuilder setFirstLink(String firstLink) {
+        public ClubsDocumentBuilder setFirstLink(String firstLink) {
             this.firstLink = firstLink;
             return this;
         }
 
-        public PlayersDocumentBuilder setLastLink(String lastLink) {
+        public ClubsDocumentBuilder setLastLink(String lastLink) {
             this.lastLink = lastLink;
             return this;
         }
 
-        public PlayersDocumentBuilder setNextLink(String nextLink) {
+        public ClubsDocumentBuilder setNextLink(String nextLink) {
             this.nextLink = nextLink;
             return this;
         }
 
-        public PlayersDocumentBuilder setPreviousLink(String previousLink) {
+        public ClubsDocumentBuilder setPreviousLink(String previousLink) {
             this.previousLink = previousLink;
             return this;
         }
 
-        public PlayersDocument build() {
-            return new PlayersDocument(this);
+        public ClubsDocument build() {
+            return new ClubsDocument(this);
         }
 
     }

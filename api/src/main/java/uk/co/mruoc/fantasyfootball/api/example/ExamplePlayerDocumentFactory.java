@@ -1,7 +1,7 @@
 package uk.co.mruoc.fantasyfootball.api.example;
 
 import uk.co.mruoc.fantasyfootball.api.PlayersDocument;
-import uk.co.mruoc.fantasyfootball.api.PlayersDocument.ClubPlayersDocumentBuilder;
+import uk.co.mruoc.fantasyfootball.api.PlayersDocument.PlayersDocumentBuilder;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument;
 
 import java.util.Arrays;
@@ -38,7 +38,7 @@ public class ExamplePlayerDocumentFactory {
     }
 
     public static PlayersDocument buildClubPlayersDocument(int pageNumber, int pageSize, int totalPlayers, int totalPages, long clubId, List<PlayerDocument> playerDocuments) {
-        ClubPlayersDocumentBuilder builder = new ClubPlayersDocumentBuilder()
+        PlayersDocumentBuilder builder = new PlayersDocumentBuilder()
                 .setClubId(clubId)
                 .setData(toDataList(playerDocuments))
                 .setTotalPages(totalPages)
