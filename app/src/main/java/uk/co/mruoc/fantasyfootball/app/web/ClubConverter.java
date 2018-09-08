@@ -7,7 +7,6 @@ import uk.co.mruoc.fantasyfootball.api.ClubDocument.ClubData;
 import uk.co.mruoc.fantasyfootball.api.ClubDocument.ClubDocumentBuilder;
 import uk.co.mruoc.fantasyfootball.api.ClubsDocument;
 import uk.co.mruoc.fantasyfootball.api.ClubsDocument.ClubsDocumentBuilder;
-import uk.co.mruoc.fantasyfootball.api.PlayerDocument;
 import uk.co.mruoc.fantasyfootball.app.dao.Club;
 
 import java.util.List;

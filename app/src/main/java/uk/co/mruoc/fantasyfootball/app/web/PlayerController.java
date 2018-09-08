@@ -24,7 +24,6 @@ import javax.validation.Valid;
 public class PlayerController {
 
     private static final String DEFAULT_PAGE_SIZE_STRING = "10";
-    private static final int DEFAULT_PAGE_SIZE = Integer.parseInt(DEFAULT_PAGE_SIZE_STRING);
 
     private final PlayerService service;
     private final PlayerConverter converter;
