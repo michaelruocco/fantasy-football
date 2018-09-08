@@ -1,0 +1,6 @@
+dependencies {
+    compile 'javax.validation:validation-api:2.0.1.Final'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.9.6'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.6'
+    compile 'io.swagger:swagger-annotations:1.5.21'
+}

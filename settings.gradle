@@ -1,2 +1,5 @@
 rootProject.name = 'fantasy-football'
 
+include 'api'
+include 'client'
+include 'app'

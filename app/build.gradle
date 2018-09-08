@@ -1,0 +1,28 @@
+plugins {
+    id 'org.springframework.boot' version '2.0.4.RELEASE'
+}
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+dependencies {
+    compile project(':api')
+
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'mysql:mysql-connector-java'
+    compile 'org.springframework.hateoas:spring-hateoas:0.25.0.RELEASE'
+    compile 'com.h2database:h2:1.4.197'
+    compile 'io.springfox:springfox-swagger2:2.9.2'
+    compile 'io.springfox:springfox-swagger-ui:2.9.2'
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.assertj:assertj-core:3.10.0'
+    testCompile 'org.mockito:mockito-core:2.19.0'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'com.github.michaelruocco:file-loader:3.0.3'
+}
+
+bootJar {
+    version = project.version
+}

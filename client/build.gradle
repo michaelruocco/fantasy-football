@@ -1,0 +1,9 @@
+dependencies {
+    compile project(':api')
+
+    compile 'com.github.michaelruocco:http-client:4.0.4'
+    compile 'org.apache.commons:commons-csv:1.5'
+    compile 'com.google.guava:guava-collections:r03'
+
+    testCompile 'org.slf4j:slf4j-simple:1.7.25'
+}
