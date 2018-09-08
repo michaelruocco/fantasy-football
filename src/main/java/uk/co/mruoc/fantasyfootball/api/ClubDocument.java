@@ -1,6 +1,7 @@
 package uk.co.mruoc.fantasyfootball.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModel;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.Valid;
@@ -8,32 +9,33 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+@ApiModel(value = "ClubDocument")
 public class ClubDocument implements JsonApiDocument {
 
     @Valid
-    private Data data;
+    private ClubData data;
 
     public ClubDocument() {
         // required by spring
     }
 
     private ClubDocument(ClubDocumentBuilder builder) {
-        data = new Data();
+        data = new ClubData();
         data.id = builder.id;
 
-        data.attributes = new Attributes();
+        data.attributes = new ClubAttributes();
         data.attributes.name = builder.name;
 
         data.links = new Links();
         data.links.self = builder.buildSelfLink();
 
-        data.relationships = new Relationships();
+        data.relationships = new ClubRelationships();
         data.relationships.players = new Relation();
         data.relationships.players.links = new RelatedLinks();
         data.relationships.players.links.related = builder.buildClubPlayersLink();
     }
 
-    public Data getData() {
+    public ClubData getData() {
         return data;
     }
 
@@ -53,7 +55,7 @@ public class ClubDocument implements JsonApiDocument {
         return data.links.self;
     }
 
-    private static class Data {
+    private static class ClubData {
 
         @Min(1)
         private Long id;
@@ -63,10 +65,10 @@ public class ClubDocument implements JsonApiDocument {
 
         @NotNull
         @Valid
-        private Attributes attributes;
+        private ClubAttributes attributes;
 
         @Valid
-        private Relationships relationships;
+        private ClubRelationships relationships;
 
         @Valid
         private Links links;
@@ -79,11 +81,11 @@ public class ClubDocument implements JsonApiDocument {
             return type;
         }
 
-        public Attributes getAttributes() {
+        public ClubAttributes getAttributes() {
             return attributes;
         }
 
-        public Relationships getRelationships() {
+        public ClubRelationships getRelationships() {
             return relationships;
         }
 
@@ -93,7 +95,7 @@ public class ClubDocument implements JsonApiDocument {
 
     }
 
-    public static class Attributes {
+    public static class ClubAttributes {
 
         @NotNull
         @Length(max = 50)
@@ -115,7 +117,7 @@ public class ClubDocument implements JsonApiDocument {
 
     }
 
-    public static class Relationships {
+    public static class ClubRelationships {
 
         @Valid
         private Relation players;

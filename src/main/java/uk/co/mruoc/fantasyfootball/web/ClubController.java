@@ -1,5 +1,7 @@
 package uk.co.mruoc.fantasyfootball.web;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +44,8 @@ public class ClubController {
     }
 
     @PostMapping
-    public @ResponseBody ResponseEntity<ClubDocument> create(@Valid @RequestBody final ClubDocument document) {
+    @ApiOperation(value = "Create a club", response = ClubDocument.class)
+    public @ResponseBody ResponseEntity<ClubDocument> create(@ApiParam(value = "ClubDocument", required = true, name = "ClubDocument") @Valid @RequestBody final ClubDocument document) {
         final Club club = clubConverter.toClub(document);
         final Club createdClub = service.upsert(club);
         final ClubDocument createdDocument = clubConverter.toDocument(createdClub, DEFAULT_PAGE_SIZE);

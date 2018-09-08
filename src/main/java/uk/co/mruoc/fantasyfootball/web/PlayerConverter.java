@@ -3,7 +3,7 @@ package uk.co.mruoc.fantasyfootball.web;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument;
-import uk.co.mruoc.fantasyfootball.api.PlayerDocument.Data;
+import uk.co.mruoc.fantasyfootball.api.PlayerDocument.PlayerData;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument.PlayerDocumentBuilder;
 import uk.co.mruoc.fantasyfootball.api.ClubPlayersDocument;
 import uk.co.mruoc.fantasyfootball.api.ClubPlayersDocument.PlayersDocumentBuilder;
@@ -31,7 +31,7 @@ public class PlayerConverter {
     }
 
     public ClubPlayersDocument toDocument(long clubId, Page<Player> page) {
-        final List<Data> players = page.stream().map(player -> toDocument(player).getData()).collect(Collectors.toList());
+        final List<PlayerData> players = page.stream().map(player -> toDocument(player).getData()).collect(Collectors.toList());
         return new PlayersDocumentBuilder()
                 .setClubId(clubId)
                 .setData(players)

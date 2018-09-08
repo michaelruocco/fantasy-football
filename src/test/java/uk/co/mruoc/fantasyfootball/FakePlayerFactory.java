@@ -95,7 +95,7 @@ public class FakePlayerFactory {
                 .build();
     }
 
-    private static List<PlayerDocument.Data> toDataList(List<PlayerDocument> documents) {
+    private static List<PlayerDocument.PlayerData> toDataList(List<PlayerDocument> documents) {
         return documents.stream().map(PlayerDocument::getData).collect(Collectors.toList());
     }
 

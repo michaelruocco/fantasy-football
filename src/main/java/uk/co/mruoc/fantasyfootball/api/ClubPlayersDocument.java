@@ -1,7 +1,7 @@
 package uk.co.mruoc.fantasyfootball.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import uk.co.mruoc.fantasyfootball.api.PlayerDocument.Data;
+import uk.co.mruoc.fantasyfootball.api.PlayerDocument.PlayerData;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -15,7 +15,7 @@ public class ClubPlayersDocument {
 
     @NotNull
     @Valid
-    private List<Data> data;
+    private List<PlayerData> data;
 
     @NotNull
     @Valid
@@ -53,7 +53,7 @@ public class ClubPlayersDocument {
         return meta;
     }
 
-    public List<Data> getData() {
+    public List<PlayerData> getData() {
         return data;
     }
 
@@ -155,7 +155,7 @@ public class ClubPlayersDocument {
         private int pageNumber;
         private int pageSize;
         private long totalPages;
-        private List<Data> data;
+        private List<PlayerData> data;
 
         public PlayersDocumentBuilder setClubId(long clubId) {
             this.clubId = clubId;
@@ -177,7 +177,7 @@ public class ClubPlayersDocument {
             return this;
         }
 
-        public PlayersDocumentBuilder setData(List<Data> data) {
+        public PlayersDocumentBuilder setData(List<PlayerData> data) {
             this.data = data;
             return this;
         }

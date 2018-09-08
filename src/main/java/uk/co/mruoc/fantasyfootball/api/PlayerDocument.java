@@ -13,17 +13,17 @@ public class PlayerDocument implements JsonApiDocument {
 
     @NotNull
     @Valid
-    private Data data;
+    private PlayerData data;
 
     public PlayerDocument() {
         // required by spring
     }
 
     private PlayerDocument(PlayerDocumentBuilder builder) {
-        data = new Data();
+        data = new PlayerData();
         data.id = builder.id;
 
-        data.attributes = new Attributes();
+        data.attributes = new PlayerAttributes();
         data.attributes.firstName = builder.firstName;
         data.attributes.lastName = builder.lastName;
         data.attributes.position = builder.position;
@@ -36,7 +36,7 @@ public class PlayerDocument implements JsonApiDocument {
             return;
         }
 
-        data.relationships = new Relationships();
+        data.relationships = new PlayerRelationships();
         data.relationships.club = new Relation();
         data.relationships.club.links = new RelationLinks();
         data.relationships.club.links.related = ClubLinkBuilder.build(builder.clubId);
@@ -45,7 +45,7 @@ public class PlayerDocument implements JsonApiDocument {
         data.relationships.club.data.id = builder.clubId;
     }
 
-    public Data getData() {
+    public PlayerData getData() {
         return data;
     }
 
@@ -85,7 +85,7 @@ public class PlayerDocument implements JsonApiDocument {
         return data.links.self;
     }
 
-    public static class Data {
+    public static class PlayerData {
 
         @Min(1)
         private Long id;
@@ -95,10 +95,10 @@ public class PlayerDocument implements JsonApiDocument {
 
         @NotNull
         @Valid
-        private Attributes attributes;
+        private PlayerAttributes attributes;
 
         @Valid
-        private Relationships relationships;
+        private PlayerRelationships relationships;
 
         @Valid
         private Links links;
@@ -111,11 +111,11 @@ public class PlayerDocument implements JsonApiDocument {
             return type;
         }
 
-        public Attributes getAttributes() {
+        public PlayerAttributes getAttributes() {
             return attributes;
         }
 
-        public Relationships getRelationships() {
+        public PlayerRelationships getRelationships() {
             return relationships;
         }
 
@@ -139,7 +139,7 @@ public class PlayerDocument implements JsonApiDocument {
 
     }
 
-    private static class Attributes {
+    private static class PlayerAttributes {
 
         @NotNull
         @Length(max = 50)
@@ -184,7 +184,7 @@ public class PlayerDocument implements JsonApiDocument {
 
     }
 
-    public static class Relationships {
+    public static class PlayerRelationships {
 
         @Valid
         private Relation club;
