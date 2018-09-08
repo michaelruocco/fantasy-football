@@ -141,6 +141,17 @@ public class PlayerConverterTest {
         assertThat(document).isEqualToComparingFieldByFieldRecursively(expectedDocument);
     }
 
+    @Test
+    public void shouldSetPreviousLinkWhenConvertingPageOfPlayersIntoClubPlayersDocumentIfNotFirstPage() {
+        final long clubId = 1234;
+        final ClubPlayersDocument expectedDocument = ExamplePlayerDocumentFactory.buildClubPlayersDocumentWithMultiplePages();
+        final Page<Player> page = new PageImpl<>(toPlayers(expectedDocument.getData()), PageRequest.of(1, 2), 6);
+
+        final ClubPlayersDocument document = converter.toDocument(clubId, page);
+
+        assertThat(document).isEqualToComparingFieldByFieldRecursively(expectedDocument);
+    }
+
     private static List<Player> toPlayers(List<PlayerData> playerDataList) {
         return playerDataList.stream().map(PlayerConverterTest::toPlayer).collect(Collectors.toList());
     }
