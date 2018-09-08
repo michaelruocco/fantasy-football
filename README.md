@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/michaelruocco/fantasy-football.svg?branch=master)](https://travis-ci.org/michaelruocco/fantasy-football)
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f0cc4e9688ab4d64afbb5c19c61b7a93)](https://www.codacy.com/app/michaelruocco/fantasy-football?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=michaelruocco/fantasy-football&amp;utm_campaign=Badge_Grade)
+
 This project is the beginnings of a system for running a fantasy football system. The back
 end is being built as a suite RESTful web service endpoints that follow the JSON API specification
 built using spring boot. More detail will follow as further progress is made.
