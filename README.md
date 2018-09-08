@@ -1,5 +1,7 @@
 # Fantasy Football
 
+[![Build Status](https://travis-ci.org/michaelruocco/fantasy-football.svg?branch=master)](https://travis-ci.org/michaelruocco/fantasy-football)
+
 This project is the beginnings of a system for running a fantasy football system. The back
 end is being built as a suite RESTful web service endpoints that follow the JSON API specification
 built using spring boot. More detail will follow as further progress is made.
