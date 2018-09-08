@@ -47,3 +47,8 @@ task jacocoRootReport(type: JacocoReport) {
         xml.enabled = true
     }
 }
+
+coveralls {
+    //sourceDirs = coverageProjects.sourceSets.main.allSource.srcDirs.flatten()
+    jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/jacocoRootReport.xml"
+}
