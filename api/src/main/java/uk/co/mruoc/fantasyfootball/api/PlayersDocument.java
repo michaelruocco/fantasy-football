@@ -7,7 +7,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-public class ClubPlayersDocument {
+public class PlayersDocument {
 
     @NotNull
     @Valid
@@ -21,11 +21,11 @@ public class ClubPlayersDocument {
     @Valid
     private Links links;
 
-    public ClubPlayersDocument() {
+    public PlayersDocument() {
         // required by spring
     }
 
-    public ClubPlayersDocument(ClubPlayersDocumentBuilder builder) {
+    public PlayersDocument(ClubPlayersDocumentBuilder builder) {
         this.data = builder.data;
 
         this.meta = new Meta();
@@ -41,14 +41,6 @@ public class ClubPlayersDocument {
         this.links.last = builder.lastLink;
         this.links.next = builder.nextLink;
         this.links.previous = builder.previousLink;
-
-        //if (builder.pageNumber < builder.totalPages - 1) {
-        //    this.links.next = PageLinkBuilder.build(builder.clubId, builder.pageNumber + 1, builder.pageSize);
-        //}
-
-        //if (builder.pageNumber > 0) {
-        //    this.links.previous = PageLinkBuilder.build(builder.clubId, builder.pageNumber - 1, builder.pageSize);
-        //}
     }
 
     public Meta getMeta() {
@@ -94,7 +86,7 @@ public class ClubPlayersDocument {
         private long totalPlayers;
         private int pageNumber;
         private int pageSize;
-        private long clubId;
+        private Long clubId;
 
         public long getTotalPages() {
             return totalPages;
@@ -108,7 +100,7 @@ public class ClubPlayersDocument {
 
         public int getPageSize() { return pageSize; }
 
-        public long getClubId() {
+        public Long getClubId() {
             return clubId;
         }
 
@@ -152,7 +144,7 @@ public class ClubPlayersDocument {
 
     public static class ClubPlayersDocumentBuilder {
 
-        private long clubId;
+        private Long clubId;
         private List<PlayerData> data;
 
         private int totalPages;
@@ -166,7 +158,7 @@ public class ClubPlayersDocument {
         private String nextLink;
         private String previousLink;
 
-        public ClubPlayersDocumentBuilder setClubId(long clubId) {
+        public ClubPlayersDocumentBuilder setClubId(Long clubId) {
             this.clubId = clubId;
             return this;
         }
@@ -221,8 +213,8 @@ public class ClubPlayersDocument {
             return this;
         }
 
-        public ClubPlayersDocument build() {
-            return new ClubPlayersDocument(this);
+        public PlayersDocument build() {
+            return new PlayersDocument(this);
         }
 
     }

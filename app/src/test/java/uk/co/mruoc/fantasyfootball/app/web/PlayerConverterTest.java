@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import uk.co.mruoc.fantasyfootball.api.ClubPlayersDocument;
+import uk.co.mruoc.fantasyfootball.api.PlayersDocument;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument.PlayerData;
 import uk.co.mruoc.fantasyfootball.api.example.ExamplePlayerDocumentFactory;
@@ -133,10 +133,10 @@ public class PlayerConverterTest {
     @Test
     public void shouldConvertPageOfPlayersIntoClubPlayersDocument() {
         final long clubId = 1234;
-        final ClubPlayersDocument expectedDocument = ExamplePlayerDocumentFactory.buildClubPlayersDocument();
+        final PlayersDocument expectedDocument = ExamplePlayerDocumentFactory.buildClubPlayersDocument();
         final Page<Player> page = new PageImpl<>(toPlayers(expectedDocument.getData()), PageRequest.of(0, 2), 2);
 
-        final ClubPlayersDocument document = converter.toDocument(clubId, page);
+        final PlayersDocument document = converter.toDocument(clubId, page);
 
         assertThat(document).isEqualToComparingFieldByFieldRecursively(expectedDocument);
     }
@@ -144,10 +144,10 @@ public class PlayerConverterTest {
     @Test
     public void shouldSetPreviousLinkWhenConvertingPageOfPlayersIntoClubPlayersDocumentIfNotFirstPage() {
         final long clubId = 1234;
-        final ClubPlayersDocument expectedDocument = ExamplePlayerDocumentFactory.buildClubPlayersDocumentWithMultiplePages();
+        final PlayersDocument expectedDocument = ExamplePlayerDocumentFactory.buildClubPlayersDocumentWithMultiplePages();
         final Page<Player> page = new PageImpl<>(toPlayers(expectedDocument.getData()), PageRequest.of(1, 2), 6);
 
-        final ClubPlayersDocument document = converter.toDocument(clubId, page);
+        final PlayersDocument document = converter.toDocument(clubId, page);
 
         assertThat(document).isEqualToComparingFieldByFieldRecursively(expectedDocument);
     }

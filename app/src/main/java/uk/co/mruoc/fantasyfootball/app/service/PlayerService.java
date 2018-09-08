@@ -1,6 +1,9 @@
 package uk.co.mruoc.fantasyfootball.app.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import uk.co.mruoc.fantasyfootball.app.dao.Player;
 import uk.co.mruoc.fantasyfootball.app.dao.PlayerRepository;
@@ -15,6 +18,11 @@ public class PlayerService {
 
     public PlayerService(final PlayerRepository repository) {
         this.repository = repository;
+    }
+
+    public Page<Player> read(final int pageNumber, final int pageSize) {
+        final Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        return repository.findAll(pageable);
     }
 
     public Player read(final long id) {

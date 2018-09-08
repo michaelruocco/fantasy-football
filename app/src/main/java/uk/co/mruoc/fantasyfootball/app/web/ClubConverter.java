@@ -18,7 +18,7 @@ public class ClubConverter {
                 .setId(id)
                 .setName(club.getName())
                 .setSelfLink(ClubLinkBuilder.build(id))
-                .setClubPlayersLink(ClubPlayersLinkBuilder.build(id, pageNumber, pageSize))
+                .setClubPlayersLink(PlayersLinkBuilder.build(id, pageNumber, pageSize))
                 .build();
     }
 

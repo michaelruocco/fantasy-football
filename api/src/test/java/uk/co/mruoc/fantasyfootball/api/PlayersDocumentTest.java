@@ -10,14 +10,14 @@ import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ClubPlayersDocumentTest {
+public class PlayersDocumentTest {
 
     private final ObjectMapper mapper = JacksonMapperSingleton.get();
 
     @Test
     public void shouldSerializeToJsonCorrectly() throws JsonProcessingException  {
         final String expectedJson = ContentLoader.loadContentFromClasspath("/playersDocument.json");
-        final ClubPlayersDocument document = ExamplePlayerDocumentFactory.buildClubPlayersDocument();
+        final PlayersDocument document = ExamplePlayerDocumentFactory.buildClubPlayersDocument();
 
         final String json = mapper.writeValueAsString(document);
 
@@ -27,7 +27,7 @@ public class ClubPlayersDocumentTest {
     @Test
     public void shouldSerializeToJsonCorrectlyWhenPartOfMultiplePages() throws JsonProcessingException  {
         final String expectedJson = ContentLoader.loadContentFromClasspath("/playersDocumentWithMultiplePages.json");
-        final ClubPlayersDocument document = ExamplePlayerDocumentFactory.buildClubPlayersDocumentWithMultiplePages();
+        final PlayersDocument document = ExamplePlayerDocumentFactory.buildClubPlayersDocumentWithMultiplePages();
 
         final String json = mapper.writeValueAsString(document);
 
@@ -37,7 +37,7 @@ public class ClubPlayersDocumentTest {
     @Test
     public void shouldSerializeToJsonCorrectlyWhenNoDataPresent() throws JsonProcessingException  {
         final String expectedJson = ContentLoader.loadContentFromClasspath("/playersDocumentWithNoData.json");
-        final ClubPlayersDocument document = ExamplePlayerDocumentFactory.buildClubPlayersDocumentWithNoData();
+        final PlayersDocument document = ExamplePlayerDocumentFactory.buildClubPlayersDocumentWithNoData();
 
         final String json = mapper.writeValueAsString(document);
 
@@ -47,44 +47,44 @@ public class ClubPlayersDocumentTest {
     @Test
     public void shouldDeserializeFromJsonCorrectly() throws IOException {
         final String json = ContentLoader.loadContentFromClasspath("/playersDocument.json");
-        final ClubPlayersDocument expectedDocument = ExamplePlayerDocumentFactory.buildClubPlayersDocument();
+        final PlayersDocument expectedDocument = ExamplePlayerDocumentFactory.buildClubPlayersDocument();
 
-        final ClubPlayersDocument document = mapper.readValue(json, ClubPlayersDocument.class);
+        final PlayersDocument document = mapper.readValue(json, PlayersDocument.class);
 
         assertThat(document).isEqualToComparingFieldByFieldRecursively(expectedDocument);
     }
 
     @Test
     public void shouldReturnClubId() {
-        final ClubPlayersDocument document = ExamplePlayerDocumentFactory.buildClubPlayersDocument();
+        final PlayersDocument document = ExamplePlayerDocumentFactory.buildClubPlayersDocument();
 
         assertThat(document.getClubId()).isEqualTo(1234);
     }
 
     @Test
     public void shouldReturnPageNumber() {
-        final ClubPlayersDocument document = ExamplePlayerDocumentFactory.buildClubPlayersDocument();
+        final PlayersDocument document = ExamplePlayerDocumentFactory.buildClubPlayersDocument();
 
         assertThat(document.getPageNumber()).isEqualTo(0);
     }
 
     @Test
     public void shouldReturnPageSize() {
-        final ClubPlayersDocument document = ExamplePlayerDocumentFactory.buildClubPlayersDocument();
+        final PlayersDocument document = ExamplePlayerDocumentFactory.buildClubPlayersDocument();
 
         assertThat(document.getPageSize()).isEqualTo(2);
     }
 
     @Test
     public void shouldReturnTotalNumberOfPages() {
-        final ClubPlayersDocument document = ExamplePlayerDocumentFactory.buildClubPlayersDocument();
+        final PlayersDocument document = ExamplePlayerDocumentFactory.buildClubPlayersDocument();
 
         assertThat(document.getTotalPages()).isEqualTo(1);
     }
 
     @Test
     public void shouldReturnTotalPlayers() {
-        final ClubPlayersDocument document = ExamplePlayerDocumentFactory.buildClubPlayersDocument();
+        final PlayersDocument document = ExamplePlayerDocumentFactory.buildClubPlayersDocument();
 
         assertThat(document.getTotalPlayers()).isEqualTo(2);
     }

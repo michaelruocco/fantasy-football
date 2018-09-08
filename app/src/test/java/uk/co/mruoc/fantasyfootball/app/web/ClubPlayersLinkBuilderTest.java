@@ -7,7 +7,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ClubClubPlayersLinkBuilderTest {
+public class ClubPlayersLinkBuilderTest {
 
     private static final long CLUB_ID = 2222;
     private static final int PAGE_NUMBER = 0;
@@ -15,7 +15,7 @@ public class ClubClubPlayersLinkBuilderTest {
 
     @Test
     public void shouldReturnEmptyStringIfCurrentRequestCannotBeFound() {
-        final String link = ClubPlayersLinkBuilder.build(CLUB_ID, PAGE_NUMBER, PAGE_SIZE);
+        final String link = PlayersLinkBuilder.build(CLUB_ID, PAGE_NUMBER, PAGE_SIZE);
 
         assertThat(link).isEqualTo("/clubs/2222/players?pageNumber=0&pageSize=10");
     }
@@ -25,7 +25,7 @@ public class ClubClubPlayersLinkBuilderTest {
         try {
             RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(new MockHttpServletRequest()));
 
-            final String link = ClubPlayersLinkBuilder.build(CLUB_ID, PAGE_NUMBER, PAGE_SIZE);
+            final String link = PlayersLinkBuilder.build(CLUB_ID, PAGE_NUMBER, PAGE_SIZE);
 
             assertThat(link).isEqualTo("http://localhost/clubs/2222/players?pageNumber=0&pageSize=10");
         } finally {

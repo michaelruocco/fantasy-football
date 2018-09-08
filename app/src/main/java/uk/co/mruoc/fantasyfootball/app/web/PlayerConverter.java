@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument.PlayerData;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument.PlayerDocumentBuilder;
-import uk.co.mruoc.fantasyfootball.api.ClubPlayersDocument;
-import uk.co.mruoc.fantasyfootball.api.ClubPlayersDocument.ClubPlayersDocumentBuilder;
+import uk.co.mruoc.fantasyfootball.api.PlayersDocument;
+import uk.co.mruoc.fantasyfootball.api.PlayersDocument.ClubPlayersDocumentBuilder;
 import uk.co.mruoc.fantasyfootball.app.dao.Club;
 import uk.co.mruoc.fantasyfootball.app.dao.Player;
 import uk.co.mruoc.fantasyfootball.app.dao.Position;
@@ -35,7 +35,7 @@ public class PlayerConverter {
         return builder.build();
     }
 
-    public ClubPlayersDocument toDocument(long clubId, Page<Player> page) {
+    public PlayersDocument toDocument(long clubId, Page<Player> page) {
         final List<PlayerData> players = page.stream().map(player -> toDocument(player).getData()).collect(Collectors.toList());
         ClubPlayersDocumentBuilder builder = new ClubPlayersDocumentBuilder()
                 .setClubId(clubId)
@@ -44,16 +44,39 @@ public class PlayerConverter {
                 .setPageNumber(page.getNumber())
                 .setPageSize(page.getSize())
                 .setTotalPages(page.getTotalPages())
-                .setSelfLink(ClubPlayersLinkBuilder.build(clubId, page.getNumber(), page.getSize()))
-                .setFirstLink(ClubPlayersLinkBuilder.build(clubId, 0, page.getSize()))
-                .setLastLink(ClubPlayersLinkBuilder.build(clubId, calculateLastPage(page.getTotalPages()), page.getSize()));
+                .setSelfLink(PlayersLinkBuilder.build(clubId, page.getNumber(), page.getSize()))
+                .setFirstLink(PlayersLinkBuilder.build(clubId, 0, page.getSize()))
+                .setLastLink(PlayersLinkBuilder.build(clubId, calculateLastPage(page.getTotalPages()), page.getSize()));
 
         if (page.getNumber() > 0) {
-            builder.setPreviousLink(ClubPlayersLinkBuilder.build(clubId, page.getNumber() - 1, page.getSize()));
+            builder.setPreviousLink(PlayersLinkBuilder.build(clubId, page.getNumber() - 1, page.getSize()));
         }
 
         if (page.getNumber() < page.getTotalPages() - 1) {
-            builder.setNextLink(ClubPlayersLinkBuilder.build(clubId, page.getNumber() + 1, page.getSize()));
+            builder.setNextLink(PlayersLinkBuilder.build(clubId, page.getNumber() + 1, page.getSize()));
+        }
+
+        return builder.build();
+    }
+
+    public PlayersDocument toPlayersDocument(Page<Player> page) {
+        final List<PlayerData> players = page.stream().map(player -> toDocument(player).getData()).collect(Collectors.toList());
+        ClubPlayersDocumentBuilder builder = new ClubPlayersDocumentBuilder()
+                .setData(players)
+                .setTotalPlayers(page.getTotalElements())
+                .setPageNumber(page.getNumber())
+                .setPageSize(page.getSize())
+                .setTotalPages(page.getTotalPages())
+                .setSelfLink(PlayersLinkBuilder.build(page.getNumber(), page.getSize()))
+                .setFirstLink(PlayersLinkBuilder.build(0, page.getSize()))
+                .setLastLink(PlayersLinkBuilder.build(calculateLastPage(page.getTotalPages()), page.getSize()));
+
+        if (page.getNumber() > 0) {
+            builder.setPreviousLink(PlayersLinkBuilder.build(page.getNumber() - 1, page.getSize()));
+        }
+
+        if (page.getNumber() < page.getTotalPages() - 1) {
+            builder.setNextLink(PlayersLinkBuilder.build(page.getNumber() + 1, page.getSize()));
         }
 
         return builder.build();

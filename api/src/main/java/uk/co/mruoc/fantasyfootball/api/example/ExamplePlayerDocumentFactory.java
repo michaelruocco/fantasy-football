@@ -1,7 +1,7 @@
 package uk.co.mruoc.fantasyfootball.api.example;
 
-import uk.co.mruoc.fantasyfootball.api.ClubPlayersDocument;
-import uk.co.mruoc.fantasyfootball.api.ClubPlayersDocument.ClubPlayersDocumentBuilder;
+import uk.co.mruoc.fantasyfootball.api.PlayersDocument;
+import uk.co.mruoc.fantasyfootball.api.PlayersDocument.ClubPlayersDocumentBuilder;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument;
 
 import java.util.Arrays;
@@ -23,21 +23,21 @@ public class ExamplePlayerDocumentFactory {
     private static final PlayerData PLAYER_DATA2 = new PlayerData2();
     private static final PlayerData PLAYER_DATA_WITHOUT_CLUB = new PlayerDataWithoutClub();
 
-    public static ClubPlayersDocument buildClubPlayersDocument() {
+    public static PlayersDocument buildClubPlayersDocument() {
         List<PlayerDocument> documents = Arrays.asList(buildPlayerDocument1(), buildPlayerDocument2());
         return buildClubPlayersDocument(0, 2, 2, 1, CLUB_DATA.getId(), documents);
     }
 
-    public static ClubPlayersDocument buildClubPlayersDocumentWithMultiplePages() {
+    public static PlayersDocument buildClubPlayersDocumentWithMultiplePages() {
         List<PlayerDocument> documents = Arrays.asList(buildPlayerDocument1(), buildPlayerDocument2());
         return buildClubPlayersDocument(1, 2, 6, 3, CLUB_DATA.getId(), documents);
     }
 
-    public static ClubPlayersDocument buildClubPlayersDocumentWithNoData() {
+    public static PlayersDocument buildClubPlayersDocumentWithNoData() {
         return buildClubPlayersDocument(0, 2, 0, 0, CLUB_DATA.getId(), emptyList());
     }
 
-    public static ClubPlayersDocument buildClubPlayersDocument(int pageNumber, int pageSize, int totalPlayers, int totalPages, long clubId, List<PlayerDocument> playerDocuments) {
+    public static PlayersDocument buildClubPlayersDocument(int pageNumber, int pageSize, int totalPlayers, int totalPages, long clubId, List<PlayerDocument> playerDocuments) {
         ClubPlayersDocumentBuilder builder = new ClubPlayersDocumentBuilder()
                 .setClubId(clubId)
                 .setData(toDataList(playerDocuments))

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.mruoc.fantasyfootball.api.ClubDocument;
-import uk.co.mruoc.fantasyfootball.api.ClubPlayersDocument;
+import uk.co.mruoc.fantasyfootball.api.PlayersDocument;
 import uk.co.mruoc.fantasyfootball.app.dao.Club;
 import uk.co.mruoc.fantasyfootball.app.dao.Player;
 import uk.co.mruoc.fantasyfootball.app.service.ClubService;
@@ -60,9 +60,10 @@ public class ClubController {
     }
 
     @GetMapping("/{id}/players")
-    public @ResponseBody ClubPlayersDocument readPlayers(@PathVariable("id") long id,
-                                    @RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
-                                    @RequestParam(name = "pageSize", defaultValue = DEFAULT_PAGE_SIZE_STRING) int pageSize) {
+    public @ResponseBody
+    PlayersDocument readPlayers(@PathVariable("id") long id,
+                                @RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
+                                @RequestParam(name = "pageSize", defaultValue = DEFAULT_PAGE_SIZE_STRING) int pageSize) {
         final Page<Player> players = service.readPlayersByClubId(id, pageNumber, pageSize);
         return playerConverter.toDocument(id, players);
     }

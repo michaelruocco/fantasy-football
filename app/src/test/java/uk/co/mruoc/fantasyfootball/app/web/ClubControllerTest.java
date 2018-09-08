@@ -9,7 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.co.mruoc.fantasyfootball.api.ClubDocument;
-import uk.co.mruoc.fantasyfootball.api.ClubPlayersDocument;
+import uk.co.mruoc.fantasyfootball.api.PlayersDocument;
 import uk.co.mruoc.fantasyfootball.api.example.ExampleClubDocumentFactory;
 import uk.co.mruoc.fantasyfootball.api.example.ExamplePlayerDocumentFactory;
 import uk.co.mruoc.fantasyfootball.app.dao.Club;
@@ -83,19 +83,19 @@ public class ClubControllerTest {
 
     @Test
     public void shouldReadClubPlayers() {
-        final ClubPlayersDocument expectedDocument = ExamplePlayerDocumentFactory.buildClubPlayersDocumentWithNoData();
+        final PlayersDocument expectedDocument = ExamplePlayerDocumentFactory.buildClubPlayersDocumentWithNoData();
         final Page<Player> page = toPage(expectedDocument);
         final long clubId = expectedDocument.getClubId();
         final int pageNumber = expectedDocument.getPageNumber();
         final int pageSize = expectedDocument.getPageSize();
         given(service.readPlayersByClubId(clubId, pageNumber, pageSize)).willReturn(page);
 
-        final ClubPlayersDocument resultDocument = controller.readPlayers(clubId, pageNumber, pageSize);
+        final PlayersDocument resultDocument = controller.readPlayers(clubId, pageNumber, pageSize);
 
         assertThat(resultDocument).isEqualToComparingFieldByFieldRecursively(expectedDocument);
     }
 
-    private static Page<Player> toPage(final ClubPlayersDocument document) {
+    private static Page<Player> toPage(final PlayersDocument document) {
         return buildEmptyPage(document.getPageNumber(), document.getPageSize(), document.getTotalPages());
     }
 
