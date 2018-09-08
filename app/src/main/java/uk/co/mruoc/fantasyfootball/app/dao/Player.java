@@ -23,10 +23,6 @@ public class Player {
     @JoinColumn(name = "club_id")
     private Club club;
 
-    public Player() {
-        // required by spring data
-    }
-
     public Long getId() {
         return id;
     }

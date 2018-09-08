@@ -22,7 +22,6 @@ public class DataLoader {
 
     private void loadClubs() {
         final List<ClubDocument> clubs = clubCsvLoader.load("data/clubs.csv");
-        System.out.println("loaded " + clubs.size() + " clubs");
         clubs.forEach(client::create);
     }
 
