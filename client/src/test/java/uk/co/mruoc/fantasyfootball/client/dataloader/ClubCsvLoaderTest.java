@@ -7,6 +7,7 @@ import uk.co.mruoc.fantasyfootball.client.dataload.ClubCsvLoader;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static uk.co.mruoc.fantasyfootball.client.dataloader.ClasspathFilePathLoader.loadAbsolutePath;
 
 public class ClubCsvLoaderTest {
 
@@ -14,18 +15,22 @@ public class ClubCsvLoaderTest {
 
     @Test
     public void shouldLoadAllClubDataFromCsvIntoDocuments() {
-        List<ClubDocument> documents = loader.load("data/clubs.csv");
+        String path = loadAbsolutePath("/test-clubs.csv");
+
+        List<ClubDocument> documents = loader.load(path);
 
         assertThat(documents).hasSize(2);
     }
 
     @Test
     public void shouldParseDataLineCorrectly() {
-        List<ClubDocument> documents = loader.load("data/clubs.csv");
+        String path = loadAbsolutePath("/test-clubs.csv");
+
+        List<ClubDocument> documents = loader.load(path);
 
         ClubDocument document = documents.get(0);
         assertThat(document.getId()).isEqualTo(1L);
-        assertThat(document.getName()).isEqualTo("Leeds United");
+        assertThat(document.getName()).isEqualTo("Test Club");
     }
 
 }

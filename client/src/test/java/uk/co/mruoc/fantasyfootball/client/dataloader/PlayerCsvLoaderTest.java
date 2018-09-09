@@ -7,6 +7,7 @@ import uk.co.mruoc.fantasyfootball.client.dataload.PlayerCsvLoader;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static uk.co.mruoc.fantasyfootball.client.dataloader.ClasspathFilePathLoader.loadAbsolutePath;
 
 public class PlayerCsvLoaderTest {
 
@@ -14,19 +15,23 @@ public class PlayerCsvLoaderTest {
 
     @Test
     public void shouldLoadAllPlayerDataFromCsvIntoDocuments() {
-        List<PlayerDocument> documents = loader.load("data/players.csv");
+        String path = loadAbsolutePath("/test-players.csv");
 
-        assertThat(documents).hasSize(36);
+        List<PlayerDocument> documents = loader.load(path);
+
+        assertThat(documents).hasSize(2);
     }
 
     @Test
     public void shouldParseDataLineCorrectly() {
-        List<PlayerDocument> documents = loader.load("data/players.csv");
+        String path = loadAbsolutePath("/test-players.csv");
+
+        List<PlayerDocument> documents = loader.load(path);
 
         PlayerDocument document = documents.get(0);
         assertThat(document.getId()).isEqualTo(1L);
-        assertThat(document.getFirstName()).isEqualTo("Bailey");
-        assertThat(document.getLastName()).isEqualTo("Peacock-Farrell");
+        assertThat(document.getFirstName()).isEqualTo("Player1");
+        assertThat(document.getLastName()).isEqualTo("WithClub");
         assertThat(document.getPosition()).isEqualTo("GOALKEEPER");
         assertThat(document.getValue()).isEqualTo(1000000);
         assertThat(document.getClubId().isPresent()).isTrue();
