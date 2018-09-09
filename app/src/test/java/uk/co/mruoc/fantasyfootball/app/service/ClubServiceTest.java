@@ -87,4 +87,27 @@ public class ClubServiceTest {
         assertThat(page.getValue().getPageSize()).isEqualTo(pageSize);
     }
 
+    @Test
+    public void shouldReadPageOfClubs() {
+        final Page<Club> expectedPage = new PageImpl<>(emptyList());
+        given(clubRepository.findAll(any(Pageable.class))).willReturn(expectedPage);
+
+        final Page<Club> page = service.read(1, 2);
+
+        assertThat(page).isEqualTo(expectedPage);
+    }
+
+    @Test
+    public void shouldPassCorrectArgumentsWhenReadingPageOfClubs() {
+        final int pageNumber = 1;
+        final int pageSize = 2;
+        final ArgumentCaptor<Pageable> page = ArgumentCaptor.forClass(Pageable.class);
+
+        service.read(pageNumber, pageSize);
+
+        verify(clubRepository).findAll(page.capture());
+        assertThat(page.getValue().getPageNumber()).isEqualTo(pageNumber);
+        assertThat(page.getValue().getPageSize()).isEqualTo(pageSize);
+    }
+
 }
