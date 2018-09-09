@@ -10,7 +10,7 @@ public class ClasspathFilePathLoader {
             File file = new File(ClasspathFilePathLoader.class.getResource(path).toURI());
             return file.getAbsolutePath();
         } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+            throw new PathLoadException(e);
         }
     }
 
