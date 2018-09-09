@@ -30,7 +30,7 @@ public class ClubsDocument {
 
         this.meta = new ClubMeta();
         this.meta.totalPages = builder.totalPages;
-        this.meta.totalPlayers = builder.totalPlayers;
+        this.meta.totalClubs = builder.totalClubs;
         this.meta.pageNumber = builder.pageNumber;
         this.meta.pageSize = builder.pageSize;
 
@@ -60,8 +60,8 @@ public class ClubsDocument {
     }
 
     @JsonIgnore
-    public long getTotalPlayers() {
-        return meta.getTotalPlayers();
+    public long getTotalClubs() {
+        return meta.getTotalClubs();
     }
 
     @JsonIgnore
@@ -77,7 +77,7 @@ public class ClubsDocument {
     private static class ClubMeta {
 
         private long totalPages;
-        private long totalPlayers;
+        private long totalClubs;
         private int pageNumber;
         private int pageSize;
 
@@ -85,8 +85,8 @@ public class ClubsDocument {
             return totalPages;
         }
 
-        public long getTotalPlayers() {
-            return totalPlayers;
+        public long getTotalClubs() {
+            return totalClubs;
         }
 
         public int getPageNumber() { return pageNumber; }
@@ -136,7 +136,7 @@ public class ClubsDocument {
         private List<ClubData> data;
 
         private int totalPages;
-        private long totalPlayers;
+        private long totalClubs;
         private int pageNumber;
         private int pageSize;
 
@@ -156,8 +156,8 @@ public class ClubsDocument {
             return this;
         }
 
-        public ClubsDocumentBuilder setTotalPlayers(long totalPlayers) {
-            this.totalPlayers = totalPlayers;
+        public ClubsDocumentBuilder setTotalClubs(long totalClubs) {
+            this.totalClubs = totalClubs;
             return this;
         }
 

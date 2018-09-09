@@ -17,7 +17,7 @@ public class DefaultPlayerClientTest {
     private static final PlayerDocument DOCUMENT = ExamplePlayerDocumentFactory.buildPlayerDocument1();
 
     private final FakeHttpClient httpClient = new DefaultFakeHttpClient();
-    private final PlayerClient client = new DefaultPlayerClient(BASE_URL, httpClient, JsonConverterFactory.build());
+    private final PlayerClient client = new DefaultPlayerClient(BASE_URL, httpClient);
 
     @Test
     public void shouldPostToCorrectUrlOnCreate() {

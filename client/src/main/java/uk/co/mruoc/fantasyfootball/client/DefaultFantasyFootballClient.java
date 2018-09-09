@@ -1,6 +1,8 @@
 package uk.co.mruoc.fantasyfootball.client;
 
 import uk.co.mruoc.fantasyfootball.api.ClubDocument;
+import uk.co.mruoc.fantasyfootball.api.JsonConverter;
+import uk.co.mruoc.fantasyfootball.api.JsonConverterSingleton;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument;
 import uk.co.mruoc.http.client.HttpClient;
 import uk.co.mruoc.http.client.SimpleHttpClient;
@@ -8,7 +10,7 @@ import uk.co.mruoc.http.client.SimpleHttpClient;
 public class DefaultFantasyFootballClient implements FantasyFootballClient {
 
     private static final HttpClient HTTP_CLIENT = new SimpleHttpClient();
-    private static final JsonConverter CONVERTER = JsonConverterFactory.build();
+    private static final JsonConverter CONVERTER = JsonConverterSingleton.get();
 
     private final ClubClient clubClient;
     private final PlayerClient playerClient;

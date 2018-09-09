@@ -1,10 +1,14 @@
-package uk.co.mruoc.fantasyfootball.client;
+package uk.co.mruoc.fantasyfootball.api;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -14,54 +18,59 @@ import static org.mockito.Mockito.mock;
 public class JsonConverterTest {
 
     private static final String BEAN_JSON = "{\"value1\":\"my first value\",\"value2\":null}";
-    private final ObjectMapper mapper = mock(ObjectMapper.class);
+    private static final FakeBean BEAN = buildFakeBean();
 
-    private final JsonConverter converter = new JsonConverter(mapper);
+    private final ObjectReader reader = mock(ObjectReader.class);
+    private final ObjectWriter writer = mock(ObjectWriter.class);
+    private final JsonFactory factory = mock(JsonFactory.class);
+
+    private final JsonConverter converter = new JsonConverter(reader, writer, factory);
 
     @Test
     public void shouldConvertObjectToJson() throws JsonProcessingException {
-        final FakeBean bean = buildFakeBean();
-        given(mapper.writeValueAsString(bean)).willReturn(BEAN_JSON);
+        given(writer.writeValueAsString(BEAN)).willReturn(BEAN_JSON);
 
-        final String json = converter.toJson(bean);
+        final String json = converter.toJson(BEAN);
 
         assertThat(json).isEqualTo(BEAN_JSON);
     }
 
     @Test
-    public void shouldThrowClientExceptionIfSerializationErrors() throws JsonProcessingException {
-        final FakeBean bean = buildFakeBean();
-        given(mapper.writeValueAsString(bean)).willThrow(JsonProcessingException.class);
+    public void shouldThrowClientExceptionIfSerializationErrors() throws IOException {
+        given(writer.writeValueAsString(BEAN)).willThrow(JsonProcessingException.class);
 
-        final Throwable thrown = catchThrowable(() -> converter.toJson(bean));
+        final Throwable thrown = catchThrowable(() -> converter.toJson(BEAN));
 
         assertThat(thrown)
-                .isInstanceOf(ClientException.class)
+                .isInstanceOf(UncheckedIOException.class)
                 .hasCauseInstanceOf(JsonProcessingException.class);
     }
 
     @Test
     public void shouldConvertObjectFromJson() throws IOException {
-        final FakeBean expectedBean = buildFakeBean();
-        given(mapper.readValue(BEAN_JSON, FakeBean.class)).willReturn(expectedBean);
+        final JsonParser parser = mock(JsonParser.class);
+        given(factory.createParser(BEAN_JSON)).willReturn(parser);
+        given(reader.readValue(parser, FakeBean.class)).willReturn(BEAN);
 
         final FakeBean bean = converter.fromJson(BEAN_JSON, FakeBean.class);
 
-        assertThat(bean).isEqualToComparingFieldByField(expectedBean);
+        assertThat(bean).isEqualToComparingFieldByField(bean);
     }
 
     @Test
     public void shouldThrowClientExceptionIfDeserializationFails() throws IOException {
-        given(mapper.readValue(BEAN_JSON, FakeBean.class)).willThrow(IOException.class);
+        final JsonParser parser = mock(JsonParser.class);
+        given(factory.createParser(BEAN_JSON)).willReturn(parser);
+        given(reader.readValue(parser, FakeBean.class)).willThrow(IOException.class);
 
         final Throwable thrown = catchThrowable(() -> converter.fromJson(BEAN_JSON, FakeBean.class));
 
         assertThat(thrown)
-                .isInstanceOf(ClientException.class)
+                .isInstanceOf(UncheckedIOException.class)
                 .hasCauseInstanceOf(IOException.class);
     }
 
-    private FakeBean buildFakeBean() {
+    private static FakeBean buildFakeBean() {
         final FakeBean bean = new FakeBean();
         bean.setValue1("my first value");
         return bean;

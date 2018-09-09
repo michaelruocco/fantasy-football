@@ -21,7 +21,7 @@ public class ClubConverter {
         final List<ClubData> clubs = page.stream().map(player -> toDocument(player, 10).getData()).collect(Collectors.toList());
         ClubsDocumentBuilder builder = new ClubsDocumentBuilder()
                 .setData(clubs)
-                .setTotalPlayers(page.getTotalElements())
+                .setTotalClubs(page.getTotalElements())
                 .setPageNumber(page.getNumber())
                 .setPageSize(page.getSize())
                 .setTotalPages(page.getTotalPages())

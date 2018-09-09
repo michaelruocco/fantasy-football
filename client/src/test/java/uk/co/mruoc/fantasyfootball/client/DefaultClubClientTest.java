@@ -17,7 +17,7 @@ public class DefaultClubClientTest {
     private static final ClubDocument DOCUMENT = ExampleClubDocumentFactory.buildClubDocument1();
 
     private final FakeHttpClient httpClient = new DefaultFakeHttpClient();
-    private final ClubClient client = new DefaultClubClient(BASE_URL, httpClient, JsonConverterFactory.build());
+    private final ClubClient client = new DefaultClubClient(BASE_URL, httpClient);
 
     @Test
     public void shouldPostToCorrectUrlOnCreate() {
