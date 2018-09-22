@@ -29,5 +29,6 @@ be manually tested [here](http://localhost:8080/swagger-ui.html).
 
 ## Next steps
 
-1. error handling in client
+1. json api error responses from server
 2. acceptance / integration testing
+3. error handling in client

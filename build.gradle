@@ -10,6 +10,10 @@ allprojects {
     repositories {
         mavenCentral()
     }
+
+    jacoco {
+        toolVersion = '0.8.2'
+    }
 }
 
 subprojects {
@@ -26,7 +30,7 @@ subprojects {
 
         testCompile 'junit:junit:4.12'
         testCompile 'org.assertj:assertj-core:3.11.1'
-        testCompile 'org.mockito:mockito-core:2.21.0'
+        testCompile 'org.mockito:mockito-core:2.22.0'
         testCompile 'com.github.michaelruocco:file-loader:4.0.0'
     }
 
