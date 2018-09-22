@@ -36,7 +36,7 @@ public class ClubService {
         return club.orElseThrow(() -> new ClubNotFoundException(id));
     }
 
-    public Club upsert(final Club club) {
+    public Club create(final Club club) {
         return clubRepository.save(club);
     }
 
@@ -46,4 +46,8 @@ public class ClubService {
         return playerRepository.findByClub(club, pageable);
     }
 
+    public boolean exists(final long id) {
+        return clubRepository.existsById(id);
+    }
+    
 }

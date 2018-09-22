@@ -36,17 +36,17 @@ public class ClubControllerTest {
     @Test
     public void shouldConvertDocumentToClubOnCreate() {
         final ArgumentCaptor<Club> clubCaptor = ArgumentCaptor.forClass(Club.class);
-        given(service.upsert(any(Club.class))).willReturn(club);
+        given(service.create(any(Club.class))).willReturn(club);
 
         controller.create(document);
 
-        verify(service).upsert(clubCaptor.capture());
+        verify(service).create(clubCaptor.capture());
         assertThat(clubCaptor.getValue()).isEqualToComparingFieldByFieldRecursively(club);
     }
 
     @Test
     public void shouldConverterCreatedClubIntoDocument() {
-        given(service.upsert(any(Club.class))).willReturn(club);
+        given(service.create(any(Club.class))).willReturn(club);
 
         final ResponseEntity<ClubDocument> entity = controller.create(document);
 
@@ -55,7 +55,7 @@ public class ClubControllerTest {
 
     @Test
     public void shouldReturnCreatedStatusCode() {
-        given(service.upsert(any(Club.class))).willReturn(club);
+        given(service.create(any(Club.class))).willReturn(club);
 
         final ResponseEntity<ClubDocument> entity = controller.create(document);
 
@@ -64,7 +64,7 @@ public class ClubControllerTest {
 
     @Test
     public void shouldReturnLocationHeaderWithNewResourceUrl() {
-        given(service.upsert(any(Club.class))).willReturn(club);
+        given(service.create(any(Club.class))).willReturn(club);
 
         final ResponseEntity<ClubDocument> entity = controller.create(document);
 

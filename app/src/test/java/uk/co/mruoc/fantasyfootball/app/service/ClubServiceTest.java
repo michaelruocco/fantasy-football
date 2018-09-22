@@ -52,12 +52,12 @@ public class ClubServiceTest {
     }
 
     @Test
-    public void shouldUpsertClub() {
+    public void shouldCreateClub() {
         final Club club = mock(Club.class);
         final Club expectedClub = mock(Club.class);
         given(clubRepository.save(club)).willReturn(expectedClub);
 
-        final Club resultClub = service.upsert(club);
+        final Club resultClub = service.create(club);
 
         assertThat(resultClub).isEqualTo(expectedClub);
     }
@@ -108,6 +108,20 @@ public class ClubServiceTest {
         verify(clubRepository).findAll(page.capture());
         assertThat(page.getValue().getPageNumber()).isEqualTo(pageNumber);
         assertThat(page.getValue().getPageSize()).isEqualTo(pageSize);
+    }
+
+    @Test
+    public void shouldReturnTrueIfPlayerExists() {
+        given(clubRepository.existsById(CLUB_ID)).willReturn(true);
+
+        assertThat(service.exists(CLUB_ID)).isTrue();
+    }
+
+    @Test
+    public void shouldReturnFalseIfPlayerExists() {
+        given(clubRepository.existsById(CLUB_ID)).willReturn(false);
+
+        assertThat(service.exists(CLUB_ID)).isFalse();
     }
 
 }

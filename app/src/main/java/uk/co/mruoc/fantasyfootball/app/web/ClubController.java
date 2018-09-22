@@ -49,7 +49,7 @@ public class ClubController {
     @ApiOperation(value = "Create a club", response = ClubDocument.class)
     public @ResponseBody ResponseEntity<ClubDocument> create(@ApiParam(value = "ClubDocument", required = true, name = "ClubDocument") @Valid @RequestBody final ClubDocument document) {
         final Club club = clubConverter.toClub(document);
-        final Club createdClub = service.upsert(club);
+        final Club createdClub = service.create(club);
         final ClubDocument createdDocument = clubConverter.toDocument(createdClub, DEFAULT_PAGE_SIZE);
         return responseBuilder.buildCreatedResponse(createdDocument);
     }
