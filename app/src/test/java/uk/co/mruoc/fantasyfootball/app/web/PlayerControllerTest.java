@@ -94,7 +94,7 @@ public class PlayerControllerTest {
     }
 
     @Test
-    public void shouldConverterUpdatedPlayerIntoDocumentOnUpdate() {
+    public void shouldConvertUpdatedPlayerIntoDocumentOnUpdate() {
         given(service.update(any(Player.class))).willReturn(player);
 
         final ResponseEntity<PlayerDocument> entity = controller.update(document.getId(), document);

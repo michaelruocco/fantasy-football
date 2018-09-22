@@ -97,6 +97,16 @@ public class ClubConverterTest {
         assertThat(document).isEqualToComparingFieldByFieldRecursively(expectedDocument);
     }
 
+    @Test
+    public void shouldConvertSpecificId() {
+        final long id = 9191;
+        final ClubDocument document = ExampleClubDocumentFactory.buildClubDocument1();
+
+        final Club club = converter.toClub(id, document);
+
+        assertThat(club.getId()).isEqualTo(id);
+    }
+
     private static List<Club> toClubs(List<ClubDocument.ClubData> clubDataList) {
         return clubDataList.stream().map(ClubConverterTest::toClub).collect(Collectors.toList());
     }

@@ -45,7 +45,7 @@ public class ClubControllerTest {
     }
 
     @Test
-    public void shouldConverterCreatedClubIntoDocument() {
+    public void shouldConvertCreatedClubIntoDocumentOnCreate() {
         given(service.create(any(Club.class))).willReturn(club);
 
         final ResponseEntity<ClubDocument> entity = controller.create(document);
@@ -54,7 +54,16 @@ public class ClubControllerTest {
     }
 
     @Test
-    public void shouldReturnCreatedStatusCode() {
+    public void shouldConvertCreatedClubIntoDocumentOnUpdate() {
+        given(service.update(any(Club.class))).willReturn(club);
+
+        final ResponseEntity<ClubDocument> entity = controller.update(document.getId(), document);
+
+        assertThat(entity.getBody()).isEqualToComparingFieldByFieldRecursively(document);
+    }
+
+    @Test
+    public void shouldReturnCreatedStatusCodeOnCreate() {
         given(service.create(any(Club.class))).willReturn(club);
 
         final ResponseEntity<ClubDocument> entity = controller.create(document);
@@ -63,7 +72,17 @@ public class ClubControllerTest {
     }
 
     @Test
-    public void shouldReturnLocationHeaderWithNewResourceUrl() {
+    public void shouldReturnOkStatusCodeOnCreateWithIdThatAlreadyExists() {
+        given(service.exists(club.getId())).willReturn(true);
+        given(service.update(any(Club.class))).willReturn(club);
+
+        final ResponseEntity<ClubDocument> entity = controller.create(document);
+
+        assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @Test
+    public void shouldReturnLocationHeaderWithNewResourceUrlOnCreate() {
         given(service.create(any(Club.class))).willReturn(club);
 
         final ResponseEntity<ClubDocument> entity = controller.create(document);
@@ -71,6 +90,26 @@ public class ClubControllerTest {
         final HttpHeaders headers = entity.getHeaders();
 
         assertThat(headers.get("Location")).containsExactly("/clubs/1234");
+    }
+
+    @Test
+    public void shouldConvertDocumentToClubOnUpdate() {
+        final ArgumentCaptor<Club> clubCaptor = ArgumentCaptor.forClass(Club.class);
+        given(service.update(any(Club.class))).willReturn(club);
+
+        controller.update(document.getId(), document);
+
+        verify(service).update(clubCaptor.capture());
+        assertThat(clubCaptor.getValue()).isEqualToComparingFieldByFieldRecursively(club);
+    }
+
+    @Test
+    public void shouldReturnOkStatusCodeOnUpdate() {
+        given(service.update(any(Club.class))).willReturn(club);
+
+        final ResponseEntity<ClubDocument> entity = controller.update(document.getId(), document);
+
+        assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
     @Test

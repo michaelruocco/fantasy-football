@@ -7,7 +7,9 @@ import uk.co.mruoc.fantasyfootball.api.ClubDocument.ClubData;
 import uk.co.mruoc.fantasyfootball.api.ClubDocument.ClubDocumentBuilder;
 import uk.co.mruoc.fantasyfootball.api.ClubsDocument;
 import uk.co.mruoc.fantasyfootball.api.ClubsDocument.ClubsDocumentBuilder;
+import uk.co.mruoc.fantasyfootball.api.PlayerDocument;
 import uk.co.mruoc.fantasyfootball.app.dao.Club;
+import uk.co.mruoc.fantasyfootball.app.dao.Player;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,6 +54,12 @@ public class ClubConverter {
                 .setSelfLink(ClubLinkBuilder.build(id))
                 .setClubPlayersLink(PlayersLinkBuilder.build(id, pageNumber, pageSize))
                 .build();
+    }
+
+    public Club toClub(long id, ClubDocument document) {
+        final Club club = toClub(document);
+        club.setId(id);
+        return club;
     }
 
     public Club toClub(final ClubDocument document) {

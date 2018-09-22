@@ -12,6 +12,15 @@ public class ClubTest {
     private final Club club = new Club(ID, NAME);
 
     @Test
+    public void shouldSetReturn() {
+        final long id = 1111;
+
+        club.setId(id);
+
+        assertThat(club.getId()).isEqualTo(id);
+    }
+
+    @Test
     public void shouldReturnId() {
         assertThat(club.getId()).isEqualTo(ID);
     }

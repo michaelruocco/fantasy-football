@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,6 +49,9 @@ public class ClubController {
     @PostMapping
     @ApiOperation(value = "Create a club", response = ClubDocument.class)
     public @ResponseBody ResponseEntity<ClubDocument> create(@ApiParam(value = "ClubDocument", required = true, name = "ClubDocument") @Valid @RequestBody final ClubDocument document) {
+        if (document.hasId() && service.exists(document.getId())) {
+            return update(document.getId(), document);
+        }
         final Club club = clubConverter.toClub(document);
         final Club createdClub = service.create(club);
         final ClubDocument createdDocument = clubConverter.toDocument(createdClub, DEFAULT_PAGE_SIZE);
@@ -65,6 +69,14 @@ public class ClubController {
     public @ResponseBody ClubDocument read(@PathVariable("id") long id) {
         final Club club = service.read(id);
         return clubConverter.toDocument(club, DEFAULT_PAGE_SIZE);
+    }
+
+    @PutMapping("/{id}")
+    public @ResponseBody ResponseEntity<ClubDocument> update(@Valid @PathVariable("id") long id, @RequestBody final ClubDocument document) {
+        final Club club = clubConverter.toClub(id, document);
+        final Club updatedClub = service.update(club);
+        ClubDocument updatedDocument = clubConverter.toDocument(updatedClub, DEFAULT_PAGE_SIZE);
+        return responseBuilder.buildUpdatedResponse(updatedDocument);
     }
 
     @GetMapping("/{id}/players")
