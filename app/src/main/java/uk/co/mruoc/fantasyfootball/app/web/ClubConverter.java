@@ -7,9 +7,7 @@ import uk.co.mruoc.fantasyfootball.api.ClubDocument.ClubData;
 import uk.co.mruoc.fantasyfootball.api.ClubDocument.ClubDocumentBuilder;
 import uk.co.mruoc.fantasyfootball.api.ClubsDocument;
 import uk.co.mruoc.fantasyfootball.api.ClubsDocument.ClubsDocumentBuilder;
-import uk.co.mruoc.fantasyfootball.api.PlayerDocument;
 import uk.co.mruoc.fantasyfootball.app.dao.Club;
-import uk.co.mruoc.fantasyfootball.app.dao.Player;
 
 import java.util.List;
 import java.util.stream.Collectors;
