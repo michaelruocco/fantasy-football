@@ -27,7 +27,7 @@ public class PlayerController {
 
     private final PlayerService service;
     private final PlayerConverter converter;
-    private final CreatedResponseBuilder<PlayerDocument> createdResponseBuilder = new CreatedResponseBuilder<>();
+    private final ResponseBuilder<PlayerDocument> responseBuilder = new ResponseBuilder<>();
 
     public PlayerController(PlayerService service) {
         this(service, new PlayerConverter());
@@ -41,17 +41,21 @@ public class PlayerController {
 
     @PostMapping
     public @ResponseBody ResponseEntity<PlayerDocument> create(@Valid @RequestBody final PlayerDocument document) {
+        if (document.hasId() && service.exists(document.getId())) {
+            return update(document.getId(), document);
+        }
         final Player player = converter.toPlayer(document);
-        final Player createdPlayer = service.upsert(player);
+        final Player createdPlayer = service.create(player);
         PlayerDocument createdDocument = converter.toDocument(createdPlayer);
-        return createdResponseBuilder.build(createdDocument);
+        return responseBuilder.buildCreatedResponse(createdDocument);
     }
 
     @PutMapping("/{id}")
-    public @ResponseBody PlayerDocument update(@Valid @PathVariable("id") long id, @RequestBody final PlayerDocument document) {
+    public @ResponseBody ResponseEntity<PlayerDocument> update(@Valid @PathVariable("id") long id, @RequestBody final PlayerDocument document) {
         final Player player = converter.toPlayer(id, document);
         final Player updatedPlayer = service.update(player);
-        return converter.toDocument(updatedPlayer);
+        PlayerDocument updatedDocument = converter.toDocument(updatedPlayer);
+        return responseBuilder.buildUpdatedResponse(updatedDocument);
     }
 
     @GetMapping("/{id}")

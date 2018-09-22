@@ -109,6 +109,10 @@ public class ExamplePlayerDocumentFactory {
         return buildPlayerDocument(PLAYER_DATA_WITHOUT_CLUB);
     }
 
+    public static PlayerDocument buildEmptyPlayerDocument() {
+        return new PlayerDocumentBuilder().build();
+    }
+
     public static PlayerDocument buildPlayerDocument(PlayerData data) {
         return new PlayerDocumentBuilder()
                 .setId(data.getId())

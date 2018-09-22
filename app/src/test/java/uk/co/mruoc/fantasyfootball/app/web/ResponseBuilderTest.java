@@ -11,31 +11,31 @@ import java.net.URISyntaxException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-public class CreatedResponseBuilderTest {
+public class ResponseBuilderTest {
 
     private static final String URI = "http://localhost:8080/myPage";
 
     private final JsonApiDocument document = new FakeDocument(URI);
 
-    private final CreatedResponseBuilder<JsonApiDocument> builder = new CreatedResponseBuilder<>();
+    private final ResponseBuilder<JsonApiDocument> builder = new ResponseBuilder<>();
 
     @Test
     public void shouldReturnEntityWithDocumentAsBody() {
-        final ResponseEntity<JsonApiDocument> entity = builder.build(document);
+        final ResponseEntity<JsonApiDocument> entity = builder.buildCreatedResponse(document);
 
         assertThat(entity.getBody()).isEqualTo(document);
     }
 
     @Test
     public void shouldReturnEntityWithCreatedHttpStatus() {
-        final ResponseEntity<JsonApiDocument> entity = builder.build(document);
+        final ResponseEntity<JsonApiDocument> entity = builder.buildCreatedResponse(document);
 
         assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
     }
 
     @Test
     public void shouldSetLocationHeaderWithDocumentSelfLink() {
-        final ResponseEntity<JsonApiDocument> entity = builder.build(document);
+        final ResponseEntity<JsonApiDocument> entity = builder.buildCreatedResponse(document);
 
         final HttpHeaders headers = entity.getHeaders();
         assertThat(headers.get("Location")).containsExactly(document.getSelfLink());
@@ -45,7 +45,7 @@ public class CreatedResponseBuilderTest {
     public void shouldThrowExceptionIfUriIsInvalid() {
         final JsonApiDocument invalidUriDocument = new FakeDocument("\\invalid");
 
-        final Throwable thrown = catchThrowable(() -> builder.build(invalidUriDocument));
+        final Throwable thrown = catchThrowable(() -> builder.buildCreatedResponse(invalidUriDocument));
 
         assertThat(thrown)
                 .isInstanceOf(InvalidLinkException.class)

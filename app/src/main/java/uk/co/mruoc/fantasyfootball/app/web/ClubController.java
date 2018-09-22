@@ -32,7 +32,7 @@ public class ClubController {
     private final ClubService service;
     private final ClubConverter clubConverter;
     private final PlayerConverter playerConverter;
-    private final CreatedResponseBuilder<ClubDocument> createdResponseBuilder = new CreatedResponseBuilder<>();
+    private final ResponseBuilder<ClubDocument> responseBuilder = new ResponseBuilder<>();
 
     public ClubController(ClubService service) {
         this(service, new ClubConverter(), new PlayerConverter());
@@ -51,7 +51,7 @@ public class ClubController {
         final Club club = clubConverter.toClub(document);
         final Club createdClub = service.upsert(club);
         final ClubDocument createdDocument = clubConverter.toDocument(createdClub, DEFAULT_PAGE_SIZE);
-        return createdResponseBuilder.build(createdDocument);
+        return responseBuilder.buildCreatedResponse(createdDocument);
     }
 
     @GetMapping

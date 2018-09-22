@@ -20,6 +20,10 @@ public class PlayerService {
         this.repository = repository;
     }
 
+    public boolean exists(final long id) {
+        return repository.existsById(id);
+    }
+
     public Page<Player> read(final int pageNumber, final int pageSize) {
         final Pageable pageable = PageRequest.of(pageNumber, pageSize);
         return repository.findAll(pageable);
@@ -30,7 +34,10 @@ public class PlayerService {
         return player.orElseThrow(() -> new PlayerNotFoundException(id));
     }
 
-    public Player upsert(final Player player) {
+    public Player create(final Player player) {
+        if (player.hasId() && repository.existsById(player.getId())) {
+            throw new PlayerAlreadyExistsException(player.getId());
+        }
         return repository.save(player);
     }
 

@@ -49,14 +49,29 @@ public class PlayerServiceTest {
     }
 
     @Test
-    public void shouldUpsertPlayer() {
+    public void shouldCreatePlayer() {
         final Player player = mock(Player.class);
         final Player expectedPlayer = mock(Player.class);
         given(repository.save(player)).willReturn(expectedPlayer);
 
-        final Player resultPlayer = service.upsert(player);
+        final Player resultPlayer = service.create(player);
 
         assertThat(resultPlayer).isEqualTo(expectedPlayer);
+    }
+
+    @Test
+    public void shouldThrowExceptionIfPlayerToCreateAlreadyExists() {
+        final Player player = mock(Player.class);
+        given(player.getId()).willReturn(ID);
+        given(player.hasId()).willReturn(true);
+        given(repository.existsById(player.getId())).willReturn(true);
+        final String expectedMessage = String.format("player with id %d already exists", ID);
+
+        final Throwable thrown = catchThrowable(() -> service.create(player));
+
+        assertThat(thrown).isInstanceOf(PlayerAlreadyExistsException.class)
+                .hasNoCause()
+                .hasMessage(expectedMessage);
     }
 
     @Test
@@ -120,6 +135,20 @@ public class PlayerServiceTest {
         verify(repository).findAll(page.capture());
         assertThat(page.getValue().getPageNumber()).isEqualTo(pageNumber);
         assertThat(page.getValue().getPageSize()).isEqualTo(pageSize);
+    }
+
+    @Test
+    public void shouldReturnTrueIfPlayerExists() {
+        given(repository.existsById(ID)).willReturn(true);
+
+        assertThat(service.exists(ID)).isTrue();
+    }
+
+    @Test
+    public void shouldReturnFalseIfPlayerExists() {
+        given(repository.existsById(ID)).willReturn(false);
+
+        assertThat(service.exists(ID)).isFalse();
     }
 
 }

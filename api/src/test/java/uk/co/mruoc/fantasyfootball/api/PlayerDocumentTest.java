@@ -20,6 +20,20 @@ public class PlayerDocumentTest {
     private final ObjectMapper mapper = JacksonMapperSingleton.get();
 
     @Test
+    public void shouldReturnTrueIfHasId() {
+        final PlayerDocument document = ExamplePlayerDocumentFactory.buildPlayerDocument1();
+
+        assertThat(document.hasId()).isTrue();
+    }
+
+    @Test
+    public void shouldReturnFalseIfDoesNotHaveId() {
+        final PlayerDocument document = ExamplePlayerDocumentFactory.buildEmptyPlayerDocument();
+
+        assertThat(document.hasId()).isFalse();
+    }
+
+    @Test
     public void shouldSerializeToJsonCorrectly() throws JsonProcessingException  {
         final String expectedJson = ContentLoader.loadContentFromClasspath("/playerDocument.json");
         final PlayerDocument document = ExamplePlayerDocumentFactory.buildPlayerDocument1();

@@ -30,7 +30,6 @@ be manually tested [here](http://localhost:8080/swagger-ui.html).
 ## Next steps
 
 1. error handling in client
-2. further unit coverage
-3. acceptance / intergration testing
-4. return 200 from create if entity already exists, rather than always 200.
-5. add a players endpoint that does not have parent resource of clubs.
+2. acceptance / integration testing
+3. return 200 from create if entity already exists, rather than always 201.
+4. add a players endpoint that does not have parent resource of clubs.

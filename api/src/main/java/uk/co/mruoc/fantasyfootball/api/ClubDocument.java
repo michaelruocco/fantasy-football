@@ -45,7 +45,7 @@ public class ClubDocument implements JsonApiDocument {
 
     @JsonIgnore
     public String getName() {
-        return data.attributes.name;
+        return data.getName();
     }
 
     @Override

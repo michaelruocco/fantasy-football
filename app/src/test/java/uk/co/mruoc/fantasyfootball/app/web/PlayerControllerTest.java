@@ -35,17 +35,17 @@ public class PlayerControllerTest {
     @Test
     public void shouldConvertDocumentToPlayerOnCreate() {
         final ArgumentCaptor<Player> playerCaptor = ArgumentCaptor.forClass(Player.class);
-        given(service.upsert(any(Player.class))).willReturn(player);
+        given(service.create(any(Player.class))).willReturn(player);
 
         controller.create(document);
 
-        verify(service).upsert(playerCaptor.capture());
+        verify(service).create(playerCaptor.capture());
         assertThat(playerCaptor.getValue()).isEqualToComparingFieldByFieldRecursively(player);
     }
 
     @Test
     public void shouldConverterCreatedPlayerIntoDocument() {
-        given(service.upsert(any(Player.class))).willReturn(player);
+        given(service.create(any(Player.class))).willReturn(player);
 
         final ResponseEntity<PlayerDocument> entity = controller.create(document);
 
@@ -53,8 +53,8 @@ public class PlayerControllerTest {
     }
 
     @Test
-    public void shouldReturnCreatedStatusCode() {
-        given(service.upsert(any(Player.class))).willReturn(player);
+    public void shouldReturnCreatedStatusCodeOnCreate() {
+        given(service.create(any(Player.class))).willReturn(player);
 
         final ResponseEntity<PlayerDocument> entity = controller.create(document);
 
@@ -62,8 +62,18 @@ public class PlayerControllerTest {
     }
 
     @Test
-    public void shouldReturnLocationHeaderWithNewResourceUrl() {
-        given(service.upsert(any(Player.class))).willReturn(player);
+    public void shouldReturnOkStatusCodeOnCreateWithIdThatAlreadyExists() {
+        given(service.exists(player.getId())).willReturn(true);
+        given(service.update(any(Player.class))).willReturn(player);
+
+        final ResponseEntity<PlayerDocument> entity = controller.create(document);
+
+        assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @Test
+    public void shouldReturnLocationHeaderWithNewResourceUrlOnCreate() {
+        given(service.create(any(Player.class))).willReturn(player);
 
         final ResponseEntity<PlayerDocument> entity = controller.create(document);
 
@@ -84,12 +94,21 @@ public class PlayerControllerTest {
     }
 
     @Test
-    public void shouldConverterUpdatedPlayerIntoDocument() {
+    public void shouldConverterUpdatedPlayerIntoDocumentOnUpdate() {
         given(service.update(any(Player.class))).willReturn(player);
 
-        final PlayerDocument resultDocument = controller.update(document.getId(), document);
+        final ResponseEntity<PlayerDocument> entity = controller.update(document.getId(), document);
 
-        assertThat(resultDocument).isEqualToComparingFieldByFieldRecursively(document);
+        assertThat(entity.getBody()).isEqualToComparingFieldByFieldRecursively(document);
+    }
+
+    @Test
+    public void shouldReturnOkStatusOnUpdate() {
+        given(service.update(any(Player.class))).willReturn(player);
+
+        final ResponseEntity<PlayerDocument> entity = controller.update(document.getId(), document);
+
+        assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
     @Test
