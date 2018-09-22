@@ -97,6 +97,11 @@ public class ClubDocument implements JsonApiDocument {
             return links;
         }
 
+        @JsonIgnore
+        public String getName() {
+            return attributes.getName();
+        }
+
     }
 
     public static class ClubAttributes {

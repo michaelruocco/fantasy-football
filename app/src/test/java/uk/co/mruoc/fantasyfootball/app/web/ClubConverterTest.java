@@ -1,9 +1,16 @@
 package uk.co.mruoc.fantasyfootball.app.web;
 
 import org.junit.Test;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import uk.co.mruoc.fantasyfootball.api.ClubDocument;
+import uk.co.mruoc.fantasyfootball.api.ClubsDocument;
 import uk.co.mruoc.fantasyfootball.api.example.ExampleClubDocumentFactory;
 import uk.co.mruoc.fantasyfootball.app.dao.Club;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -68,6 +75,34 @@ public class ClubConverterTest {
         final Club club = converter.toClub(document);
 
         assertThat(club.getName()).isEqualTo(document.getName());
+    }
+
+    @Test
+    public void shouldConvertPageOfClubsIntoClubsDocument() {
+        final ClubsDocument expectedDocument = ExampleClubDocumentFactory.buildClubsDocument();
+        final Page<Club> page = new PageImpl<>(toClubs(expectedDocument.getData()), PageRequest.of(0, 2), 2);
+
+        final ClubsDocument document = converter.toDocument(page);
+
+        assertThat(document).isEqualToComparingFieldByFieldRecursively(expectedDocument);
+    }
+
+    @Test
+    public void shouldSetPreviousLinkWhenConvertingPageOfClubsIntoClubsDocumentIfNotFirstPage() {
+        final ClubsDocument expectedDocument = ExampleClubDocumentFactory.buildClubsDocumentWithMultiplePages();
+        final Page<Club> page = new PageImpl<>(toClubs(expectedDocument.getData()), PageRequest.of(1, 2), 6);
+
+        final ClubsDocument document = converter.toDocument(page);
+
+        assertThat(document).isEqualToComparingFieldByFieldRecursively(expectedDocument);
+    }
+
+    private static List<Club> toClubs(List<ClubDocument.ClubData> clubDataList) {
+        return clubDataList.stream().map(ClubConverterTest::toClub).collect(Collectors.toList());
+    }
+
+    private static Club toClub(ClubDocument.ClubData data) {
+        return new Club(data.getId(), data.getName());
     }
 
 }

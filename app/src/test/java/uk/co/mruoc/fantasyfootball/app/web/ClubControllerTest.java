@@ -9,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.co.mruoc.fantasyfootball.api.ClubDocument;
+import uk.co.mruoc.fantasyfootball.api.ClubsDocument;
 import uk.co.mruoc.fantasyfootball.api.PlayersDocument;
 import uk.co.mruoc.fantasyfootball.api.example.ExampleClubDocumentFactory;
 import uk.co.mruoc.fantasyfootball.api.example.ExamplePlayerDocumentFactory;
@@ -95,11 +96,32 @@ public class ClubControllerTest {
         assertThat(resultDocument).isEqualToComparingFieldByFieldRecursively(expectedDocument);
     }
 
-    private static Page<Player> toPage(final PlayersDocument document) {
-        return buildEmptyPage(document.getPageNumber(), document.getPageSize(), document.getTotalPages());
+    @Test
+    public void shouldReadClubs() {
+        final ClubsDocument expectedDocument = ExampleClubDocumentFactory.buildClubsDocumentWithNoData();
+        final Page<Club> page = toPage(expectedDocument);
+        final int pageNumber = expectedDocument.getPageNumber();
+        final int pageSize = expectedDocument.getPageSize();
+        given(service.read(pageNumber, pageSize)).willReturn(page);
+
+        final ClubsDocument resultDocument = controller.read(pageNumber, pageSize);
+
+        assertThat(resultDocument).isEqualToComparingFieldByFieldRecursively(expectedDocument);
     }
 
-    private static Page<Player> buildEmptyPage(int pageNumber, int pageSize, long totalPages) {
+    private static Page<Player> toPage(final PlayersDocument document) {
+        return buildEmptyPlayerPage(document.getPageNumber(), document.getPageSize(), document.getTotalPages());
+    }
+
+    private static Page<Club> toPage(final ClubsDocument document) {
+        return buildEmptyClubPage(document.getPageNumber(), document.getPageSize(), document.getTotalPages());
+    }
+
+    private static Page<Player> buildEmptyPlayerPage(int pageNumber, int pageSize, long totalPages) {
+        return new PageImpl<>(emptyList(), PageRequest.of(pageNumber, pageSize), totalPages);
+    }
+
+    private static Page<Club> buildEmptyClubPage(int pageNumber, int pageSize, long totalPages) {
         return new PageImpl<>(emptyList(), PageRequest.of(pageNumber, pageSize), totalPages);
     }
 

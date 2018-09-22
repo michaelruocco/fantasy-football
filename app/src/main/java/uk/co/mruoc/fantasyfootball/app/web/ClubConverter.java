@@ -26,15 +26,15 @@ public class ClubConverter {
                 .setPageSize(page.getSize())
                 .setTotalPages(page.getTotalPages())
                 .setSelfLink(ClubLinkBuilder.build(page.getNumber(), page.getSize()))
-                .setFirstLink(PlayersLinkBuilder.build(0, page.getSize()))
-                .setLastLink(PlayersLinkBuilder.build(calculateLastPage(page.getTotalPages()), page.getSize()));
+                .setFirstLink(ClubLinkBuilder.build(0, page.getSize()))
+                .setLastLink(ClubLinkBuilder.build(calculateLastPage(page.getTotalPages()), page.getSize()));
 
         if (page.getNumber() > 0) {
-            builder.setPreviousLink(PlayersLinkBuilder.build(page.getNumber() - 1, page.getSize()));
+            builder.setPreviousLink(ClubLinkBuilder.build(page.getNumber() - 1, page.getSize()));
         }
 
         if (page.getNumber() < page.getTotalPages() - 1) {
-            builder.setNextLink(PlayersLinkBuilder.build(page.getNumber() + 1, page.getSize()));
+            builder.setNextLink(ClubLinkBuilder.build(page.getNumber() + 1, page.getSize()));
         }
 
         return builder.build();
