@@ -63,6 +63,61 @@ public class ClubServiceTest {
     }
 
     @Test
+    public void shouldThrowExceptionIfClubToCreateAlreadyExists() {
+        final Club club = mock(Club.class);
+        given(club.getId()).willReturn(CLUB_ID);
+        given(club.hasId()).willReturn(true);
+        given(clubRepository.existsById(club.getId())).willReturn(true);
+        final String expectedMessage = String.format("club with id %d already exists", CLUB_ID);
+
+        final Throwable thrown = catchThrowable(() -> service.create(club));
+
+        assertThat(thrown).isInstanceOf(ClubAlreadyExistsException.class)
+                .hasNoCause()
+                .hasMessage(expectedMessage);
+    }
+
+    @Test
+    public void shouldThrowExceptionIfClubUpdatedWithNoId() {
+        final Club club = mock(Club.class);
+
+        final Throwable thrown = catchThrowable(() -> service.update(club));
+
+        assertThat(thrown).isInstanceOf(IllegalArgumentException.class)
+                .hasNoCause()
+                .hasMessage("cannot update club without id");
+    }
+
+    @Test
+    public void shouldThrowExceptionIfClubToUpdateDoesNotExist() {
+        final Club club = mock(Club.class);
+        given(club.hasId()).willReturn(true);
+        given(club.getId()).willReturn(CLUB_ID);
+        given(clubRepository.existsById(CLUB_ID)).willReturn(false);
+        final String expectedMessage = String.format("club with id %d not found", CLUB_ID);
+
+        final Throwable thrown = catchThrowable(() -> service.update(club));
+
+        assertThat(thrown).isInstanceOf(ClubNotFoundException.class)
+                .hasNoCause()
+                .hasMessage(expectedMessage);
+    }
+
+    @Test
+    public void shouldUpdateClub() {
+        final Club club = mock(Club.class);
+        final Club expectedClub = mock(Club.class);
+        given(club.hasId()).willReturn(true);
+        given(club.getId()).willReturn(CLUB_ID);
+        given(clubRepository.existsById(CLUB_ID)).willReturn(true);
+        given(clubRepository.save(club)).willReturn(expectedClub);
+
+        final Club resultClub = service.update(club);
+
+        assertThat(resultClub).isEqualTo(expectedClub);
+    }
+
+    @Test
     public void shouldReadPageOfClubPlayers() {
         final Page<Player> expectedPage = new PageImpl<>(emptyList());
         given(playerRepository.findByClub(any(Club.class), any(Pageable.class))).willReturn(expectedPage);
@@ -111,14 +166,14 @@ public class ClubServiceTest {
     }
 
     @Test
-    public void shouldReturnTrueIfPlayerExists() {
+    public void shouldReturnTrueIfClubExists() {
         given(clubRepository.existsById(CLUB_ID)).willReturn(true);
 
         assertThat(service.exists(CLUB_ID)).isTrue();
     }
 
     @Test
-    public void shouldReturnFalseIfPlayerExists() {
+    public void shouldReturnFalseIfClubExists() {
         given(clubRepository.existsById(CLUB_ID)).willReturn(false);
 
         assertThat(service.exists(CLUB_ID)).isFalse();

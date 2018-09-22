@@ -29,6 +29,10 @@ public class ExampleClubDocumentFactory {
         return buildClubDocument(data, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
     }
 
+    public static ClubDocument buildEmptyClubDocument() {
+        return new ClubDocumentBuilder().build();
+    }
+
     public static ClubDocument buildClubDocument(ClubData data, int pageNumber, int pageSize) {
         long id = data.getId();
         return new ClubDocumentBuilder()

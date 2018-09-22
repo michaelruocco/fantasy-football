@@ -37,6 +37,21 @@ public class ClubService {
     }
 
     public Club create(final Club club) {
+        if (club.hasId() && clubRepository.existsById(club.getId())) {
+            throw new ClubAlreadyExistsException(club.getId());
+        }
+        return clubRepository.save(club);
+    }
+
+    public Club update(final Club club) {
+        if (!club.hasId()) {
+            throw new IllegalArgumentException("cannot update club without id");
+        }
+
+        if (!clubRepository.existsById(club.getId())) {
+            throw new ClubNotFoundException(club.getId());
+        }
+
         return clubRepository.save(club);
     }
 
@@ -49,5 +64,5 @@ public class ClubService {
     public boolean exists(final long id) {
         return clubRepository.existsById(id);
     }
-    
+
 }

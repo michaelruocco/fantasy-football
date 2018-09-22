@@ -26,6 +26,10 @@ public class Club {
         this.name = name;
     }
 
+    public boolean hasId() {
+        return id != null;
+    }
+
     public Long getId() {
         return id;
     }

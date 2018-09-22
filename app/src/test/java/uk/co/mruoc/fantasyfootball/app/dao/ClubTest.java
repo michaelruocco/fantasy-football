@@ -17,6 +17,18 @@ public class ClubTest {
     }
 
     @Test
+    public void shouldReturnTrueIfHasId() {
+        assertThat(club.hasId()).isTrue();
+    }
+
+    @Test
+    public void shouldReturnFalseIfDoesNotHaveId() {
+        Club clubWithNoId = new Club();
+
+        assertThat(clubWithNoId.hasId()).isFalse();
+    }
+
+    @Test
     public void shouldReturnName() {
         assertThat(club.getName()).isEqualTo(NAME);
     }

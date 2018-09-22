@@ -42,6 +42,20 @@ public class ClubDocumentTest {
     }
 
     @Test
+    public void shouldReturnTrueIfHasId() {
+        final ClubDocument document = ExampleClubDocumentFactory.buildClubDocument(CLUB_DATA);
+
+        assertThat(document.hasId()).isTrue();
+    }
+
+    @Test
+    public void shouldReturnFalseIfDoesNotHaveId() {
+        final ClubDocument document = ExampleClubDocumentFactory.buildEmptyClubDocument();
+
+        assertThat(document.hasId()).isFalse();
+    }
+
+    @Test
     public void shouldReturnName() {
         final ClubDocument document = ExampleClubDocumentFactory.buildClubDocument(CLUB_DATA);
 

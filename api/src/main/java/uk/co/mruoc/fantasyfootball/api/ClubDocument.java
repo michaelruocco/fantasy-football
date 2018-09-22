@@ -39,6 +39,11 @@ public class ClubDocument implements JsonApiDocument {
     }
 
     @JsonIgnore
+    public boolean hasId() {
+        return data.id != null;
+    }
+
+    @JsonIgnore
     public Long getId() {
         return data.id;
     }

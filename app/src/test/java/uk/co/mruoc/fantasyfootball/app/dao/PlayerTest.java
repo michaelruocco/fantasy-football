@@ -20,6 +20,20 @@ public class PlayerTest {
     }
 
     @Test
+    public void shouldReturnTrueIfHasId() {
+        final long id = 1111;
+
+        player.setId(id);
+
+        assertThat(player.hasId()).isTrue();
+    }
+
+    @Test
+    public void shouldReturnFalseIfDoesNotHaveId() {
+        assertThat(player.hasId()).isFalse();
+    }
+
+    @Test
     public void shouldReturnTrueIfPlayerHasId() {
         final long id = 1111;
 
