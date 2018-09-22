@@ -1,0 +1,14 @@
+{
+  "meta": {
+    "totalPages": 0,
+    "totalClubs": 0,
+    "pageNumber": 0,
+    "pageSize": 2
+  },
+  "data": [],
+  "links": {
+    "self": "/clubs?pageNumber=0&pageSize=2",
+    "first": "/clubs?pageNumber=0&pageSize=2",
+    "last": "/clubs?pageNumber=0&pageSize=2"
+  }
+}

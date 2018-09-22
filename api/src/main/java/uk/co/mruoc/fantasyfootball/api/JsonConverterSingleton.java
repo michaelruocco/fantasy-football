@@ -8,6 +8,10 @@ public class JsonConverterSingleton {
     private static final ObjectMapper MAPPER = createMapper();
     private static final JsonConverter CONVERTER = build(MAPPER);
 
+    private JsonConverterSingleton() {
+        // static utility class
+    }
+
     public static JsonConverter get() {
         return CONVERTER;
     }

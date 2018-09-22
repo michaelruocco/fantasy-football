@@ -16,6 +16,12 @@ public class ExampleLinkBuilder {
                 "&pageSize=" + pageSize;
     }
 
+    public static String buildClubsLink(int pageNumber, int pageSize) {
+        return "/clubs" +
+                "?pageNumber=" + pageNumber +
+                "&pageSize=" + pageSize;
+    }
+
     public static int calculateLastPage(int totalPages) {
         if (totalPages > 0) {
             return totalPages - 1;
