@@ -12,6 +12,7 @@ import static java.util.Collections.emptyList;
 import static uk.co.mruoc.fantasyfootball.api.example.ExampleLinkBuilder.buildClubLink;
 import static uk.co.mruoc.fantasyfootball.api.example.ExampleLinkBuilder.buildClubPlayersLink;
 import static uk.co.mruoc.fantasyfootball.api.example.ExampleLinkBuilder.buildPlayerLink;
+import static uk.co.mruoc.fantasyfootball.api.example.ExampleLinkBuilder.buildPlayersLink;
 import static uk.co.mruoc.fantasyfootball.api.example.ExampleLinkBuilder.calculateLastPage;
 import static uk.co.mruoc.fantasyfootball.api.PlayerDocument.PlayerDocumentBuilder;
 
@@ -55,6 +56,42 @@ public class ExamplePlayerDocumentFactory {
 
         if (pageNumber > 0) {
             builder.setPreviousLink(buildClubPlayersLink(clubId, pageNumber - 1, pageSize));
+        }
+
+        return builder.build();
+    }
+
+    public static PlayersDocument buildPlayersDocument() {
+        List<PlayerDocument> documents = Arrays.asList(buildPlayerDocument1(), buildPlayerDocument2());
+        return buildPlayersDocument(0, 2, 2, 1, documents);
+    }
+
+    public static PlayersDocument buildPlayersDocumentWithMultiplePages() {
+        List<PlayerDocument> documents = Arrays.asList(buildPlayerDocument1(), buildPlayerDocument2());
+        return buildPlayersDocument(1, 2, 6, 3, documents);
+    }
+
+    public static PlayersDocument buildPlayersDocumentWithNoData() {
+        return buildPlayersDocument(0, 2, 0, 0, emptyList());
+    }
+
+    public static PlayersDocument buildPlayersDocument(int pageNumber, int pageSize, int totalPlayers, int totalPages, List<PlayerDocument> playerDocuments) {
+        PlayersDocumentBuilder builder = new PlayersDocumentBuilder()
+                .setData(toDataList(playerDocuments))
+                .setTotalPages(totalPages)
+                .setTotalPlayers(totalPlayers)
+                .setPageNumber(pageNumber)
+                .setPageSize(pageSize)
+                .setSelfLink(buildPlayersLink(pageNumber, pageSize))
+                .setFirstLink(buildPlayersLink(0, pageSize))
+                .setLastLink(buildPlayersLink(calculateLastPage(totalPages), pageSize));
+
+        if (pageNumber < totalPages - 1) {
+            builder.setNextLink(buildPlayersLink( pageNumber + 1, pageSize));
+        }
+
+        if (pageNumber > 0) {
+            builder.setPreviousLink(buildPlayersLink(pageNumber - 1, pageSize));
         }
 
         return builder.build();

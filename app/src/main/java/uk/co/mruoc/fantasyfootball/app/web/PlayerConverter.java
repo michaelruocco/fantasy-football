@@ -35,7 +35,7 @@ public class PlayerConverter {
         return builder.build();
     }
 
-    public PlayersDocument toDocument(long clubId, Page<Player> page) {
+    public PlayersDocument toClubPlayersDocument(long clubId, Page<Player> page) {
         final List<PlayerData> players = page.stream().map(player -> toDocument(player).getData()).collect(Collectors.toList());
         PlayersDocumentBuilder builder = new PlayersDocumentBuilder()
                 .setClubId(clubId)

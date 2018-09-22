@@ -73,7 +73,7 @@ public class ClubController {
                                 @RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
                                 @RequestParam(name = "pageSize", defaultValue = DEFAULT_PAGE_SIZE_STRING) int pageSize) {
         final Page<Player> players = service.readPlayersByClubId(id, pageNumber, pageSize);
-        return playerConverter.toDocument(id, players);
+        return playerConverter.toClubPlayersDocument(id, players);
     }
 
 }

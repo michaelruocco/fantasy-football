@@ -2,16 +2,21 @@ package uk.co.mruoc.fantasyfootball.app.web;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument;
+import uk.co.mruoc.fantasyfootball.api.PlayersDocument;
 import uk.co.mruoc.fantasyfootball.api.example.ExamplePlayerDocumentFactory;
 import uk.co.mruoc.fantasyfootball.app.dao.Club;
 import uk.co.mruoc.fantasyfootball.app.dao.Player;
 import uk.co.mruoc.fantasyfootball.app.dao.Position;
 import uk.co.mruoc.fantasyfootball.app.service.PlayerService;
 
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -96,6 +101,20 @@ public class PlayerControllerTest {
         assertThat(resultDocument).isEqualToComparingFieldByFieldRecursively(document);
     }
 
+
+    @Test
+    public void shouldReadPlayers() {
+        final PlayersDocument expectedDocument = ExamplePlayerDocumentFactory.buildPlayersDocumentWithNoData();
+        final Page<Player> page = toPage(expectedDocument);
+        final int pageNumber = expectedDocument.getPageNumber();
+        final int pageSize = expectedDocument.getPageSize();
+        given(service.read(pageNumber, pageSize)).willReturn(page);
+
+        final PlayersDocument resultDocument = controller.read(pageNumber, pageSize);
+
+        assertThat(resultDocument).isEqualToComparingFieldByFieldRecursively(expectedDocument);
+    }
+
     private static Player toPlayer(PlayerDocument.PlayerData data) {
         Player player = new Player();
         player.setId(data.getId());
@@ -107,6 +126,14 @@ public class PlayerControllerTest {
             player.setClub(new Club(data.getClubId().get()));
         }
         return player;
+    }
+
+    private static Page<Player> toPage(final PlayersDocument document) {
+        return buildEmptyPlayerPage(document.getPageNumber(), document.getPageSize(), document.getTotalPages());
+    }
+
+    private static Page<Player> buildEmptyPlayerPage(int pageNumber, int pageSize, long totalPages) {
+        return new PageImpl<>(emptyList(), PageRequest.of(pageNumber, pageSize), totalPages);
     }
 
 }

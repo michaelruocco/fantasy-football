@@ -10,6 +10,12 @@ public class ExampleLinkBuilder {
         return "/clubs/" + id;
     }
 
+    public static String buildPlayersLink(int pageNumber, int pageSize) {
+        return "/players" +
+                "?pageNumber=" + pageNumber +
+                "&pageSize=" + pageSize;
+    }
+
     public static String buildClubPlayersLink(long id, int pageNumber, int pageSize) {
         return buildClubLink(id) + "/players" +
                 "?pageNumber=" + pageNumber +

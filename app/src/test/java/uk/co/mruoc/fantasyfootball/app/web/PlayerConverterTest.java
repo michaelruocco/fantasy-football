@@ -136,7 +136,7 @@ public class PlayerConverterTest {
         final PlayersDocument expectedDocument = ExamplePlayerDocumentFactory.buildClubPlayersDocument();
         final Page<Player> page = new PageImpl<>(toPlayers(expectedDocument.getData()), PageRequest.of(0, 2), 2);
 
-        final PlayersDocument document = converter.toDocument(clubId, page);
+        final PlayersDocument document = converter.toClubPlayersDocument(clubId, page);
 
         assertThat(document).isEqualToComparingFieldByFieldRecursively(expectedDocument);
     }
@@ -147,7 +147,27 @@ public class PlayerConverterTest {
         final PlayersDocument expectedDocument = ExamplePlayerDocumentFactory.buildClubPlayersDocumentWithMultiplePages();
         final Page<Player> page = new PageImpl<>(toPlayers(expectedDocument.getData()), PageRequest.of(1, 2), 6);
 
-        final PlayersDocument document = converter.toDocument(clubId, page);
+        final PlayersDocument document = converter.toClubPlayersDocument(clubId, page);
+
+        assertThat(document).isEqualToComparingFieldByFieldRecursively(expectedDocument);
+    }
+
+    @Test
+    public void shouldConvertPageOfPlayersIntoPlayersDocument() {
+        final PlayersDocument expectedDocument = ExamplePlayerDocumentFactory.buildPlayersDocument();
+        final Page<Player> page = new PageImpl<>(toPlayers(expectedDocument.getData()), PageRequest.of(0, 2), 2);
+
+        final PlayersDocument document = converter.toPlayersDocument(page);
+
+        assertThat(document).isEqualToComparingFieldByFieldRecursively(expectedDocument);
+    }
+
+    @Test
+    public void shouldSetPreviousLinkWhenConvertingPageOfPlayersIntoPlayersDocumentIfNotFirstPage() {
+        final PlayersDocument expectedDocument = ExamplePlayerDocumentFactory.buildPlayersDocumentWithMultiplePages();
+        final Page<Player> page = new PageImpl<>(toPlayers(expectedDocument.getData()), PageRequest.of(1, 2), 6);
+
+        final PlayersDocument document = converter.toPlayersDocument(page);
 
         assertThat(document).isEqualToComparingFieldByFieldRecursively(expectedDocument);
     }
