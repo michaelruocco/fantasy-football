@@ -10,7 +10,6 @@ import { ClubService } from '../club.service';
 export class ClubsComponent implements OnInit {
 
   clubs: Club[];
-  selectedClub: Club;
 
   constructor(private clubService: ClubService) { }
 
@@ -20,10 +19,6 @@ export class ClubsComponent implements OnInit {
 
   getClubs(): void {
     this.clubService.getClubs().subscribe(clubs => this.clubs = clubs);
-  }
-
-  onSelect(club: Club): void {
-    this.selectedClub = club;
   }
 
 }

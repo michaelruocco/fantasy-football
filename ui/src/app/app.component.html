@@ -1,3 +1,28 @@
-<h1>{{ title }}</h1>
-<app-clubs></app-clubs>
-<app-messages></app-messages>
+
+
+<div class="container">
+  <div class="navbar navbar-dark bg-dark navbar-fixed-top navbar-expand-lg">
+
+    <a class="navbar-brand" routerLink="/dashboard" (click)="navbarCollapsed = true">{{ title }}</a>
+
+    <button class="navbar-toggler navbar-toggler-right" type="button" (click)="navbarCollapsed = !navbarCollapsed"
+            [attr.aria-expanded]="!navbarCollapsed" aria-controls="navbarContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="navbar-collapse" [ngbCollapse]="navbarCollapsed" id="navbarContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/clubs" (click)="navbarCollapsed = true">Clubs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="http://localhost:8080/swagger-ui.html">API</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+  <app-messages></app-messages>
+</div>
+

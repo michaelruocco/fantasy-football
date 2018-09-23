@@ -8,11 +8,11 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let club of clubs" (click)="onSelect(club)" [class.table-active]="club === selectedClub">
+  <tr *ngFor="let club of clubs" [class.table-active]="club === selectedClub">
     <th scope="row">{{club.id}}</th>
-    <td>{{club.name}}</td>
+    <td>
+      <a routerLink="/detail/{{club.id}}">{{club.attributes.name}}</a>
+    </td>
   </tr>
   </tbody>
 </table>
-
-<app-club-detail [club]="selectedClub"></app-club-detail>
