@@ -6,5 +6,25 @@
       <input [(ngModel)]="club.attributes.name" placeholder="name">
     </label>
   </div>
+  <div>
+    <table class="table table-hover">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Position</th>
+        <th scope="col">Value</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let player of players">
+        <th scope="row">{{player.id}}</th>
+        <td>{{player.attributes.firstName}} {{player.attributes.lastName}}</td>
+        <td>{{player.attributes.position | titlecase }}</td>
+        <td>{{player.attributes.value}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
   <button class="btn btn-primary" (click)="goBack()">Back</button>
 </div>

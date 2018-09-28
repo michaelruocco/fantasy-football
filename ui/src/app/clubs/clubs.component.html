@@ -3,16 +3,12 @@
 <table class="table table-hover">
   <thead class="thead-dark">
   <tr>
-    <th scope="col">Id</th>
     <th scope="col">Name</th>
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let club of clubs" [class.table-active]="club === selectedClub">
-    <th scope="row">{{club.id}}</th>
-    <td>
-      <a routerLink="/detail/{{club.id}}">{{club.attributes.name}}</a>
-    </td>
+  <tr *ngFor="let club of clubs" [class.table-active]="club === selectedClub" (click)="select(club)">
+    <td>{{club.attributes.name}}</td>
   </tr>
   </tbody>
 </table>

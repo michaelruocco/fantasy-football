@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Club } from './club';
-import { CLUBS } from './mock-clubs';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MessageService } from './message.service';
