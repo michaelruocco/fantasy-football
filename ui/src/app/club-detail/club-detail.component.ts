@@ -44,8 +44,8 @@ export class ClubDetailComponent implements OnInit {
   }
 
   loadPlayers(): void {
-    console.log('loading player page ' + (this.pageNumber - 1));
-    this.playerService.getClubPlayers(this.club.id, this.pageNumber - 1, this.pageSize).subscribe(object => this.updateClub(object));
+    console.log('loading player page ' + this.pageNumber);
+    this.playerService.getClubPlayers(this.club.id, this.pageNumber, this.pageSize).subscribe(object => this.updateClub(object));
   }
 
   updateClub(object): void {
