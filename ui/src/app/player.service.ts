@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Player } from './player';
+import { ClubPlayers } from './club-players';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MessageService } from './message.service';
@@ -17,9 +17,10 @@ export class PlayerService {
     private messageService: MessageService
   ) { }
 
-  getClubPlayers(clubId: number): Observable<Player[]> {
-    this.messageService.add('PlayerService: fetched club players');
-    return this.http.get(this.clubsUrl + clubId + "/players?pageSize=30").pipe(map(body => body["data"] as Player[]));
+  getClubPlayers(clubId, pageNumber, pageSize): Observable<ClubPlayers> {
+    var url = this.clubsUrl + clubId + '/players?pageNumber=' + pageNumber + '&pageSize=' + pageSize;
+    this.messageService.add('PlayerService: fetching club players ' + url);
+    return this.http.get(url).pipe(map(body => body as ClubPlayers));
   }
 
 }

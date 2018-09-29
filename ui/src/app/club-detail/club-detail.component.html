@@ -1,13 +1,14 @@
 <div *ngIf="club">
-  <h2>{{club.attributes.name}}</h2>
-  <div><span>id: </span>{{club.id}}</div>
+  <h1>{{club.attributes.name}}</h1>
+  <!--<div><span>id: </span>{{club.id}}</div>
   <div>
     <label>name:
       <input [(ngModel)]="club.attributes.name" placeholder="name">
     </label>
-  </div>
+  </div>-->
   <div>
-    <table class="table table-hover">
+    <ngb-pagination *ngIf="totalPages > 1" [collectionSize]="totalPlayers" [pageSize]="pageSize" [(page)]="pageNumber" [boundaryLinks]="true" [rotate]="true" (pageChange)="loadPlayers()"></ngb-pagination>
+    <table *ngIf="totalPlayers > 1" class="table table-hover">
       <thead class="thead-dark">
       <tr>
         <th scope="col">Name</th>
