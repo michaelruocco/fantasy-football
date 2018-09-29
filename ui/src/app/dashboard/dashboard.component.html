@@ -1,6 +1,6 @@
 <h2>Top Clubs</h2>
 <div class="grid grid-pad">
-  <a *ngFor="let club of clubs" class="col-1-4" routerLink="/detail/{{club.id}}">
+  <a *ngFor="let club of clubs" class="col-1-4" routerLink="/clubs/{{club.id}}">
     <div class="module club">
       <h4>{{club.attributes.name}}</h4>
     </div>

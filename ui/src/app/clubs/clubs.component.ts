@@ -25,7 +25,7 @@ export class ClubsComponent implements OnInit {
 
   select(club) {
     console.log(club.id)
-    this.router.navigate([`./detail/${club.id}`]);
+    this.router.navigate([`./clubs/${club.id}`]);
   };
 
 }
