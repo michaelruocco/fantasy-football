@@ -33,7 +33,7 @@ export class ClubDetailComponent implements OnInit {
 
   loadClub(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.pageSize = 5;
+    this.pageSize = 10;
     this.clubService.getClub(id).subscribe(club => this.setClub(club));
   }
 
