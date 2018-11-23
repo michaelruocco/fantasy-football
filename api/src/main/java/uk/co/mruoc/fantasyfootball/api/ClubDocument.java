@@ -15,7 +15,7 @@ public class ClubDocument implements JsonApiDocument {
     private ClubData data;
 
     public ClubDocument() {
-        // required by spring
+        // required by jackson
     }
 
     private ClubDocument(ClubDocumentBuilder builder) {
@@ -40,7 +40,7 @@ public class ClubDocument implements JsonApiDocument {
 
     @JsonIgnore
     public boolean hasId() {
-        return data.id != null;
+        return data != null && data.id != null;
     }
 
     @JsonIgnore

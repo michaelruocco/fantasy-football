@@ -14,7 +14,7 @@ public class DefaultClubClientTest {
     private static final String BASE_URL = "http://localhost:8080";
 
     private static final String JSON = ContentLoader.loadContentFromClasspath("/clubDocument.json");
-    private static final ClubDocument DOCUMENT = ExampleClubDocumentFactory.buildClubDocument1();
+    private static final ClubDocument DOCUMENT = new ClubDocument();
 
     private final FakeHttpClient httpClient = new DefaultFakeHttpClient();
     private final ClubClient client = new DefaultClubClient(BASE_URL, httpClient);

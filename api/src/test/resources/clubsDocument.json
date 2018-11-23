@@ -1,9 +1,9 @@
 {
   "meta": {
-    "totalPages": 3,
-    "totalClubs": 6,
-    "pageNumber": 1,
-    "pageSize": 2
+    "totalPages": 1,
+    "totalItems": 2,
+    "pageNumber": 3,
+    "pageSize": 4
   },
   "data": [
     {
@@ -42,10 +42,10 @@
     }
   ],
   "links": {
-    "self": "/clubs?pageNumber=1&pageSize=2",
-    "first": "/clubs?pageNumber=0&pageSize=2",
-    "last": "/clubs?pageNumber=2&pageSize=2",
-    "next": "/clubs?pageNumber=2&pageSize=2",
-    "previous": "/clubs?pageNumber=0&pageSize=2"
+    "self": "/self",
+    "first": "/first",
+    "last": "/last",
+    "next": "/next",
+    "previous": "/previous"
   }
 }

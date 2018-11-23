@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import uk.co.mruoc.fantasyfootball.api.ArrayDocument;
 import uk.co.mruoc.fantasyfootball.api.ClubDocument;
-import uk.co.mruoc.fantasyfootball.api.ClubsDocument;
-import uk.co.mruoc.fantasyfootball.api.PlayersDocument;
+import uk.co.mruoc.fantasyfootball.api.ClubDocument.ClubData;
+import uk.co.mruoc.fantasyfootball.api.PlayerDocument.PlayerData;
 import uk.co.mruoc.fantasyfootball.app.dao.Club;
 import uk.co.mruoc.fantasyfootball.app.dao.Player;
 import uk.co.mruoc.fantasyfootball.app.service.ClubService;
@@ -59,8 +60,9 @@ public class ClubController {
     }
 
     @GetMapping
-    public @ResponseBody ClubsDocument read(@RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
-                                            @RequestParam(name = "pageSize", defaultValue = DEFAULT_PAGE_SIZE_STRING) int pageSize) {
+    public @ResponseBody ArrayDocument<ClubData> read(
+            @RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
+            @RequestParam(name = "pageSize", defaultValue = DEFAULT_PAGE_SIZE_STRING) int pageSize) {
         final Page<Club> clubs = service.read(pageNumber, pageSize);
         return clubConverter.toDocument(clubs);
     }
@@ -72,7 +74,9 @@ public class ClubController {
     }
 
     @PutMapping("/{id}")
-    public @ResponseBody ResponseEntity<ClubDocument> update(@Valid @PathVariable("id") long id, @RequestBody final ClubDocument document) {
+    public @ResponseBody ResponseEntity<ClubDocument> update(
+            @Valid @PathVariable("id") long id,
+            @RequestBody final ClubDocument document) {
         final Club club = clubConverter.toClub(id, document);
         final Club updatedClub = service.update(club);
         ClubDocument updatedDocument = clubConverter.toDocument(updatedClub, DEFAULT_PAGE_SIZE);
@@ -80,10 +84,10 @@ public class ClubController {
     }
 
     @GetMapping("/{id}/players")
-    public @ResponseBody
-    PlayersDocument readPlayers(@PathVariable("id") long id,
-                                @RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
-                                @RequestParam(name = "pageSize", defaultValue = DEFAULT_PAGE_SIZE_STRING) int pageSize) {
+    public @ResponseBody ArrayDocument<PlayerData> readPlayers(
+            @PathVariable("id") long id,
+            @RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
+            @RequestParam(name = "pageSize", defaultValue = DEFAULT_PAGE_SIZE_STRING) int pageSize) {
         final Page<Player> players = service.readPlayersByClubId(id, pageNumber, pageSize);
         return playerConverter.toClubPlayersDocument(id, players);
     }

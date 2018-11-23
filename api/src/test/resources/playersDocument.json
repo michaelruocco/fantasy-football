@@ -1,10 +1,9 @@
 {
   "meta": {
-    "totalPages": 3,
-    "totalPlayers": 6,
-    "pageNumber": 1,
-    "pageSize": 2,
-    "clubId": 1234
+    "totalPages": 1,
+    "totalItems": 2,
+    "pageNumber": 3,
+    "pageSize": 4
   },
   "data": [
     {
@@ -57,10 +56,10 @@
     }
   ],
   "links": {
-    "self": "/clubs/1234/players?pageNumber=1&pageSize=2",
-    "first": "/clubs/1234/players?pageNumber=0&pageSize=2",
-    "last": "/clubs/1234/players?pageNumber=2&pageSize=2",
-    "next": "/clubs/1234/players?pageNumber=2&pageSize=2",
-    "previous": "/clubs/1234/players?pageNumber=0&pageSize=2"
+    "self": "/self",
+    "first": "/first",
+    "last": "/last",
+    "next": "/next",
+    "previous": "/previous"
   }
 }

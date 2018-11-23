@@ -3,7 +3,6 @@ package uk.co.mruoc.fantasyfootball.client;
 import org.junit.Test;
 import uk.co.mruoc.fantasyfootball.api.ClubDocument;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument;
-import uk.co.mruoc.fantasyfootball.api.example.ExampleClubDocumentFactory;
 import uk.co.mruoc.fantasyfootball.api.example.ExamplePlayerDocumentFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,7 +18,7 @@ public class DefaultFantasyFootballClientTest {
 
     @Test
     public void shouldCreateClub() {
-        ClubDocument document = ExampleClubDocumentFactory.buildClubDocument1();
+        ClubDocument document = new ClubDocument();
         given(clubClient.create(document)).willReturn(document);
 
         ClubDocument resultDocument = client.create(document);

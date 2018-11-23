@@ -15,7 +15,7 @@ public class PlayerDocument implements JsonApiDocument {
     private PlayerData data;
 
     public PlayerDocument() {
-        // required by spring
+        // required by jackson
     }
 
     private PlayerDocument(PlayerDocumentBuilder builder) {
@@ -50,7 +50,7 @@ public class PlayerDocument implements JsonApiDocument {
 
     @JsonIgnore
     public boolean hasId() {
-        return data.id != null;
+        return data != null && data.id != null;
     }
 
     @JsonIgnore
@@ -80,6 +80,9 @@ public class PlayerDocument implements JsonApiDocument {
 
     @JsonIgnore
     public Optional<Long> getClubId() {
+        if (data == null) {
+            return Optional.empty();
+        }
         return data.getClubId();
     }
 

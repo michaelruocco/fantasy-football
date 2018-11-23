@@ -2,10 +2,11 @@ package uk.co.mruoc.fantasyfootball.app.web;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
+import uk.co.mruoc.fantasyfootball.api.ArrayDocument;
+import uk.co.mruoc.fantasyfootball.api.ArrayDocument.ArrayDocumentBuilder;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument.PlayerData;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument.PlayerDocumentBuilder;
-import uk.co.mruoc.fantasyfootball.api.PlayersDocument;
 import uk.co.mruoc.fantasyfootball.api.PlayersDocument.PlayersDocumentBuilder;
 import uk.co.mruoc.fantasyfootball.app.dao.Club;
 import uk.co.mruoc.fantasyfootball.app.dao.Player;
@@ -17,6 +18,14 @@ import java.util.stream.Collectors;
 
 @Component
 public class PlayerConverter {
+
+    public ArrayDocument<PlayerData> toClubPlayersDocument(long clubId, Page<Player> page) {
+        return toPlayersDocument(new ClubPlayersLinkBuilder(clubId), page);
+    }
+
+    public ArrayDocument<PlayerData> toPlayersDocument(Page<Player> page) {
+        return toPlayersDocument(new AllPlayersLinkBuilder(), page);
+    }
 
     public PlayerDocument toDocument(Player player) {
         final PlayerDocumentBuilder builder = new PlayerDocumentBuilder()
@@ -35,53 +44,6 @@ public class PlayerConverter {
         return builder.build();
     }
 
-    public PlayersDocument toClubPlayersDocument(long clubId, Page<Player> page) {
-        final List<PlayerData> players = page.stream().map(player -> toDocument(player).getData()).collect(Collectors.toList());
-        PlayersDocumentBuilder builder = new PlayersDocumentBuilder()
-                .setClubId(clubId)
-                .setData(players)
-                .setTotalPlayers(page.getTotalElements())
-                .setPageNumber(page.getNumber())
-                .setPageSize(page.getSize())
-                .setTotalPages(page.getTotalPages())
-                .setSelfLink(PlayersLinkBuilder.build(clubId, page.getNumber(), page.getSize()))
-                .setFirstLink(PlayersLinkBuilder.build(clubId, 0, page.getSize()))
-                .setLastLink(PlayersLinkBuilder.build(clubId, calculateLastPage(page.getTotalPages()), page.getSize()));
-
-        if (page.getNumber() > 0) {
-            builder.setPreviousLink(PlayersLinkBuilder.build(clubId, page.getNumber() - 1, page.getSize()));
-        }
-
-        if (page.getNumber() < page.getTotalPages() - 1) {
-            builder.setNextLink(PlayersLinkBuilder.build(clubId, page.getNumber() + 1, page.getSize()));
-        }
-
-        return builder.build();
-    }
-
-    public PlayersDocument toPlayersDocument(Page<Player> page) {
-        final List<PlayerData> players = page.stream().map(player -> toDocument(player).getData()).collect(Collectors.toList());
-        PlayersDocumentBuilder builder = new PlayersDocumentBuilder()
-                .setData(players)
-                .setTotalPlayers(page.getTotalElements())
-                .setPageNumber(page.getNumber())
-                .setPageSize(page.getSize())
-                .setTotalPages(page.getTotalPages())
-                .setSelfLink(PlayersLinkBuilder.build(page.getNumber(), page.getSize()))
-                .setFirstLink(PlayersLinkBuilder.build(0, page.getSize()))
-                .setLastLink(PlayersLinkBuilder.build(calculateLastPage(page.getTotalPages()), page.getSize()));
-
-        if (page.getNumber() > 0) {
-            builder.setPreviousLink(PlayersLinkBuilder.build(page.getNumber() - 1, page.getSize()));
-        }
-
-        if (page.getNumber() < page.getTotalPages() - 1) {
-            builder.setNextLink(PlayersLinkBuilder.build(page.getNumber() + 1, page.getSize()));
-        }
-
-        return builder.build();
-    }
-
     public Player toPlayer(long id, PlayerDocument document) {
         final Player player = toPlayer(document);
         player.setId(id);
@@ -97,6 +59,33 @@ public class PlayerConverter {
         player.setValue(document.getValue());
         player.setClub(extractClub(document));
         return player;
+    }
+
+    private ArrayDocument<PlayerData> toPlayersDocument(PlayersLinkBuilder linkBuilder, Page<Player> page) {
+        ArrayDocumentBuilder<PlayerData> builder = buildPlayersDocumentBuilder(page)
+                .setSelfLink(linkBuilder.build(page.getNumber(), page.getSize()))
+                .setFirstLink(linkBuilder.build(0, page.getSize()))
+                .setLastLink(linkBuilder.build(calculateLastPage(page.getTotalPages()), page.getSize()));
+
+        if (page.getNumber() > 0) {
+            builder.setPreviousLink(linkBuilder.build(page.getNumber() - 1, page.getSize()));
+        }
+
+        if (page.getNumber() < page.getTotalPages() - 1) {
+            builder.setNextLink(linkBuilder.build(page.getNumber() + 1, page.getSize()));
+        }
+
+        return builder.build();
+    }
+
+    private ArrayDocumentBuilder<PlayerData> buildPlayersDocumentBuilder(Page<Player> page) {
+        final List<PlayerData> players = page.stream().map(player -> toDocument(player).getData()).collect(Collectors.toList());
+        return new PlayersDocumentBuilder()
+                .setData(players)
+                .setTotalItems(page.getTotalElements())
+                .setPageNumber(page.getNumber())
+                .setPageSize(page.getSize())
+                .setTotalPages(page.getTotalPages());
     }
 
     private Club extractClub(PlayerDocument document) {

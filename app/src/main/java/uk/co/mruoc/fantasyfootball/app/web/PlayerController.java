@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import uk.co.mruoc.fantasyfootball.api.PlayersDocument;
+import uk.co.mruoc.fantasyfootball.api.ArrayDocument;
+import uk.co.mruoc.fantasyfootball.api.PlayerDocument.PlayerData;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument;
 import uk.co.mruoc.fantasyfootball.app.dao.Player;
 import uk.co.mruoc.fantasyfootball.app.service.PlayerService;
@@ -51,7 +52,9 @@ public class PlayerController {
     }
 
     @PutMapping("/{id}")
-    public @ResponseBody ResponseEntity<PlayerDocument> update(@Valid @PathVariable("id") long id, @RequestBody final PlayerDocument document) {
+    public @ResponseBody ResponseEntity<PlayerDocument> update(
+            @Valid @PathVariable("id") long id,
+            @RequestBody final PlayerDocument document) {
         final Player player = converter.toPlayer(id, document);
         final Player updatedPlayer = service.update(player);
         PlayerDocument updatedDocument = converter.toDocument(updatedPlayer);
@@ -65,9 +68,9 @@ public class PlayerController {
     }
 
     @GetMapping
-    public @ResponseBody
-    PlayersDocument read(@RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
-                         @RequestParam(name = "pageSize", defaultValue = DEFAULT_PAGE_SIZE_STRING) int pageSize) {
+    public @ResponseBody ArrayDocument<PlayerData> read(
+            @RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
+            @RequestParam(name = "pageSize", defaultValue = DEFAULT_PAGE_SIZE_STRING) int pageSize) {
         final Page<Player> players = service.read(pageNumber, pageSize);
         return converter.toPlayersDocument(players);
     }

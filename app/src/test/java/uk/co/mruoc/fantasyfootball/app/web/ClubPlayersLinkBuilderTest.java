@@ -7,15 +7,17 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PlayerLinkBuilderTest {
+public class ClubPlayersLinkBuilderTest {
 
     private static final long CLUB_ID = 2222;
     private static final int PAGE_NUMBER = 0;
     private static final int PAGE_SIZE = 10;
 
+    private final PlayersLinkBuilder linkBuilder = new ClubPlayersLinkBuilder(CLUB_ID);
+
     @Test
     public void shouldReturnClubPlayersPaginatedEndpointWithNoHostnameIfCurrentRequestNotSet() {
-        final String link = PlayersLinkBuilder.build(CLUB_ID, PAGE_NUMBER, PAGE_SIZE);
+        final String link = linkBuilder.build(PAGE_NUMBER, PAGE_SIZE);
 
         assertThat(link).isEqualTo("/clubs/2222/players?pageNumber=0&pageSize=10");
     }
@@ -25,29 +27,9 @@ public class PlayerLinkBuilderTest {
         try {
             RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(new MockHttpServletRequest()));
 
-            final String link = PlayersLinkBuilder.build(CLUB_ID, PAGE_NUMBER, PAGE_SIZE);
+            final String link = linkBuilder.build(PAGE_NUMBER, PAGE_SIZE);
 
             assertThat(link).isEqualTo("http://localhost/clubs/2222/players?pageNumber=0&pageSize=10");
-        } finally {
-            RequestContextHolder.resetRequestAttributes();
-        }
-    }
-
-    @Test
-    public void shouldReturnAllPlayersPaginatedEndpointWithNoHostnameIfCurrentRequestNotSet() {
-        final String link = PlayersLinkBuilder.build(PAGE_NUMBER, PAGE_SIZE);
-
-        assertThat(link).isEqualTo("/players?pageNumber=0&pageSize=10");
-    }
-
-    @Test
-    public void shouldReturnAllPlayersPaginatedEndpoint() {
-        try {
-            RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(new MockHttpServletRequest()));
-
-            final String link = PlayersLinkBuilder.build(PAGE_NUMBER, PAGE_SIZE);
-
-            assertThat(link).isEqualTo("http://localhost/players?pageNumber=0&pageSize=10");
         } finally {
             RequestContextHolder.resetRequestAttributes();
         }

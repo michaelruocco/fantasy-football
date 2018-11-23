@@ -3,9 +3,7 @@ package uk.co.mruoc.fantasyfootball.api;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
-import uk.co.mruoc.fantasyfootball.api.example.ClubData;
-import uk.co.mruoc.fantasyfootball.api.example.ExampleClubDocumentFactory;
-import uk.co.mruoc.fantasyfootball.api.example.ExampleClubData1;
+import uk.co.mruoc.fantasyfootball.api.ClubDocument.ClubDocumentBuilder;
 import uk.co.mruoc.file.ContentLoader;
 
 import java.io.IOException;
@@ -14,66 +12,82 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ClubDocumentTest {
 
-    private static final ClubData CLUB_DATA = new ExampleClubData1();
-    private static final ClubDocument DOCUMENT = ExampleClubDocumentFactory.buildClubDocument(CLUB_DATA);
-    private static final String JSON = ContentLoader.loadContentFromClasspath("/clubDocument.json");
+    private static final String JSON_PATH = "/clubDocument.json";
+    private static final String JSON = ContentLoader.loadContentFromClasspath(JSON_PATH);
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    private final ObjectMapper mapper = new ObjectMapper();
+    private static final long ID = 1234;
+    private static final String NAME = "Fake Club 1";
+    private static final String CLUB_PLAYERS_LINK = String.format("/clubs/%s/players?pageNumber=0&pageSize=10", ID);
+    private static final String SELF_LINK = String.format("/clubs/%s", ID);
 
     @Test
-    public void shouldSerializeToJsonCorrectly() throws JsonProcessingException  {
-        final String json = mapper.writeValueAsString(DOCUMENT);
+    public void shouldSerializeToJsonCorrectly() throws JsonProcessingException {
+        final ClubDocument document = buildClubDocument();
+
+        final String json = MAPPER.writeValueAsString(document);
 
         assertThat(json).isEqualToIgnoringWhitespace(JSON);
     }
 
     @Test
     public void shouldDeserializeFromJsonCorrectly() throws IOException {
-        final ClubDocument document = mapper.readValue(JSON, ClubDocument.class);
+        final ClubDocument expectedDocument = buildClubDocument();
 
-        assertThat(document).isEqualToComparingFieldByFieldRecursively(DOCUMENT);
+        final ClubDocument document = MAPPER.readValue(JSON, ClubDocument.class);
+
+        assertThat(document).isEqualToComparingFieldByFieldRecursively(expectedDocument);
     }
 
     @Test
     public void shouldReturnId() {
-        final ClubDocument document = ExampleClubDocumentFactory.buildClubDocument(CLUB_DATA);
+        final ClubDocument document = buildClubDocument();
 
-        assertThat(document.getId()).isEqualTo(CLUB_DATA.getId());
+        assertThat(document.getId()).isEqualTo(ID);
     }
 
     @Test
     public void shouldReturnTrueIfHasId() {
-        final ClubDocument document = ExampleClubDocumentFactory.buildClubDocument(CLUB_DATA);
+        final ClubDocument document = buildClubDocument();
 
         assertThat(document.hasId()).isTrue();
     }
 
     @Test
     public void shouldReturnFalseIfDoesNotHaveId() {
-        final ClubDocument document = ExampleClubDocumentFactory.buildEmptyClubDocument();
+        final ClubDocument document = new ClubDocument();
 
         assertThat(document.hasId()).isFalse();
     }
 
     @Test
     public void shouldReturnName() {
-        final ClubDocument document = ExampleClubDocumentFactory.buildClubDocument(CLUB_DATA);
+        final ClubDocument document = buildClubDocument();
 
-        assertThat(document.getName()).isEqualTo(CLUB_DATA.getName());
+        assertThat(document.getName()).isEqualTo(NAME);
     }
 
     @Test
     public void shouldReturnSelfLink() {
-        final ClubDocument document = ExampleClubDocumentFactory.buildClubDocument(CLUB_DATA);
+        final ClubDocument document = buildClubDocument();
 
-        assertThat(document.getSelfLink()).isEqualTo("/clubs/" + CLUB_DATA.getId());
+        assertThat(document.getSelfLink()).isEqualTo(SELF_LINK);
     }
 
     @Test
     public void shouldReturnClubPlayersLink() {
-        final ClubDocument document = ExampleClubDocumentFactory.buildClubDocument(CLUB_DATA);
+        final ClubDocument document = buildClubDocument();
 
-        assertThat(document.getClubPlayersLink()).isEqualTo("/clubs/" + CLUB_DATA.getId() + "/players?pageNumber=0&pageSize=10");
+        assertThat(document.getClubPlayersLink()).isEqualTo(CLUB_PLAYERS_LINK);
+    }
+
+    private static ClubDocument buildClubDocument() {
+        return new ClubDocumentBuilder()
+                .setId(ID)
+                .setName(NAME)
+                .setClubPlayersLink(CLUB_PLAYERS_LINK)
+                .setSelfLink(SELF_LINK)
+                .build();
     }
 
 }
