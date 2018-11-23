@@ -30,10 +30,6 @@ public class PlayerController {
     private final PlayerConverter converter;
     private final ResponseBuilder<PlayerDocument> responseBuilder = new ResponseBuilder<>();
 
-    public PlayerController(PlayerService service) {
-        this(service, new PlayerConverter());
-    }
-
     @Autowired
     public PlayerController(PlayerService service, PlayerConverter converter) {
         this.service = service;

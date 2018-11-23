@@ -55,7 +55,10 @@ public class PlayerDocument implements JsonApiDocument {
 
     @JsonIgnore
     public Long getId() {
-        return data.id;
+        if (hasId()) {
+            return data.id;
+        }
+        return null;
     }
 
     @JsonIgnore
