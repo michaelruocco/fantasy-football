@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Club } from '../club';
 import { ClubService } from '../club.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,7 +12,7 @@ export class DashboardComponent implements OnInit {
 
   clubs: Club[] = [];
 
-  constructor(private clubService: ClubService) { }
+  constructor(public auth: AuthService, private clubService: ClubService) { }
 
   ngOnInit() {
     this.getClubs();

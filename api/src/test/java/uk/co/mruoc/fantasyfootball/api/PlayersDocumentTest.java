@@ -82,7 +82,7 @@ public class PlayersDocumentTest {
     }
 
     @Test
-    public void shouldReturnTotalPlayers() {
+    public void shouldReturnTotalItems() {
         final ArrayDocument<PlayerData> document = buildPlayersDocument();
 
         assertThat(document.getTotalItems()).isEqualTo(TOTAL_ITEMS);

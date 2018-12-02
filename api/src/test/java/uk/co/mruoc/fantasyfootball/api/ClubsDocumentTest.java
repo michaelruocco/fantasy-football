@@ -66,7 +66,7 @@ public class ClubsDocumentTest {
     }
 
     @Test
-    public void shouldReturnTotalClubs() {
+    public void shouldReturnTotalItems() {
         final ArrayDocument<ClubData> document = buildClubsDocument();
 
         assertThat(document.getTotalItems()).isEqualTo(TOTAL_ITEMS);

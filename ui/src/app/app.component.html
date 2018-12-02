@@ -1,5 +1,3 @@
-
-
 <div class="container">
   <div class="navbar navbar-dark bg-dark navbar-fixed-top navbar-expand-lg">
 
@@ -18,6 +16,17 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="http://localhost:8080/swagger-ui.html">API</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li *ngIf="!authService.isAuthenticated()">
+          <button class="btn btn-light btn-margin" (click)="authService.login()">Log In</button>
+        </li>
+        <li class="nav-item" *ngIf="authService.isAuthenticated()">
+          <a class="nav-link" routerLink="/profile"><img src="{{profile?.picture}}" alt="{{profile?.nickname}}" title="{{profile?.nickname}}" style="width:20px; height:20px; border-radius:75%; margin:0px;"></a>
+        </li>
+        <li *ngIf="authService.isAuthenticated()">
+          <button class="btn btn-light btn-margin" (click)="authService.logout()">Log Out</button>
         </li>
       </ul>
     </div>

@@ -51,7 +51,7 @@ export class ClubDetailComponent implements OnInit {
   updateClub(object): void {
     this.players = object.data;
 
-    this.totalPlayers = object.meta.totalPlayers;
+    this.totalPlayers = object.meta.totalItems;
     this.pageSize = object.meta.pageSize;
     this.totalPages = object.meta.totalPages;
   }

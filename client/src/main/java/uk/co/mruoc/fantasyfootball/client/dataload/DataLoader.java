@@ -12,7 +12,7 @@ public class DataLoader {
     private final ClubCsvLoader clubCsvLoader = new ClubCsvLoader();
     private final PlayerCsvLoader playerCsvLoader = new PlayerCsvLoader();
 
-    private final FantasyFootballClient client = new DefaultFantasyFootballClient("https://mruoc-fantasy-football.herokuapp.com");
+    private final FantasyFootballClient client = new DefaultFantasyFootballClient("http://localhost:8080");
 
     public boolean load() {
         loadClubs();

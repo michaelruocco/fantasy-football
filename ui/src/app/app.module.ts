@@ -9,13 +9,17 @@ import { ClubsComponent } from './clubs/clubs.component';
 import { ClubDetailComponent } from './club-detail/club-detail.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { CallbackComponent } from './callback/callback.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ClubsComponent,
     ClubDetailComponent,
-    DashboardComponent
+    DashboardComponent,
+    CallbackComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
