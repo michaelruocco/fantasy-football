@@ -15,7 +15,7 @@ export class AuthService {
     clientID: '8OUsTwlZ9T4qv5LgfAs7hFFegBwIh5oT',
     domain: 'michaelruocco.eu.auth0.com',
     responseType: 'token id_token',
-    redirectUri: 'http://localhost:4200/login/callback',
+    redirectUri: 'https://mruoc-fantasy-football.herokuapp.com/login/callback',
     scope: 'openid profile'
   });
 

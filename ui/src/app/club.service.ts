@@ -9,7 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class ClubService {
 
-  private clubsUrl = 'http://localhost:8080/clubs';
+  private clubsUrl = 'https://mruoc-fantasy-football-backend.herokuapp.com/clubs';
 
   constructor(private http: HttpClient) { }
 
