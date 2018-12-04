@@ -43,6 +43,7 @@ ng serve --open
 
 ## Next steps
 
-1. json api error responses from server
-2. acceptance / integration testing
-3. error handling in client
+1. add environment config in ui
+2. json api error responses from server
+3. acceptance / integration testing
+4. error handling in client
