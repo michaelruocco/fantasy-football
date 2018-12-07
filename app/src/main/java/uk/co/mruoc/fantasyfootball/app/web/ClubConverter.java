@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class ClubConverter {
 
     public ArrayDocument<ClubData> toDocument(final Page<Club> page) {
-        final List<ClubData> clubs = page.stream().map(player -> toDocument(player, 10).getData()).collect(Collectors.toList());
+        final List<ClubData> clubs = page.stream().map(player -> toDocument(player, page.getSize()).getData()).collect(Collectors.toList());
         ArrayDocumentBuilder<ClubData> builder = new ClubsDocumentBuilder()
                 .setData(clubs)
                 .setTotalItems(page.getTotalElements())
@@ -32,6 +32,7 @@ public class ClubConverter {
             builder.setPreviousLink(ClubLinkBuilder.build(page.getNumber() - 1, page.getSize()));
         }
 
+        System.out.println(page.getNumber() + " " + page.getTotalPages());
         if (page.getNumber() < page.getTotalPages() - 1) {
             builder.setNextLink(ClubLinkBuilder.build(page.getNumber() + 1, page.getSize()));
         }

@@ -73,6 +73,31 @@ public abstract class ArrayDocument<T> {
         return meta.getPageSize();
     }
 
+    @JsonIgnore
+    public String getSelfLink() {
+        return links.getSelf();
+    }
+
+    @JsonIgnore
+    public String getFirstLink() {
+        return links.getFirst();
+    }
+
+    @JsonIgnore
+    public String getLastLink() {
+        return links.getLast();
+    }
+
+    @JsonIgnore
+    public String getNextLink() {
+        return links.getNext();
+    }
+
+    @JsonIgnore
+    public String getPreviousLink() {
+        return links.getPrevious();
+    }
+
     private static class Meta {
 
         private long totalPages;
