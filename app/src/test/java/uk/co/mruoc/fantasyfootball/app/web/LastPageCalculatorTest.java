@@ -32,5 +32,5 @@ public class LastPageCalculatorTest {
 
         assertThat(lastPage).isEqualTo(totalPages - 1);
     }
-    
+
 }
