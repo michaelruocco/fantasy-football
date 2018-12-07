@@ -63,21 +63,6 @@ public class ClubServiceTest {
     }
 
     @Test
-    public void shouldThrowExceptionIfClubToCreateAlreadyExists() {
-        final Club club = mock(Club.class);
-        given(club.getId()).willReturn(CLUB_ID);
-        given(club.hasId()).willReturn(true);
-        given(clubRepository.existsById(club.getId())).willReturn(true);
-        final String expectedMessage = String.format("club with id %d already exists", CLUB_ID);
-
-        final Throwable thrown = catchThrowable(() -> service.create(club));
-
-        assertThat(thrown).isInstanceOf(ClubAlreadyExistsException.class)
-                .hasNoCause()
-                .hasMessage(expectedMessage);
-    }
-
-    @Test
     public void shouldThrowExceptionIfClubUpdatedWithNoId() {
         final Club club = mock(Club.class);
 

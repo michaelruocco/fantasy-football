@@ -1,16 +1,9 @@
 package uk.co.mruoc.fantasyfootball.app.service;
 
-public class PlayerNotFoundException extends RuntimeException {
-
-    private final long id;
+public class PlayerNotFoundException extends AbstractNotFoundException {
 
     public PlayerNotFoundException(long id) {
-        super("player with id " + id + " not found");
-        this.id = id;
-    }
-
-    public long getId() {
-        return id;
+        super(String.format("player with id %s not found", id), id);
     }
 
 }

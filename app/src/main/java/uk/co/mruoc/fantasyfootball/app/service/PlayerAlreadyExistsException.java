@@ -1,9 +1,9 @@
 package uk.co.mruoc.fantasyfootball.app.service;
 
-public class PlayerAlreadyExistsException extends RuntimeException {
+public class PlayerAlreadyExistsException extends AbstractAlreadyExistsException {
 
     public PlayerAlreadyExistsException(long id) {
-        super("player with id " + id + " already exists");
+        super(String.format("player with id %s already exists", id), id);
     }
 
 }

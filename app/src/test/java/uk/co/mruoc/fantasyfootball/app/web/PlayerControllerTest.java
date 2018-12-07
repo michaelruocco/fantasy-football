@@ -22,7 +22,6 @@ import static org.mockito.Mockito.mock;
 
 public class PlayerControllerTest {
 
-
     private static final long ID = 1133;
     private static final String FIRST_NAME = "Joe";
     private static final String LAST_NAME = "Bloggs";
@@ -84,7 +83,6 @@ public class PlayerControllerTest {
         final ResponseEntity<PlayerDocument> entity = controller.create(document);
 
         final HttpHeaders headers = entity.getHeaders();
-
         assertThat(headers.get("Location")).containsExactly("/players/1133");
     }
 
@@ -122,7 +120,6 @@ public class PlayerControllerTest {
 
         assertThat(resultDocument).isEqualTo(readDocument);
     }
-
 
     @Test
     public void shouldReadPlayers() {

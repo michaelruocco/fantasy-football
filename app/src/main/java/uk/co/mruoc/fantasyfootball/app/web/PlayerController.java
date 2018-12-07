@@ -38,12 +38,13 @@ public class PlayerController {
 
     @PostMapping
     public @ResponseBody ResponseEntity<PlayerDocument> create(@Valid @RequestBody final PlayerDocument document) {
-        if (document.hasId() && service.exists(document.getId())) {
-            return update(document.getId(), document);
-        }
+        final boolean exists = document.hasId() && service.exists(document.getId());
         final Player player = converter.toPlayer(document);
         final Player createdPlayer = service.create(player);
         PlayerDocument createdDocument = converter.toDocument(createdPlayer);
+        if (exists) {
+            return responseBuilder.buildUpdatedResponse(createdDocument);
+        }
         return responseBuilder.buildCreatedResponse(createdDocument);
     }
 

@@ -37,9 +37,6 @@ public class ClubService {
     }
 
     public Club create(final Club club) {
-        if (club.hasId() && clubRepository.existsById(club.getId())) {
-            throw new ClubAlreadyExistsException(club.getId());
-        }
         return clubRepository.save(club);
     }
 

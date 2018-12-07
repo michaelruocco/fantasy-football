@@ -60,21 +60,6 @@ public class PlayerServiceTest {
     }
 
     @Test
-    public void shouldThrowExceptionIfPlayerToCreateAlreadyExists() {
-        final Player player = mock(Player.class);
-        given(player.getId()).willReturn(ID);
-        given(player.hasId()).willReturn(true);
-        given(repository.existsById(player.getId())).willReturn(true);
-        final String expectedMessage = String.format("player with id %d already exists", ID);
-
-        final Throwable thrown = catchThrowable(() -> service.create(player));
-
-        assertThat(thrown).isInstanceOf(PlayerAlreadyExistsException.class)
-                .hasNoCause()
-                .hasMessage(expectedMessage);
-    }
-
-    @Test
     public void shouldThrowExceptionIfPlayerUpdatedWithNoId() {
         final Player player = mock(Player.class);
 

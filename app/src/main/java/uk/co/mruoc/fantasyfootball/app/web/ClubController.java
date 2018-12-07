@@ -36,10 +36,6 @@ public class ClubController {
     private final PlayerConverter playerConverter;
     private final ResponseBuilder<ClubDocument> responseBuilder = new ResponseBuilder<>();
 
-    public ClubController(ClubService service) {
-        this(service, new ClubConverter(), new PlayerConverter());
-    }
-
     @Autowired
     public ClubController(ClubService service, ClubConverter clubConverter, PlayerConverter playerConverter) {
         this.service = service;
@@ -50,12 +46,13 @@ public class ClubController {
     @PostMapping
     @ApiOperation(value = "Create a club", response = ClubDocument.class)
     public @ResponseBody ResponseEntity<ClubDocument> create(@ApiParam(value = "ClubDocument", required = true, name = "ClubDocument") @Valid @RequestBody final ClubDocument document) {
-        if (document.hasId() && service.exists(document.getId())) {
-            return update(document.getId(), document);
-        }
+        final boolean exists = document.hasId() && service.exists(document.getId());
         final Club club = clubConverter.toClub(document);
         final Club createdClub = service.create(club);
         final ClubDocument createdDocument = clubConverter.toDocument(createdClub, DEFAULT_PAGE_SIZE);
+        if (exists) {
+            return responseBuilder.buildUpdatedResponse(createdDocument);
+        }
         return responseBuilder.buildCreatedResponse(createdDocument);
     }
 

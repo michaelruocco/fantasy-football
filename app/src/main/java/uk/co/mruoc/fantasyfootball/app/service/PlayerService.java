@@ -35,9 +35,6 @@ public class PlayerService {
     }
 
     public Player create(final Player player) {
-        if (player.hasId() && repository.existsById(player.getId())) {
-            throw new PlayerAlreadyExistsException(player.getId());
-        }
         return repository.save(player);
     }
 

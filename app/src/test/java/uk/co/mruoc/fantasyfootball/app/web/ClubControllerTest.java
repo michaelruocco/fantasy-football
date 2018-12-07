@@ -1,8 +1,6 @@
 package uk.co.mruoc.fantasyfootball.app.web;
 
-import org.junit.Ignore;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -14,60 +12,52 @@ import uk.co.mruoc.fantasyfootball.api.ClubDocument;
 import uk.co.mruoc.fantasyfootball.api.ClubDocument.ClubData;
 import uk.co.mruoc.fantasyfootball.api.ClubsDocument;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument.PlayerData;
-import uk.co.mruoc.fantasyfootball.api.PlayersDocument;
+import uk.co.mruoc.fantasyfootball.api.PlayersDocument.PlayersDocumentBuilder;
 import uk.co.mruoc.fantasyfootball.app.dao.Club;
 import uk.co.mruoc.fantasyfootball.app.dao.Player;
 import uk.co.mruoc.fantasyfootball.app.service.ClubService;
 
 import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
-@Ignore
 public class ClubControllerTest {
 
+    private static final int DEFAULT_PAGE_SIZE = 10;
+    private static final int PAGE_NUMBER = 1;
+
+    private static final long ID = 54321L;
+    private static final String NAME = "Test Club";
+    private static final String SELF_LINK = "/club/" + ID;
+
     private final ClubService service = mock(ClubService.class);
+    private final ClubConverter clubConverter = mock(ClubConverter.class);
+    private final PlayerConverter playerConverter = mock(PlayerConverter.class);
 
-    private final ClubDocument document = new ClubDocument();
-    private final Club club = new Club(document.getId(), document.getName());
+    private final ClubDocument document = buildClubDocument();
+    private final Club club = new Club();
 
-    private final ClubController controller = new ClubController(service);
-
-    @Test
-    public void shouldConvertDocumentToClubOnCreate() {
-        final ArgumentCaptor<Club> clubCaptor = ArgumentCaptor.forClass(Club.class);
-        given(service.create(any(Club.class))).willReturn(club);
-
-        controller.create(document);
-
-        verify(service).create(clubCaptor.capture());
-        assertThat(clubCaptor.getValue()).isEqualToComparingFieldByFieldRecursively(club);
-    }
+    private final ClubController controller = new ClubController(service, clubConverter, playerConverter);
 
     @Test
-    public void shouldConvertCreatedClubIntoDocumentOnCreate() {
-        given(service.create(any(Club.class))).willReturn(club);
+    public void shouldCreateClub() {
+        given(clubConverter.toClub(document)).willReturn(club);
+        final Club createdClub = new Club();
+        given(service.create(club)).willReturn(createdClub);
+        final ClubDocument createdDocument = buildClubDocument();
+        given(clubConverter.toDocument(createdClub, DEFAULT_PAGE_SIZE)).willReturn(createdDocument);
 
         final ResponseEntity<ClubDocument> entity = controller.create(document);
 
-        assertThat(entity.getBody()).isEqualToComparingFieldByFieldRecursively(document);
-    }
-
-    @Test
-    public void shouldConvertCreatedClubIntoDocumentOnUpdate() {
-        given(service.update(any(Club.class))).willReturn(club);
-
-        final ResponseEntity<ClubDocument> entity = controller.update(document.getId(), document);
-
-        assertThat(entity.getBody()).isEqualToComparingFieldByFieldRecursively(document);
+        assertThat(entity.getBody()).isEqualTo(createdDocument);
     }
 
     @Test
     public void shouldReturnCreatedStatusCodeOnCreate() {
-        given(service.create(any(Club.class))).willReturn(club);
+        given(clubConverter.toClub(document)).willReturn(club);
+        given(service.create(club)).willReturn(club);
+        given(clubConverter.toDocument(club, DEFAULT_PAGE_SIZE)).willReturn(document);
 
         final ResponseEntity<ClubDocument> entity = controller.create(document);
 
@@ -76,8 +66,10 @@ public class ClubControllerTest {
 
     @Test
     public void shouldReturnOkStatusCodeOnCreateWithIdThatAlreadyExists() {
-        given(service.exists(club.getId())).willReturn(true);
-        given(service.update(any(Club.class))).willReturn(club);
+        given(clubConverter.toClub(document)).willReturn(club);
+        given(service.exists(document.getId())).willReturn(true);
+        given(service.create(club)).willReturn(club);
+        given(clubConverter.toDocument(club, DEFAULT_PAGE_SIZE)).willReturn(document);
 
         final ResponseEntity<ClubDocument> entity = controller.create(document);
 
@@ -86,29 +78,34 @@ public class ClubControllerTest {
 
     @Test
     public void shouldReturnLocationHeaderWithNewResourceUrlOnCreate() {
-        given(service.create(any(Club.class))).willReturn(club);
+        given(clubConverter.toClub(document)).willReturn(club);
+        given(service.create(club)).willReturn(club);
+        given(clubConverter.toDocument(club, DEFAULT_PAGE_SIZE)).willReturn(document);
 
         final ResponseEntity<ClubDocument> entity = controller.create(document);
 
         final HttpHeaders headers = entity.getHeaders();
-
-        assertThat(headers.get("Location")).containsExactly("/clubs/1234");
+        assertThat(headers.get("Location")).containsExactly(SELF_LINK);
     }
 
     @Test
     public void shouldConvertDocumentToClubOnUpdate() {
-        final ArgumentCaptor<Club> clubCaptor = ArgumentCaptor.forClass(Club.class);
-        given(service.update(any(Club.class))).willReturn(club);
+        given(clubConverter.toClub(document.getId(), document)).willReturn(club);
+        final Club updatedClub = new Club();
+        given(service.update(club)).willReturn(updatedClub);
+        final ClubDocument updatedDocument = buildClubDocument();
+        given(clubConverter.toDocument(updatedClub, DEFAULT_PAGE_SIZE)).willReturn(updatedDocument);
 
-        controller.update(document.getId(), document);
+        final ResponseEntity<ClubDocument> entity = controller.update(document.getId(), document);
 
-        verify(service).update(clubCaptor.capture());
-        assertThat(clubCaptor.getValue()).isEqualToComparingFieldByFieldRecursively(club);
+        assertThat(entity.getBody()).isEqualTo(updatedDocument);
     }
 
     @Test
     public void shouldReturnOkStatusCodeOnUpdate() {
-        given(service.update(any(Club.class))).willReturn(club);
+        given(clubConverter.toClub(document.getId(), document)).willReturn(club);
+        given(service.update(club)).willReturn(club);
+        given(clubConverter.toDocument(club, DEFAULT_PAGE_SIZE)).willReturn(document);
 
         final ResponseEntity<ClubDocument> entity = controller.update(document.getId(), document);
 
@@ -118,44 +115,58 @@ public class ClubControllerTest {
     @Test
     public void shouldReadClub() {
         given(service.read(document.getId())).willReturn(club);
+        final ClubDocument readDocument = new ClubDocument();
+        given(clubConverter.toDocument(club, DEFAULT_PAGE_SIZE)).willReturn(readDocument);
 
         final ClubDocument resultDocument = controller.read(document.getId());
 
-        assertThat(resultDocument).isEqualToComparingFieldByFieldRecursively(document);
+        assertThat(resultDocument).isEqualTo(readDocument);
     }
 
     @Test
     public void shouldReadClubPlayers() {
-        final PlayersDocument expectedDocument = new PlayersDocument();
-        final Page<Player> page = toPage(expectedDocument);
-        final long clubId = 1234;
-        final int pageNumber = expectedDocument.getPageNumber();
-        final int pageSize = expectedDocument.getPageSize();
-        given(service.readPlayersByClubId(clubId, pageNumber, pageSize)).willReturn(page);
+        final ArrayDocument<PlayerData> expectedDocument = new PlayersDocumentBuilder()
+                .setPageNumber(PAGE_NUMBER)
+                .setPageSize(DEFAULT_PAGE_SIZE)
+                .build();
+        final Page<Player> page = toPlayerPage(expectedDocument);
+        given(service.readPlayersByClubId(ID, PAGE_NUMBER, DEFAULT_PAGE_SIZE)).willReturn(page);
+        given(playerConverter.toClubPlayersDocument(ID, page)).willReturn(expectedDocument);
 
-        final ArrayDocument<PlayerData> resultDocument = controller.readPlayers(clubId, pageNumber, pageSize);
+        final ArrayDocument<PlayerData> resultDocument = controller.readPlayers(ID, PAGE_NUMBER, DEFAULT_PAGE_SIZE);
 
-        assertThat(resultDocument).isEqualToComparingFieldByFieldRecursively(expectedDocument);
+        assertThat(resultDocument).isEqualTo(expectedDocument);
     }
 
     @Test
     public void shouldReadClubs() {
-        final ClubsDocument expectedDocument = new ClubsDocument();
-        final Page<Club> page = toPage(expectedDocument);
-        final int pageNumber = expectedDocument.getPageNumber();
-        final int pageSize = expectedDocument.getPageSize();
-        given(service.read(pageNumber, pageSize)).willReturn(page);
+        final ArrayDocument<ClubData> expectedDocument = new ClubsDocument.ClubsDocumentBuilder()
+                .setPageNumber(PAGE_NUMBER)
+                .setPageSize(DEFAULT_PAGE_SIZE)
+                .build();
+        final Page<Club> page = toClubPage(expectedDocument);
+        given(service.read(PAGE_NUMBER, DEFAULT_PAGE_SIZE)).willReturn(page);
+        given(clubConverter.toDocument(page)).willReturn(expectedDocument);
 
-        final ArrayDocument<ClubData> resultDocument = controller.read(pageNumber, pageSize);
+        final ArrayDocument<ClubData> resultDocument = controller.read(PAGE_NUMBER, DEFAULT_PAGE_SIZE);
 
-        assertThat(resultDocument).isEqualToComparingFieldByFieldRecursively(expectedDocument);
+        assertThat(resultDocument).isEqualTo(expectedDocument);
     }
 
-    private static Page<Player> toPage(final PlayersDocument document) {
+    private static ClubDocument buildClubDocument() {
+        return new ClubDocument.ClubDocumentBuilder()
+                .setId(ID)
+                .setName(NAME)
+                .setSelfLink(SELF_LINK)
+                .build();
+    }
+
+
+    private static Page<Player> toPlayerPage(final ArrayDocument<PlayerData> document) {
         return buildEmptyPlayerPage(document.getPageNumber(), document.getPageSize(), document.getTotalPages());
     }
 
-    private static Page<Club> toPage(final ClubsDocument document) {
+    private static Page<Club> toClubPage(final ArrayDocument<ClubData> document) {
         return buildEmptyClubPage(document.getPageNumber(), document.getPageSize(), document.getTotalPages());
     }
 
