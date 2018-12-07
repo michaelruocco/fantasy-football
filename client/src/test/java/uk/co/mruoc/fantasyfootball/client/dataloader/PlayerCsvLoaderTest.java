@@ -34,8 +34,8 @@ public class PlayerCsvLoaderTest {
         assertThat(document.getLastName()).isEqualTo("WithClub");
         assertThat(document.getPosition()).isEqualTo("GOALKEEPER");
         assertThat(document.getValue()).isEqualTo(1000000);
-        assertThat(document.getClubId().isPresent()).isTrue();
-        assertThat(document.getClubId().get()).isEqualTo(1L);
+        assertThat(document.hasClub()).isTrue();
+        assertThat(document.getClubId()).isEqualTo(1L);
     }
 
 }
