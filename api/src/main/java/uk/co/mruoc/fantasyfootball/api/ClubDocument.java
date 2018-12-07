@@ -18,7 +18,7 @@ public class ClubDocument implements JsonApiDocument {
         // required by jackson
     }
 
-    private ClubDocument(ClubDocumentBuilder builder) {
+    public ClubDocument(ClubDocumentBuilder builder) {
         data = new ClubData();
         data.id = builder.id;
 

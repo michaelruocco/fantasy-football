@@ -13,7 +13,6 @@ import uk.co.mruoc.fantasyfootball.app.dao.Player;
 import uk.co.mruoc.fantasyfootball.app.dao.Position;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -36,10 +35,10 @@ public class PlayerConverter {
                 .setValue(player.getValue())
                 .setSelfLink(PlayerLinkBuilder.build(player.getId()));
 
-        final Optional<Long> clubId = player.getClubId();
-        if (clubId.isPresent()) {
-            builder.setClubId(clubId.get());
-            builder.setClubLink(ClubLinkBuilder.build(clubId.get()));
+        if (player.hasClub()) {
+            long clubId = player.getClubId();
+            builder.setClubId(clubId);
+            builder.setClubLink(ClubLinkBuilder.build(clubId));
         }
         return builder.build();
     }
@@ -65,7 +64,7 @@ public class PlayerConverter {
         ArrayDocumentBuilder<PlayerData> builder = buildPlayersDocumentBuilder(page)
                 .setSelfLink(linkBuilder.build(page.getNumber(), page.getSize()))
                 .setFirstLink(linkBuilder.build(0, page.getSize()))
-                .setLastLink(linkBuilder.build(calculateLastPage(page.getTotalPages()), page.getSize()));
+                .setLastLink(linkBuilder.build(LastPageCalculator.calculate(page.getTotalPages()), page.getSize()));
 
         if (page.getNumber() > 0) {
             builder.setPreviousLink(linkBuilder.build(page.getNumber() - 1, page.getSize()));
@@ -89,15 +88,10 @@ public class PlayerConverter {
     }
 
     private Club extractClub(PlayerDocument document) {
-        final Optional<Long> clubId = document.getClubId();
-        return clubId.map(Club::new).orElse(null);
-    }
-
-    private int calculateLastPage(int totalPages) {
-        if (totalPages > 0) {
-            return totalPages - 1;
+        if (document.hasClub()) {
+            return new Club(document.getClubId());
         }
-        return 0;
+        return null;
     }
 
 }

@@ -6,7 +6,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.Optional;
 
 public class PlayerDocument implements JsonApiDocument {
 
@@ -18,7 +17,7 @@ public class PlayerDocument implements JsonApiDocument {
         // required by jackson
     }
 
-    private PlayerDocument(PlayerDocumentBuilder builder) {
+    public PlayerDocument(PlayerDocumentBuilder builder) {
         data = new PlayerData();
         data.id = builder.id;
 
@@ -55,10 +54,7 @@ public class PlayerDocument implements JsonApiDocument {
 
     @JsonIgnore
     public Long getId() {
-        if (hasId()) {
-            return data.id;
-        }
-        return null;
+        return hasId() ? data.id : null;
     }
 
     @JsonIgnore
@@ -82,11 +78,13 @@ public class PlayerDocument implements JsonApiDocument {
     }
 
     @JsonIgnore
-    public Optional<Long> getClubId() {
-        if (data == null) {
-            return Optional.empty();
-        }
-        return data.getClubId();
+    public Long getClubId() {
+        return data == null ? null : data.getClubId();
+    }
+
+    @JsonIgnore
+    public boolean hasClub() {
+        return data != null && data.hasClubId();
     }
 
     @Override
@@ -154,11 +152,8 @@ public class PlayerDocument implements JsonApiDocument {
         }
 
         @JsonIgnore
-        public Optional<Long> getClubId() {
-            if (hasClubId()) {
-                return Optional.of(relationships.club.data.id);
-            }
-            return Optional.empty();
+        public Long getClubId() {
+            return hasClubId() ? relationships.club.data.id : null;
         }
 
         private boolean hasClubId() {

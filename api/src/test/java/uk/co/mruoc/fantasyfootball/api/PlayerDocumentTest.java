@@ -6,7 +6,6 @@ import org.junit.Test;
 import uk.co.mruoc.file.ContentLoader;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static uk.co.mruoc.fantasyfootball.api.PlayerDocument.*;
@@ -97,14 +96,14 @@ public class PlayerDocumentTest {
     public void shouldReturnClubId() {
         final PlayerDocument document = buildPlayerDocument();
 
-        assertThat(document.getClubId()).isEqualTo(Optional.of(CLUB_ID));
+        assertThat(document.getClubId()).isEqualTo(CLUB_ID);
     }
 
     @Test
-    public void shouldReturnEmptyOptionalIfClubIdNotSet() {
+    public void shouldReturnNullIfClubIdNotSet() {
         final PlayerDocument document = new PlayerDocument();
 
-        assertThat(document.getClubId()).isEqualTo(Optional.empty());
+        assertThat(document.getClubId()).isNull();
     }
 
     @Test
@@ -112,6 +111,13 @@ public class PlayerDocumentTest {
         final PlayerDocument document = buildPlayerDocument();
 
         assertThat(document.getSelfLink()).isEqualTo(SELF_LINK);
+    }
+
+    @Test
+    public void shouldReturnFalseIfClubIdNotSet() {
+        final PlayerDocument noClubDocument = new PlayerDocument(new PlayerDocumentBuilder());
+
+        assertThat(noClubDocument.hasClub()).isFalse();
     }
 
     private static PlayerDocument buildPlayerDocument() {

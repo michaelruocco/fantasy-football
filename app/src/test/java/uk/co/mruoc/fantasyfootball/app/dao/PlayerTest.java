@@ -2,8 +2,6 @@ package uk.co.mruoc.fantasyfootball.app.dao;
 
 import org.junit.Test;
 
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerTest {
@@ -107,7 +105,7 @@ public class PlayerTest {
 
         player.setClub(club);
 
-        assertThat(player.getClubId()).isEqualTo(Optional.of(club.getId()));
+        assertThat(player.getClubId()).isEqualTo(club.getId());
     }
 
     @Test
@@ -116,8 +114,8 @@ public class PlayerTest {
     }
 
     @Test
-    public void shouldReturnEmptyOptionalClubIdIfPlayerDoesHasClub() {
-        assertThat(player.getClubId()).isEqualTo(Optional.empty());
+    public void shouldReturnNullIfPlayerDoesNotHaveClub() {
+        assertThat(player.getClubId()).isNull();
     }
 
 }
