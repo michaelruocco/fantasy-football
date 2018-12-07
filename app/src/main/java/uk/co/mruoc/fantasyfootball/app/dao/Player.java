@@ -1,8 +1,6 @@
 package uk.co.mruoc.fantasyfootball.app.dao;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -52,10 +50,6 @@ public class Player {
 
     public Position getPosition() {
         return position;
-    }
-
-    public String getPositionName() {
-        return position.name();
     }
 
     public void setPosition(Position position) {
