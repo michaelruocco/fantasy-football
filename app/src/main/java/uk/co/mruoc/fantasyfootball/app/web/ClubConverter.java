@@ -32,7 +32,6 @@ public class ClubConverter {
             builder.setPreviousLink(ClubLinkBuilder.build(page.getNumber() - 1, page.getSize()));
         }
 
-        System.out.println(page.getNumber() + " " + page.getTotalPages());
         if (page.getNumber() < page.getTotalPages() - 1) {
             builder.setNextLink(ClubLinkBuilder.build(page.getNumber() + 1, page.getSize()));
         }
