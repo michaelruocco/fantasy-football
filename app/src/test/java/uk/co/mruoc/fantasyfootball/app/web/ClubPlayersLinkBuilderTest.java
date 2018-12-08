@@ -13,7 +13,7 @@ public class ClubPlayersLinkBuilderTest {
     private static final int PAGE_NUMBER = 0;
     private static final int PAGE_SIZE = 10;
 
-    private final PlayersLinkBuilder linkBuilder = new ClubPlayersLinkBuilder(CLUB_ID);
+    private final LinkBuilder linkBuilder = new ClubPlayersLinkBuilder(CLUB_ID);
 
     @Test
     public void shouldReturnClubPlayersPaginatedEndpointWithNoHostnameIfCurrentRequestNotSet() {

@@ -12,7 +12,7 @@ public class AllPlayersLinkBuilderTest {
     private static final int PAGE_NUMBER = 0;
     private static final int PAGE_SIZE = 10;
 
-    private final PlayersLinkBuilder linkBuilder = new AllPlayersLinkBuilder();
+    private final LinkBuilder linkBuilder = new AllPlayersLinkBuilder();
 
     @Test
     public void shouldReturnAllPlayersPaginatedEndpointWithNoHostnameIfCurrentRequestNotSet() {

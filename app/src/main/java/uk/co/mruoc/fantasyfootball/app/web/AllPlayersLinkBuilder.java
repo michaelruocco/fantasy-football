@@ -2,7 +2,7 @@ package uk.co.mruoc.fantasyfootball.app.web;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
-public class AllPlayersLinkBuilder implements PlayersLinkBuilder {
+public class AllPlayersLinkBuilder implements LinkBuilder {
 
     @Override
     public String build(int pageNumber, int pageSize) {

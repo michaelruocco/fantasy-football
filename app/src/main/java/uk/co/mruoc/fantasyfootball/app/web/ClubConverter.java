@@ -45,7 +45,7 @@ public class ClubConverter {
 
     public ClubDocument toDocument(final Club club, final int pageNumber, final int pageSize) {
         Long id = club.getId();
-        PlayersLinkBuilder linkBuilder = new ClubPlayersLinkBuilder(id);
+        LinkBuilder linkBuilder = new ClubPlayersLinkBuilder(id);
         return new ClubDocumentBuilder()
                 .setId(id)
                 .setName(club.getName())

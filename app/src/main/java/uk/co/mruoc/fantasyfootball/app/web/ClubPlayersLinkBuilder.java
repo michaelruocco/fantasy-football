@@ -2,7 +2,7 @@ package uk.co.mruoc.fantasyfootball.app.web;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
-public class ClubPlayersLinkBuilder implements PlayersLinkBuilder {
+public class ClubPlayersLinkBuilder implements LinkBuilder {
 
     private final long clubId;
 

@@ -60,7 +60,7 @@ public class PlayerConverter {
         return player;
     }
 
-    private ArrayDocument<PlayerData> toPlayersDocument(PlayersLinkBuilder linkBuilder, Page<Player> page) {
+    private ArrayDocument<PlayerData> toPlayersDocument(LinkBuilder linkBuilder, Page<Player> page) {
         ArrayDocumentBuilder<PlayerData> builder = buildPlayersDocumentBuilder(page)
                 .setSelfLink(linkBuilder.build(page.getNumber(), page.getSize()))
                 .setFirstLink(linkBuilder.build(0, page.getSize()))
