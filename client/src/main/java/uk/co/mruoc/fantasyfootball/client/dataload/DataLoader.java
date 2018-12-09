@@ -12,7 +12,7 @@ public class DataLoader {
     private final ClubCsvLoader clubCsvLoader = new ClubCsvLoader();
     private final PlayerCsvLoader playerCsvLoader = new PlayerCsvLoader();
 
-    private final FantasyFootballClient client = new DefaultFantasyFootballClient("https://mruoc-fantasy-football-backend.herokuapp.com");
+    private final FantasyFootballClient client = new DefaultFantasyFootballClient("http://localhost:8080");
 
     public boolean load() {
         loadClubs();
@@ -21,12 +21,12 @@ public class DataLoader {
     }
 
     private void loadClubs() {
-        final List<ClubDocument> clubs = clubCsvLoader.load("data/clubs.csv");
+        final List<ClubDocument> clubs = clubCsvLoader.load("data/csvs/clubs.csv");
         clubs.forEach(client::create);
     }
 
     private void loadPlayers() {
-        final List<PlayerDocument> players = playerCsvLoader.load("data/players.csv");
+        final List<PlayerDocument> players = playerCsvLoader.load("data/csvs/players.csv");
         players.forEach(client::create);
     }
 

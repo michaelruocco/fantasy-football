@@ -15,8 +15,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PlayersDocumentTest {
 
     private static final String JSON_PATH = "/playersDocument.json";
-    private static final ObjectMapper MAPPER = new ObjectMapper();
     private static final String JSON = ContentLoader.loadContentFromClasspath(JSON_PATH);
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private static final long ID_1 = 1133;
     private static final String FIRST_NAME_1 = "Joe";
