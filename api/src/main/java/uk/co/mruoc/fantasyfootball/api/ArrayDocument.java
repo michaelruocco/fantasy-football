@@ -45,7 +45,7 @@ public abstract class ArrayDocument<T> {
         return meta;
     }
 
-    public List<?> getData() {
+    public List<T> getData() {
         return data;
     }
 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import uk.co.mruoc.fantasyfootball.api.ArrayDocument;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument.PlayerData;
 import uk.co.mruoc.fantasyfootball.api.PlayerDocument;
+import uk.co.mruoc.fantasyfootball.api.PlayersDocument;
 import uk.co.mruoc.fantasyfootball.app.dao.Player;
 import uk.co.mruoc.fantasyfootball.app.service.PlayerService;
 

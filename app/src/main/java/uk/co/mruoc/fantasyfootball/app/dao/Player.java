@@ -79,4 +79,8 @@ public class Player {
         return club != null;
     }
 
+    public String getPositionName() {
+        return position.name();
+    }
+
 }

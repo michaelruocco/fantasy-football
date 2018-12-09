@@ -31,7 +31,7 @@ public class PlayerConverter {
                 .setId(player.getId())
                 .setFirstName(player.getFirstName())
                 .setLastName(player.getLastName())
-                .setPosition(player.getPosition().name())
+                .setPosition(player.getPositionName())
                 .setValue(player.getValue())
                 .setSelfLink(PlayerLinkBuilder.build(player.getId()));
 
@@ -40,6 +40,7 @@ public class PlayerConverter {
             builder.setClubId(clubId);
             builder.setClubLink(ClubLinkBuilder.build(clubId));
         }
+
         return builder.build();
     }
 
