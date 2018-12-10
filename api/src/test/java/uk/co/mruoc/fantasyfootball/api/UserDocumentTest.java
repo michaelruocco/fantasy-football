@@ -91,6 +91,20 @@ public class UserDocumentTest {
     }
 
     @Test
+    public void shouldReturnTrueIfHasEmail() {
+        final UserDocument document = buildUserDocument();
+
+        assertThat(document.hasEmail()).isTrue();
+    }
+
+    @Test
+    public void shouldReturnFalseIfDoesNotHaveEmail() {
+        final UserDocument document = new UserDocument();
+
+        assertThat(document.hasEmail()).isFalse();
+    }
+
+    @Test
     public void shouldReturnSelfLink() {
         final UserDocument document = buildUserDocument();
 

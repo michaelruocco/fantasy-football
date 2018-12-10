@@ -4,6 +4,8 @@ import org.junit.Test;
 import uk.co.mruoc.fantasyfootball.api.UserDocument;
 import uk.co.mruoc.fantasyfootball.api.UserDocument.UserDocumentBuilder;
 import uk.co.mruoc.fantasyfootball.app.dao.User;
+import uk.co.mruoc.fantasyfootball.app.dao.UserType;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserConverterTest {
@@ -71,6 +73,60 @@ public class UserConverterTest {
         assertThat(user.getEmail()).isEqualTo(document.getEmail());
     }
 
+    @Test
+    public void shouldConvertIdToDocument() {
+        final User user = buildUser();
+
+        final UserDocument document = converter.toDocument(user);
+
+        assertThat(document.getId()).isEqualTo(user.getId());
+    }
+
+    @Test
+    public void shouldConvertNameToDocument() {
+        final User user = buildUser();
+
+        final UserDocument document = converter.toDocument(user);
+
+        assertThat(document.getFirstName()).isEqualTo(user.getFirstName());
+    }
+
+    @Test
+    public void shouldConvertLastNameToDocument() {
+        final User user = buildUser();
+
+        final UserDocument document = converter.toDocument(user);
+
+        assertThat(document.getLastName()).isEqualTo(user.getLastName());
+    }
+
+    @Test
+    public void shouldConvertTypeToDocument() {
+        final User user = buildUser();
+
+        final UserDocument document = converter.toDocument(user);
+
+        assertThat(document.getUserType()).isEqualTo(user.getType().name());
+    }
+
+    @Test
+    public void shouldConvertEmailToDocument() {
+        final User user = buildUser();
+
+        final UserDocument document = converter.toDocument(user);
+
+        assertThat(document.getEmail()).isEqualTo(user.getEmail());
+    }
+
+    @Test
+    public void shouldConvertPopulateSelfLinkOnDocument() {
+        final User user = buildUser();
+
+        final UserDocument document = converter.toDocument(user);
+
+        assertThat(document.getSelfLink()).isEqualTo("/users/" + user.getId());
+    }
+
     private static UserDocument buildUserDocument() {
         return new UserDocumentBuilder()
                 .setId(ID)
@@ -79,6 +135,16 @@ public class UserConverterTest {
                 .setType(TYPE)
                 .setEmail(EMAIL)
                 .build();
+    }
+
+    private static User buildUser() {
+        final User user = new User();
+        user.setId(ID);
+        user.setFirstName(FIRST_NAME);
+        user.setLastName(LAST_NAME);
+        user.setType(UserType.ADMIN);
+        user.setEmail(EMAIL);
+        return user;
     }
 
 }

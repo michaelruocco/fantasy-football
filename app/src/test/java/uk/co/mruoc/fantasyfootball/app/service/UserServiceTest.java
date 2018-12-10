@@ -20,21 +20,21 @@ public class UserServiceTest {
     private final UserService service = new UserService(repository);
 
     @Test
-    public void shouldReturnUserIfFound() {
+    public void shouldReturnUserIfFoundWithEmail() {
         final User expectedUser = mock(User.class);
         given(repository.findByEmail(EMAIL)).willReturn(Optional.of(expectedUser));
 
-        final User user = service.read(EMAIL);
+        final User user = service.readByEmail(EMAIL);
 
         assertThat(user).isEqualTo(expectedUser);
     }
 
     @Test
-    public void shouldThrowExceptionIfUserNotFound() {
+    public void shouldThrowExceptionIfUserNotFoundWithEmail() {
         given(repository.findByEmail(EMAIL)).willReturn(Optional.empty());
         final String expectedMessage = String.format("user with email %s not found", EMAIL);
 
-        final Throwable thrown = catchThrowable(() -> service.read(EMAIL));
+        final Throwable thrown = catchThrowable(() -> service.readByEmail(EMAIL));
 
         assertThat(thrown).isInstanceOf(UserNotFoundException.class)
                 .hasNoCause()
@@ -93,17 +93,17 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldReturnTrueIfUserExists() {
+    public void shouldReturnTrueIfUserExistsWithEmail() {
         given(repository.existsByEmail(EMAIL)).willReturn(true);
 
-        assertThat(service.exists(EMAIL)).isTrue();
+        assertThat(service.existsByEmail(EMAIL)).isTrue();
     }
 
     @Test
-    public void shouldReturnFalseIfUserExists() {
+    public void shouldReturnFalseIfUserDoesNotExistWithEmail() {
         given(repository.existsByEmail(EMAIL)).willReturn(false);
 
-        assertThat(service.exists(EMAIL)).isFalse();
+        assertThat(service.existsByEmail(EMAIL)).isFalse();
     }
 
 }

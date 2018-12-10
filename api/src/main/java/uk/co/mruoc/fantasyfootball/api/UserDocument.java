@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -71,9 +72,14 @@ public class UserDocument implements JsonApiDocument {
         return data.links.self;
     }
 
+    @JsonIgnore
+    public boolean hasEmail() {
+        return data != null && data.getEmail() != null;
+    }
+
     public static class UserData {
 
-        @Email
+        @Min(1)
         private Long id;
 
         @Pattern(regexp = "^users")

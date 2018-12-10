@@ -17,11 +17,11 @@ public class UserService {
         this.repository = repository;
     }
 
-    public boolean exists(final String email) {
+    public boolean existsByEmail(final String email) {
         return repository.existsByEmail(email);
     }
 
-    public User read(final String email) {
+    public User readByEmail(final String email) {
         final Optional<User> user = repository.findByEmail(email);
         return user.orElseThrow(() -> new UserNotFoundException(email));
     }
