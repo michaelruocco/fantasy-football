@@ -1,0 +1,15 @@
+{
+  "data": {
+    "id": 1133,
+    "type": "users",
+    "attributes": {
+      "firstName": "Joe",
+      "lastName": "Bloggs",
+      "type": "ADMIN",
+      "email": "joe.bloggs@hotmail.com"
+    },
+    "links": {
+      "self": "/users/1133"
+    }
+  }
+}

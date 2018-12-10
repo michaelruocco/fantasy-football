@@ -2,8 +2,12 @@ package uk.co.mruoc.fantasyfootball.app.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, String> {
+import java.util.Optional;
 
-    // intentionally blank
+public interface UserRepository extends JpaRepository<User, Long> {
+
+    boolean existsByEmail(final String email);
+
+    Optional<User> findByEmail(final String email);
 
 }

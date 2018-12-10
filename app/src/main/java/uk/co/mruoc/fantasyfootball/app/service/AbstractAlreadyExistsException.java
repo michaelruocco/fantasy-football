@@ -9,7 +9,7 @@ public class AbstractAlreadyExistsException extends RuntimeException implements 
         this.id = id;
     }
 
-    public long getId() {
+    public Object getId() {
         return id;
     }
 

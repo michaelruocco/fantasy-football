@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class PlayerNotFoundErrorData extends ErrorData {
 
-    public PlayerNotFoundErrorData(final long id, final String detail) {
+    public PlayerNotFoundErrorData(final Object id, final String detail) {
         super(new ErrorData.ErrorDataBuilder()
                 .setCode("PLAYER_NOT_FOUND")
                 .setTitle("Player not found")
@@ -14,7 +14,7 @@ public class PlayerNotFoundErrorData extends ErrorData {
                 .setMeta(toMeta(id)));
     }
 
-    private static Map<String, Object> toMeta(final long id) {
+    private static Map<String, Object> toMeta(final Object id) {
         Map<String, Object> meta = new HashMap<>();
         meta.put("id", id);
         return Collections.unmodifiableMap(meta);

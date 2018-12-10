@@ -2,7 +2,7 @@ package uk.co.mruoc.fantasyfootball.app.service;
 
 public interface IdAwareException {
 
-    long getId();
+    Object getId();
 
     String getMessage();
 

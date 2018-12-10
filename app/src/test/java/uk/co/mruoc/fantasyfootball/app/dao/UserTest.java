@@ -9,12 +9,49 @@ public class UserTest {
     private final User user = new User();
 
     @Test
+    public void shouldReturnId() {
+        final Long id = 9999L;
+
+        user.setId(id);
+
+        assertThat(user.getId()).isEqualTo(id);
+    }
+
+    @Test
+    public void shouldReturnTrueIfUserHasId() {
+        final Long id = 9999L;
+
+        user.setId(id);
+
+        assertThat(user.hasId()).isTrue();
+    }
+
+    @Test
+    public void shouldReturnFalseIfUserDoesNotHaveId() {
+        assertThat(user.hasId()).isFalse();
+    }
+
+    @Test
     public void shouldReturnEmail() {
         final String email = "michael.ruocco@hotmail.com";
 
         user.setEmail(email);
 
         assertThat(user.getEmail()).isEqualTo(email);
+    }
+
+    @Test
+    public void shouldReturnTrueIfUserHasEmail() {
+        final String email = "michael.ruocco@hotmail.com";
+
+        user.setEmail(email);
+
+        assertThat(user.hasEmail()).isTrue();
+    }
+
+    @Test
+    public void shouldReturnFalseIfUserDoesNotHaveEmail() {
+        assertThat(user.hasEmail()).isFalse();
     }
 
     @Test
