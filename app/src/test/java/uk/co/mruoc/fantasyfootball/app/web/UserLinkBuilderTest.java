@@ -15,7 +15,7 @@ public class UserLinkBuilderTest {
     public void shouldReturnUserLinkWithNoHostnameIfCurrentRequestNotSet() {
         final String link = UserLinkBuilder.build(ID);
 
-        assertThat(link).isEqualTo("/user/" + ID);
+        assertThat(link).isEqualTo("/users/" + ID);
     }
 
     @Test
