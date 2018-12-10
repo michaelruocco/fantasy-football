@@ -23,7 +23,7 @@ public class Player {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -35,7 +35,7 @@ public class Player {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(final String firstName) {
         this.firstName = firstName;
     }
 
@@ -43,7 +43,7 @@ public class Player {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(final String lastName) {
         this.lastName = lastName;
     }
 
@@ -51,7 +51,7 @@ public class Player {
         return position;
     }
 
-    public void setPosition(Position position) {
+    public void setPosition(final Position position) {
         this.position = position;
     }
 
@@ -59,7 +59,7 @@ public class Player {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(final int value) {
         this.value = value;
     }
 
@@ -67,7 +67,7 @@ public class Player {
         return club;
     }
 
-    public void setClub(Club club) {
+    public void setClub(final Club club) {
         this.club = club;
     }
 

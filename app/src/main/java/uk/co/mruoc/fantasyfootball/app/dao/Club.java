@@ -1,8 +1,6 @@
 package uk.co.mruoc.fantasyfootball.app.dao;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name = "club")
@@ -16,16 +14,16 @@ public class Club {
         // required by spring data
     }
 
-    public Club(Long id) {
+    public Club(final Long id) {
         this(id, "");
     }
 
-    public Club(Long id, String name) {
+    public Club(final Long id, final String name) {
         this.id = id;
         this.name = name;
     }
 
-    public void setId(long id) {
+    public void setId(final long id) {
         this.id = id;
     }
 
