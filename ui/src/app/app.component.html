@@ -25,8 +25,8 @@
         <li class="nav-item" *ngIf="authService.isAuthenticated()">
           <a class="nav-link" routerLink="/profile"><img src="{{profile?.picture}}" alt="{{profile?.nickname}}" title="{{profile?.nickname}}" style="width:20px; height:20px; border-radius:75%; margin:0px;"></a>
         </li>
-        <li *ngIf="authService.isAuthenticated()">
-          <button class="btn btn-light btn-margin" (click)="authService.logout()">Log Out</button>
+        <li class="nav-item" *ngIf="authService.isAuthenticated()">
+          <a class="nav-link" (click)="authService.logout()">Log Out</a>
         </li>
       </ul>
     </div>
