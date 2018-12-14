@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import * as auth0 from 'auth0-js';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../environments/environment';
 
 (window as any).global = window;
 
@@ -15,7 +16,7 @@ export class AuthService {
     clientID: '8OUsTwlZ9T4qv5LgfAs7hFFegBwIh5oT',
     domain: 'michaelruocco.eu.auth0.com',
     responseType: 'token id_token',
-    redirectUri: 'https://mruoc-fantasy-football.herokuapp.com/login/callback',
+    redirectUri: environment.loginCallbackUrl + '/login/callback',
     scope: 'openid profile'
   });
 

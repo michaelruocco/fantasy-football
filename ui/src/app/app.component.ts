@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './auth.service';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,7 @@ import { AuthService } from './auth.service';
 export class AppComponent {
   title = 'Fantasy Football';
   navbarCollapsed = false;
+  apiUrl = environment.apiUrl;
 
   _subscription;
   profile: any;

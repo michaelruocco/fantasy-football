@@ -15,12 +15,12 @@
           <a class="nav-link" routerLink="/clubs" (click)="navbarCollapsed = true">Clubs</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="http://localhost:8080/swagger-ui.html">API</a>
+          <a class="nav-link" href="{{apiUrl}}/swagger-ui.html">API</a>
         </li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li *ngIf="!authService.isAuthenticated()">
-          <button class="btn btn-light btn-margin" (click)="authService.login()">Log In</button>
+      <ul class="navbar-nav navbar-right">
+        <li class="nav-item" *ngIf="!authService.isAuthenticated()">
+          <a class="nav-link" (click)="authService.login()">Log In</a>
         </li>
         <li class="nav-item" *ngIf="authService.isAuthenticated()">
           <a class="nav-link" routerLink="/profile"><img src="{{profile?.picture}}" alt="{{profile?.nickname}}" title="{{profile?.nickname}}" style="width:20px; height:20px; border-radius:75%; margin:0px;"></a>
