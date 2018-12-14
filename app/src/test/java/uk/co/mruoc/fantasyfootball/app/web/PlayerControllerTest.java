@@ -148,10 +148,4 @@ public class PlayerControllerTest {
                 .build();
     }
 
-    private static Player buildPlayer() {
-        final Player player = new Player();
-        player.setId(ID);
-        return player;
-    }
-
 }

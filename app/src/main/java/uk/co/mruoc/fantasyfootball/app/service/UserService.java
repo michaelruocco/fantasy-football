@@ -23,7 +23,12 @@ public class UserService {
 
     public User readByEmail(final String email) {
         final Optional<User> user = repository.findByEmail(email);
-        return user.orElseThrow(() -> new UserNotFoundException(email));
+        return user.orElseThrow(() -> new UserEmailNotFoundException(email));
+    }
+
+    public User read(final long id) {
+        final Optional<User> user = repository.findById(id);
+        return user.orElseThrow(() -> new UserIdNotFoundException(id));
     }
 
     public User create(final User user) {
@@ -36,7 +41,7 @@ public class UserService {
         }
 
         if (!repository.existsByEmail(user.getEmail())) {
-            throw new UserNotFoundException(user.getEmail());
+            throw new UserEmailNotFoundException(user.getEmail());
         }
 
         return repository.save(user);

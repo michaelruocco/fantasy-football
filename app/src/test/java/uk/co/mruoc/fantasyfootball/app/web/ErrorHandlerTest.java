@@ -5,8 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.co.mruoc.fantasyfootball.api.ErrorData;
 import uk.co.mruoc.fantasyfootball.api.ErrorDocument;
-import uk.co.mruoc.fantasyfootball.app.service.AbstractNotFoundException;
 import uk.co.mruoc.fantasyfootball.app.service.PlayerNotFoundException;
+import uk.co.mruoc.fantasyfootball.app.service.UserIdNotFoundException;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class ErrorHandlerTest {
 
     @Test
     public void shouldReturnNotFoundStatusCodeForNotFoundException() {
-        AbstractNotFoundException exception = new PlayerNotFoundException(ID);
+        RuntimeException exception = new PlayerNotFoundException(ID);
 
         ResponseEntity<ErrorDocument> entity = handler.handleError(exception);
 
@@ -29,8 +29,8 @@ public class ErrorHandlerTest {
     }
 
     @Test
-    public void shouldReturnNotFoundErrorDocument() {
-        AbstractNotFoundException exception = new PlayerNotFoundException(ID);
+    public void shouldReturnPlayerNotFoundErrorDocument() {
+        RuntimeException exception = new PlayerNotFoundException(ID);
 
         ResponseEntity<ErrorDocument> entity = handler.handleError(exception);
 
@@ -44,6 +44,43 @@ public class ErrorHandlerTest {
         assertThat(error.getTitle()).isEqualTo("Player not found");
         assertThat(error.getDetail()).isEqualTo(String.format("player with id %s not found", ID));
         assertThat(error.getMeta()).containsOnly(entry("id", ID));
+    }
+
+    @Test
+    public void shouldReturnUserNotFoundErrorDocument() {
+        RuntimeException exception = new UserIdNotFoundException(ID);
+
+        ResponseEntity<ErrorDocument> entity = handler.handleError(exception);
+
+        ErrorDocument document = entity.getBody();
+        List<ErrorData> errors = document.getErrors();
+        assertThat(errors).hasSize(1);
+
+        ErrorData error = errors.get(0);
+        assertThat(error.getId()).isNotNull();
+        assertThat(error.getCode()).isEqualTo("USER_NOT_FOUND");
+        assertThat(error.getTitle()).isEqualTo("User not found");
+        assertThat(error.getDetail()).isEqualTo(String.format("user with id %s not found", ID));
+        assertThat(error.getMeta()).containsOnly(entry("id", ID));
+    }
+
+    @Test
+    public void shouldReturnInternalServerErrorDocument() {
+        final String message = "test message";
+        Throwable exception = new Exception(message);
+
+        ResponseEntity<ErrorDocument> entity = handler.handleError(exception);
+
+        ErrorDocument document = entity.getBody();
+        List<ErrorData> errors = document.getErrors();
+        assertThat(errors).hasSize(1);
+
+        ErrorData error = errors.get(0);
+        assertThat(error.getId()).isNotNull();
+        assertThat(error.getCode()).isEqualTo("INTERNAL_SERVER_ERROR");
+        assertThat(error.getTitle()).isEqualTo("Internal server error");
+        assertThat(error.getDetail()).isEqualTo(message);
+        assertThat(error.getMeta()).isNull();
     }
 
 }

@@ -13,11 +13,34 @@ import static org.mockito.Mockito.mock;
 
 public class UserServiceTest {
 
+    private static final long ID = 1234;
     private static final String EMAIL = "michael.ruocco@hotmail.com";
 
     private final UserRepository repository = mock(UserRepository.class);
 
     private final UserService service = new UserService(repository);
+
+    @Test
+    public void shouldReturnUserIfFoundWithId() {
+        final User expectedUser = mock(User.class);
+        given(repository.findById(ID)).willReturn(Optional.of(expectedUser));
+
+        final User user = service.read(ID);
+
+        assertThat(user).isEqualTo(expectedUser);
+    }
+
+    @Test
+    public void shouldThrowExceptionIfUserNotFoundWithId() {
+        given(repository.findById(ID)).willReturn(Optional.empty());
+        final String expectedMessage = String.format("user with id %s not found", ID);
+
+        final Throwable thrown = catchThrowable(() -> service.read(ID));
+
+        assertThat(thrown).isInstanceOf(UserIdNotFoundException.class)
+                .hasNoCause()
+                .hasMessage(expectedMessage);
+    }
 
     @Test
     public void shouldReturnUserIfFoundWithEmail() {
@@ -36,7 +59,7 @@ public class UserServiceTest {
 
         final Throwable thrown = catchThrowable(() -> service.readByEmail(EMAIL));
 
-        assertThat(thrown).isInstanceOf(UserNotFoundException.class)
+        assertThat(thrown).isInstanceOf(UserEmailNotFoundException.class)
                 .hasNoCause()
                 .hasMessage(expectedMessage);
     }
@@ -73,7 +96,7 @@ public class UserServiceTest {
 
         final Throwable thrown = catchThrowable(() -> service.update(user));
 
-        assertThat(thrown).isInstanceOf(UserNotFoundException.class)
+        assertThat(thrown).isInstanceOf(UserEmailNotFoundException.class)
                 .hasNoCause()
                 .hasMessage(expectedMessage);
     }

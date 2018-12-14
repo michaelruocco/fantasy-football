@@ -53,6 +53,12 @@ public class UserController {
         return responseBuilder.buildUpdatedResponse(updatedDocument);
     }
 
+    @GetMapping("/{id}")
+    public @ResponseBody UserDocument read(@PathVariable("id") long id) {
+        final User user = service.read(id);
+        return converter.toDocument(user);
+    }
+
     @GetMapping
     public @ResponseBody UserDocument read(@RequestParam("email") final String email) {
         final User user = service.readByEmail(email);

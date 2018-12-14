@@ -1,19 +1,28 @@
 package uk.co.mruoc.fantasyfootball.app.service;
 
 import org.junit.Test;
+import uk.co.mruoc.fantasyfootball.api.JsonApiException;
+import uk.co.mruoc.fantasyfootball.api.PlayerNotFoundErrorData;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerNotFoundExceptionTest {
 
+    private static final long ID = 1234;
+    private static final String EXPECTED_MESSAGE = String.format("player with id %d not found", ID);
+
     @Test
-    public void shouldReturnCorrectMessage() {
-        final long id = 1234;
-        final String expectedMessage = String.format("player with id %d not found", id);
+    public void shouldReturnMessage() {
+        final Throwable throwable = new PlayerNotFoundException(ID);
 
-        final Throwable throwable = new PlayerNotFoundException(id);
+        assertThat(throwable.getMessage()).isEqualTo(EXPECTED_MESSAGE);
+    }
 
-        assertThat(throwable.getMessage()).isEqualTo(expectedMessage);
+    @Test
+    public void shouldReturnErrorData() {
+        final JsonApiException exception = new PlayerNotFoundException(ID);
+
+        assertThat(exception.getErrorData()).isInstanceOf(PlayerNotFoundErrorData.class);
     }
 
 }
