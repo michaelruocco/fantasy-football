@@ -1,13 +1,23 @@
 <div class="panel panel-default profile-area">
   <div class="panel-heading">
-    <h3>Profile</h3>
+    <img src="{{user?.attributes.picture}}" class="rounded mx-auto d-block" style="margin: 10px" alt="avatar">
   </div>
   <div class="panel-body">
-    <img src="{{user?.attributes.picture}}" class="avatar" alt="avatar">
-    <div>
-      <label><i class="glyphicon glyphicon-user"></i>Nickname</label>
-      <h3 class="nickname">{{ user?.attributes.nickname }}</h3>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" value="{{user?.attributes.name}}" readonly>
     </div>
-    <pre class="full-profile">{{ user | json }}</pre>
+    <div class="form-group">
+      <label for="nickname">Nickname</label>
+      <input type="text" class="form-control" id="nickname" value="{{user?.attributes.nickname}}" readonly>
+    </div>
+    <div class="form-group">
+      <label for="type">Type</label>
+      <input type="text" class="form-control" id="type" value="{{user?.attributes.type}}" readonly>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" value="{{user?.attributes.email}}" readonly>
+    </div>
   </div>
 </div>
