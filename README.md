@@ -16,7 +16,7 @@ To run the unit tests you can run the following command:
 ./gradlew clean build
 ```
 
-## Starting the backend service locally
+## Starting the api service locally
 
 To start up the service on your local machine you can run:
 
@@ -27,7 +27,7 @@ To start up the service on your local machine you can run:
 This will start the service on your local machine, once the service is started it can
 be manually tested [here](http://localhost:8080/swagger-ui.html).
 
-## Starting the frontend UI locally
+## Starting the UI locally
 
 To start up the UI on your local machine you must have node JS and npm installed, if
 you have these tools installed then you can run the following commands from the ui

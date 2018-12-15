@@ -3,6 +3,7 @@ package uk.co.mruoc.fantasyfootball.app.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ import uk.co.mruoc.fantasyfootball.app.service.PlayerService;
 import javax.validation.Valid;
 
 @RestController
+@CrossOrigin
 @RequestMapping(path= "/players")
 public class PlayerController {
 

@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter, Output } from '@angular/core';
+import { Injectable, EventEmitter, Output, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import * as auth0 from 'auth0-js';
@@ -23,7 +23,7 @@ export class AuthService {
   profile: any;
   @Output() profileChange = new EventEmitter<any>();
 
-  constructor(public router: Router, private http: HttpClient) {}
+  constructor(public router: Router, private http: HttpClient, private ngZone: NgZone) {}
 
   public login(): void {
     this.auth0.authorize();
@@ -36,11 +36,12 @@ export class AuthService {
         window.location.hash = '';
         this.setSession(authResult);
         this.getProfile(null);
-        this.router.navigate(['/']);
       } else if (err) {
-        this.router.navigate(['/']);
         console.log(err);
       }
+      this.ngZone.run(() => {
+        this.router.navigate(['/']);
+      });
     });
   }
 
