@@ -3,6 +3,7 @@ package uk.co.mruoc.fantasyfootball.app.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -66,6 +67,12 @@ public class UserController {
     public @ResponseBody UserDocument read(@RequestParam("email") final String email) {
         final User user = service.readByEmail(email);
         return converter.toDocument(user);
+    }
+
+    @DeleteMapping("/{id}")
+    public @ResponseBody ResponseEntity delete(@PathVariable("id") final long id) {
+        service.delete(id);
+        return responseBuilder.buildDeletedResponse();
     }
 
 }

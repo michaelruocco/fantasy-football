@@ -44,6 +44,10 @@ public class UserService {
         return repository.save(updatedUser);
     }
 
+    public void delete(final long id) {
+        repository.deleteById(id);
+    }
+
     private User loadAndUpdate(final User user) {
         final Optional<User> loadedUserOpt = repository.findById(user.getId());
         if (!loadedUserOpt.isPresent()) {

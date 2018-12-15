@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class UserServiceTest {
 
@@ -129,6 +130,13 @@ public class UserServiceTest {
         given(repository.existsByEmail(EMAIL)).willReturn(false);
 
         assertThat(service.existsByEmail(EMAIL)).isFalse();
+    }
+
+    @Test
+    public void shouldDeleteUser() {
+        service.delete(ID);
+
+        verify(repository).deleteById(ID);
     }
 
 }

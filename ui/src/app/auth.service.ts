@@ -5,7 +5,7 @@ import * as auth0 from 'auth0-js';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { UserService } from './user.service';
-import { User } from './user';
+import { UserData } from './user-data';
 
 (window as any).global = window;
 
@@ -22,8 +22,8 @@ export class AuthService {
     scope: 'openid profile email'
   });
 
-  user: User;
-  @Output() userChange = new EventEmitter<User>();
+  user: UserData;
+  @Output() userChange = new EventEmitter<UserData>();
 
   constructor(public router: Router,
     private http: HttpClient,

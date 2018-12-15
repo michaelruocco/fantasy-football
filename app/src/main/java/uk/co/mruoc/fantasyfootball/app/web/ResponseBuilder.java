@@ -20,6 +20,10 @@ public class ResponseBuilder<T extends JsonApiDocument> {
         return new ResponseEntity<>(document, new HttpHeaders(), HttpStatus.OK);
     }
 
+    public ResponseEntity buildDeletedResponse() {
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
     private URI buildLocationUri(T document) {
         try {
             return new URI(document.getSelfLink());

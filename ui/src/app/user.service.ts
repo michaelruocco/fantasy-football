@@ -36,11 +36,11 @@ export class UserService {
     return this.http.post<User>(url, user).pipe(map(body => body['data'] as UserData));
   }
 
-  getUser(email): Observable<User> {
+  getUser(email): Observable<UserData> {
     var url = this.usersUrl;
     let params = new HttpParams().set('email', email);
     console.log('loading user ' + url + ' with params ' + JSON.stringify(params));
-    return this.http.get(url, {params: params}).pipe(map(body => body['data'] as User));
+    return this.http.get(url, {params: params}).pipe(map(body => body['data'] as UserData));
   }
 
 }

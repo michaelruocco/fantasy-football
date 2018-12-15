@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from './auth.service';
 import { environment } from '../environments/environment';
-import { User } from './user';
+import { UserData } from './user-data';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +14,7 @@ export class AppComponent {
   apiUrl = environment.apiUrl;
 
   _subscription;
-  user: User;
+  user: UserData;
 
   constructor(public authService: AuthService) {
     this._subscription = authService.userChange.subscribe((user) => {

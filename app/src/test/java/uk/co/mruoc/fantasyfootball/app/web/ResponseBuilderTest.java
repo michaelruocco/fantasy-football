@@ -52,6 +52,15 @@ public class ResponseBuilderTest {
                 .hasCauseInstanceOf(URISyntaxException.class);
     }
 
+    @Test
+    public void shouldReturnNoContentWithNoBodyForDelete() {
+        ResponseEntity response = builder.buildDeletedResponse();
+
+        assertThat(response.getBody()).isNull();
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+        assertThat(response.getHeaders()).isEmpty();
+    }
+
     private static class FakeDocument implements JsonApiDocument {
 
         private final String selfLink;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { User } from '../user';
+import { UserData } from '../user-data';
 
 @Component({
   selector: 'app-profile',
@@ -9,7 +9,7 @@ import { User } from '../user';
 })
 export class ProfileComponent implements OnInit {
 
-  user: User;
+  user: UserData;
 
   constructor(public authService: AuthService) { }
 

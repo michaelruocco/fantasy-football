@@ -13,6 +13,8 @@ import uk.co.mruoc.fantasyfootball.app.service.UserService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 public class UserControllerTest {
 
@@ -124,6 +126,22 @@ public class UserControllerTest {
         final UserDocument resultDocument = controller.read(document.getEmail());
 
         assertThat(resultDocument).isEqualTo(readDocument);
+    }
+
+    @Test
+    public void shouldDeleteUser() {
+        controller.delete(document.getId());
+
+        verify(service).delete(document.getId());
+    }
+
+    @Test
+    public void shouldReturnNoContentStatusCodeWithNoBodyOnDelete() {
+        final ResponseEntity response = controller.delete(document.getId());
+
+        assertThat(response.getStatusCode()).isEqualTo(NO_CONTENT);
+        assertThat(response.getBody()).isNull();
+        assertThat(response.getHeaders()).isEmpty();
     }
 
     private static UserDocument buildUserDocument() {

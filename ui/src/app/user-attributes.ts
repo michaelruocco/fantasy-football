@@ -1,9 +1,9 @@
-export interface UserAttributes {
+export class UserAttributes {
 
   name: string;
   nickname: string;
   picture: string;
-  type?: string;
+  type: string;
   email: string;
 
 }
