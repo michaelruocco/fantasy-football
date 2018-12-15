@@ -17,10 +17,11 @@ public class UserDocumentTest {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private static final long ID = 1133;
-    private static final String FIRST_NAME = "Joe";
-    private static final String LAST_NAME = "Bloggs";
+    private static final String NAME = "Joe Bloggs";
+    private static final String NICKNAME = "joebloggs";
     private static final String TYPE = "ADMIN";
     private static final String EMAIL = "joe.bloggs@hotmail.com";
+    private static final String PICTURE = "http://pictures.com/joebloggs";
     private static final String SELF_LINK = String.format("/users/%s", ID);
 
     @Test
@@ -63,17 +64,24 @@ public class UserDocumentTest {
     }
 
     @Test
-    public void shouldReturnFirstName() {
+    public void shouldReturnName() {
         final UserDocument document = buildUserDocument();
 
-        assertThat(document.getFirstName()).isEqualTo(FIRST_NAME);
+        assertThat(document.getName()).isEqualTo(NAME);
     }
 
     @Test
-    public void shouldReturnLastName() {
+    public void shouldReturnNickname() {
         final UserDocument document = buildUserDocument();
 
-        assertThat(document.getLastName()).isEqualTo(LAST_NAME);
+        assertThat(document.getNickname()).isEqualTo(NICKNAME);
+    }
+
+    @Test
+    public void shouldReturnPicture() {
+        final UserDocument document = buildUserDocument();
+
+        assertThat(document.getPicture()).isEqualTo(PICTURE);
     }
 
     @Test
@@ -114,8 +122,9 @@ public class UserDocumentTest {
     private static UserDocument buildUserDocument() {
         return new UserDocumentBuilder()
                 .setId(ID)
-                .setFirstName(FIRST_NAME)
-                .setLastName(LAST_NAME)
+                .setName(NAME)
+                .setNickname(NICKNAME)
+                .setPicture(PICTURE)
                 .setType(TYPE)
                 .setEmail(EMAIL)
                 .setSelfLink(SELF_LINK)

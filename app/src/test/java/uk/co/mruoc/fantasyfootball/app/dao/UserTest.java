@@ -55,21 +55,30 @@ public class UserTest {
     }
 
     @Test
-    public void shouldReturnFirstName() {
-        final String firstName = "Joe";
+    public void shouldReturnName() {
+        final String name = "Joe Bloggs";
 
-        user.setFirstName(firstName);
+        user.setName(name);
 
-        assertThat(user.getFirstName()).isEqualTo(firstName);
+        assertThat(user.getName()).isEqualTo(name);
     }
 
     @Test
-    public void shouldReturnLastName() {
-        final String lastName = "Bloggs";
+    public void shouldReturnNickname() {
+        final String nickname = "joebloggs";
 
-        user.setLastName(lastName);
+        user.setNickname(nickname);
 
-        assertThat(user.getLastName()).isEqualTo(lastName);
+        assertThat(user.getNickname()).isEqualTo(nickname);
+    }
+
+    @Test
+    public void shouldReturnPicture() {
+        final String picture = "http://pictures.com/joebloggs";
+
+        user.setPicture(picture);
+
+        assertThat(user.getPicture()).isEqualTo(picture);
     }
 
     @Test
@@ -97,6 +106,61 @@ public class UserTest {
         user.setType(type);
 
         assertThat(user.isAdmin()).isFalse();
+    }
+
+    @Test
+    public void shouldUpdateNameFromUpdatedUser() {
+        final User updatedUser = new User();
+        final String name = "Joe Bloggs";
+        updatedUser.setName(name);
+
+        user.update(updatedUser);
+
+        assertThat(user.getName()).isEqualTo(name);
+    }
+
+    @Test
+    public void shouldUpdateNicknameFromUpdatedUser() {
+        final User updatedUser = new User();
+        final String nickname = "joebloggs";
+        updatedUser.setNickname(nickname);
+
+        user.update(updatedUser);
+
+        assertThat(user.getNickname()).isEqualTo(nickname);
+    }
+
+    @Test
+    public void shouldUpdateTypeFromUpdatedUser() {
+        final User updatedUser = new User();
+        final UserType type = UserType.ADMIN;
+        updatedUser.setType(type);
+
+        user.update(updatedUser);
+
+        assertThat(user.getType()).isEqualTo(type);
+    }
+
+    @Test
+    public void shouldUpdatePictureFromUpdatedUser() {
+        final User updatedUser = new User();
+        final String picture = "http://pictures.com/joebloggs";
+        updatedUser.setPicture(picture);
+
+        user.update(updatedUser);
+
+        assertThat(user.getPicture()).isEqualTo(picture);
+    }
+
+    @Test
+    public void shouldUpdateEmailFromUpdatedUser() {
+        final User updatedUser = new User();
+        final String email = "joe.bloggs@hotmail.com";
+        updatedUser.setEmail(email);
+
+        user.update(updatedUser);
+
+        assertThat(user.getEmail()).isEqualTo(email);
     }
 
 }

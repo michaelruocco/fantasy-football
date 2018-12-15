@@ -13,8 +13,9 @@ public class User {
     @Id
     @GeneratedValue
     private Long id;
-    private String firstName;
-    private String lastName;
+    private String name;
+    private String nickname;
+    private String picture;
     private UserType type;
     private String email;
 
@@ -30,20 +31,40 @@ public class User {
         return id != null;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(final String firstName) {
-        this.firstName = firstName;
+    public void setName(final String name) {
+        this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public boolean hasName() {
+        return name != null;
     }
 
-    public void setLastName(final String lastName) {
-        this.lastName = lastName;
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(final String nickname) {
+        this.nickname = nickname;
+    }
+
+    public boolean hasNickname() {
+        return nickname != null;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(final String picture) {
+        this.picture = picture;
+    }
+
+    public boolean hasPicture() {
+        return picture != null;
     }
 
     public UserType getType() {
@@ -52,6 +73,10 @@ public class User {
 
     public void setType(final UserType type) {
         this.type = type;
+    }
+
+    public boolean hasType() {
+        return type != null;
     }
 
     public String getEmail() {
@@ -68,6 +93,24 @@ public class User {
 
     public boolean isAdmin() {
         return UserType.ADMIN.equals(type);
+    }
+
+    public void update(User user) {
+        if (user.hasName()) {
+            setName(user.getName());
+        }
+        if (user.hasNickname()) {
+            setNickname(user.getNickname());
+        }
+        if (user.hasType()) {
+            setType(user.getType());
+        }
+        if (user.hasPicture()) {
+            setPicture(user.getPicture());
+        }
+        if (user.hasEmail()) {
+            setEmail(user.getEmail());
+        }
     }
 
 }

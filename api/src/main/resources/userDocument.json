@@ -3,8 +3,9 @@
     "id": 1133,
     "type": "users",
     "attributes": {
-      "firstName": "Joe",
-      "lastName": "Bloggs",
+      "name": "Joe Bloggs",
+      "nickname": "joebloggs",
+      "picture": "http://pictures.com/joebloggs",
       "type": "ADMIN",
       "email": "joe.bloggs@hotmail.com"
     },

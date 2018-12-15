@@ -17,10 +17,11 @@ import static org.mockito.Mockito.mock;
 public class UserControllerTest {
 
     private static final long ID = 1133;
-    private static final String FIRST_NAME = "Joe";
-    private static final String LAST_NAME = "Bloggs";
+    private static final String NAME = "Joe Bloggs";
+    private static final String NICKNAME = "joebloggs";
     private static final UserType TYPE = UserType.ADMIN;
     private static final String EMAIL = "joe.bloggs@hotmail.com";
+    private static final String PICTURE = "http://picture.com/joebloggs";
     private static final String SELF_LINK = String.format("/users/%d", ID);
 
     private final UserService service = mock(UserService.class);
@@ -128,8 +129,9 @@ public class UserControllerTest {
     private static UserDocument buildUserDocument() {
         return new UserDocumentBuilder()
                 .setId(ID)
-                .setFirstName(FIRST_NAME)
-                .setLastName(LAST_NAME)
+                .setName(NAME)
+                .setNickname(NICKNAME)
+                .setPicture(PICTURE)
                 .setType(TYPE.name())
                 .setEmail(EMAIL)
                 .setSelfLink(SELF_LINK)

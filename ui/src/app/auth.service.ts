@@ -4,6 +4,8 @@ import { filter } from 'rxjs/operators';
 import * as auth0 from 'auth0-js';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../environments/environment';
+import { UserService } from './user.service';
+import { User } from './user';
 
 (window as any).global = window;
 
@@ -17,13 +19,16 @@ export class AuthService {
     domain: 'michaelruocco.eu.auth0.com',
     responseType: 'token id_token',
     redirectUri: environment.loginCallbackUrl + '/login/callback',
-    scope: 'openid profile'
+    scope: 'openid profile email'
   });
 
-  profile: any;
-  @Output() profileChange = new EventEmitter<any>();
+  user: User;
+  @Output() userChange = new EventEmitter<User>();
 
-  constructor(public router: Router, private http: HttpClient, private ngZone: NgZone) {}
+  constructor(public router: Router,
+    private http: HttpClient,
+    private ngZone: NgZone,
+    private userService: UserService) {}
 
   public login(): void {
     this.auth0.authorize();
@@ -35,7 +40,7 @@ export class AuthService {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
         this.setSession(authResult);
-        this.getProfile(null);
+        this.getUser(null);
       } else if (err) {
         console.log(err);
       }
@@ -62,7 +67,7 @@ export class AuthService {
     return authenticated;
   }
 
-  public getProfile(callback): void {
+  public getUser(callback): void {
     const accessToken = localStorage.getItem('access_token');
     if (!accessToken) {
       console.log('no access token found, could not load profile');
@@ -70,16 +75,30 @@ export class AuthService {
     }
 
     const self = this;
-    this.auth0.client.userInfo(accessToken, (err, profile) => {
+    this.auth0.client.userInfo(accessToken, (error, profile) => {
       if (profile) {
         console.log('profile updated ' + JSON.stringify(profile));
-        this.profile = profile;
-        this.profileChange.emit(profile);
-      }
-      if (callback) {
-        callback(err, profile);
+        this.userService.getUser(profile.email).subscribe(user => {
+          this.updateUser(user, error, callback);
+        }, err => {
+          if (err.status === 404) {
+            this.userService.createUser(profile).subscribe(user => {
+              this.updateUser(user, error, callback);
+            });
+          } else {
+            console.log('error loading user ' + err)
+          }
+        });
       }
     });
+  }
+
+  private updateUser(user, error, callback): void {
+    console.log('setting user ' + JSON.stringify(user));
+    this.userChange.emit(user);
+    if (callback) {
+      callback(error, user);
+    }
   }
 
   private setSession(authResult): void {

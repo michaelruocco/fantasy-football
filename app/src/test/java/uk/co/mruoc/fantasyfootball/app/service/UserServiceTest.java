@@ -76,27 +76,27 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldThrowExceptionIfUserUpdatedWithNoEmail() {
+    public void shouldThrowExceptionIfUserUpdatedWithNoId() {
         final User user = mock(User.class);
 
         final Throwable thrown = catchThrowable(() -> service.update(user));
 
         assertThat(thrown).isInstanceOf(IllegalArgumentException.class)
                 .hasNoCause()
-                .hasMessage("cannot update user without email");
+                .hasMessage("cannot update user without id");
     }
 
     @Test
     public void shouldThrowExceptionIfUserToUpdateDoesNotExist() {
         final User user = mock(User.class);
-        given(user.hasEmail()).willReturn(true);
-        given(user.getEmail()).willReturn(EMAIL);
-        given(repository.existsByEmail(EMAIL)).willReturn(false);
-        final String expectedMessage = String.format("user with email %s not found", EMAIL);
+        given(user.hasId()).willReturn(true);
+        given(user.getId()).willReturn(ID);
+        given(repository.existsById(ID)).willReturn(false);
+        final String expectedMessage = String.format("user with id %d not found", ID);
 
         final Throwable thrown = catchThrowable(() -> service.update(user));
 
-        assertThat(thrown).isInstanceOf(UserEmailNotFoundException.class)
+        assertThat(thrown).isInstanceOf(UserIdNotFoundException.class)
                 .hasNoCause()
                 .hasMessage(expectedMessage);
     }
@@ -104,11 +104,13 @@ public class UserServiceTest {
     @Test
     public void shouldUpdateUser() {
         final User user = mock(User.class);
+        final User loadedUser = mock(User.class);
         final User expectedUser = mock(User.class);
-        given(user.hasEmail()).willReturn(true);
-        given(user.getEmail()).willReturn(EMAIL);
-        given(repository.existsByEmail(EMAIL)).willReturn(true);
-        given(repository.save(user)).willReturn(expectedUser);
+        given(user.hasId()).willReturn(true);
+        given(user.getId()).willReturn(ID);
+        given(repository.existsById(ID)).willReturn(true);
+        given(repository.findById(ID)).willReturn(Optional.of(loadedUser));
+        given(repository.save(loadedUser)).willReturn(expectedUser);
 
         final User resultUser = service.update(user);
 

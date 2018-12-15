@@ -11,10 +11,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UserConverterTest {
 
     private static final long ID = 1133;
-    private static final String FIRST_NAME = "Joe";
-    private static final String LAST_NAME = "Bloggs";
+    private static final String NAME = "Joe Bloggs";
+    private static final String NICKNAME = "joebloggs";
     private static final String TYPE = "ADMIN";
     private static final String EMAIL = "joe.bloggs@hotmail.com";
+    private static final String PICTURE = "http://pictures.com/joebloggs";
 
     private final UserConverter converter = new UserConverter();
 
@@ -43,16 +44,25 @@ public class UserConverterTest {
 
         final User user = converter.toUser(document);
 
-        assertThat(user.getFirstName()).isEqualTo(document.getFirstName());
+        assertThat(user.getName()).isEqualTo(document.getName());
     }
 
     @Test
-    public void shouldConvertLastNameFromDocument() {
+    public void shouldConvertNicknameFromDocument() {
         final UserDocument document = buildUserDocument();
 
         final User user = converter.toUser(document);
 
-        assertThat(user.getLastName()).isEqualTo(document.getLastName());
+        assertThat(user.getNickname()).isEqualTo(document.getNickname());
+    }
+
+    @Test
+    public void shouldConvertPictureFromDocument() {
+        final UserDocument document = buildUserDocument();
+
+        final User user = converter.toUser(document);
+
+        assertThat(user.getPicture()).isEqualTo(document.getPicture());
     }
 
     @Test
@@ -88,16 +98,25 @@ public class UserConverterTest {
 
         final UserDocument document = converter.toDocument(user);
 
-        assertThat(document.getFirstName()).isEqualTo(user.getFirstName());
+        assertThat(document.getName()).isEqualTo(user.getName());
     }
 
     @Test
-    public void shouldConvertLastNameToDocument() {
+    public void shouldConvertNicknameToDocument() {
         final User user = buildUser();
 
         final UserDocument document = converter.toDocument(user);
 
-        assertThat(document.getLastName()).isEqualTo(user.getLastName());
+        assertThat(document.getNickname()).isEqualTo(user.getNickname());
+    }
+
+    @Test
+    public void shouldConvertPictureToDocument() {
+        final User user = buildUser();
+
+        final UserDocument document = converter.toDocument(user);
+
+        assertThat(document.getPicture()).isEqualTo(user.getPicture());
     }
 
     @Test
@@ -130,8 +149,9 @@ public class UserConverterTest {
     private static UserDocument buildUserDocument() {
         return new UserDocumentBuilder()
                 .setId(ID)
-                .setFirstName(FIRST_NAME)
-                .setLastName(LAST_NAME)
+                .setName(NAME)
+                .setNickname(NICKNAME)
+                .setPicture(PICTURE)
                 .setType(TYPE)
                 .setEmail(EMAIL)
                 .build();
@@ -140,8 +160,9 @@ public class UserConverterTest {
     private static User buildUser() {
         final User user = new User();
         user.setId(ID);
-        user.setFirstName(FIRST_NAME);
-        user.setLastName(LAST_NAME);
+        user.setName(NAME);
+        user.setNickname(NICKNAME);
+        user.setPicture(PICTURE);
         user.setType(UserType.ADMIN);
         user.setEmail(EMAIL);
         return user;

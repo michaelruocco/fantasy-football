@@ -36,15 +36,22 @@ public class UserService {
     }
 
     public User update(final User user) {
-        if (!user.hasEmail()) {
-            throw new IllegalArgumentException("cannot update user without email");
+        if (!user.hasId()) {
+            throw new IllegalArgumentException("cannot update user without id");
         }
 
-        if (!repository.existsByEmail(user.getEmail())) {
-            throw new UserEmailNotFoundException(user.getEmail());
-        }
+        final User updatedUser = loadAndUpdate(user);
+        return repository.save(updatedUser);
+    }
 
-        return repository.save(user);
+    private User loadAndUpdate(final User user) {
+        final Optional<User> loadedUserOpt = repository.findById(user.getId());
+        if (!loadedUserOpt.isPresent()) {
+            throw new UserIdNotFoundException(user.getId());
+        }
+        final User loadedUser = loadedUserOpt.get();
+        loadedUser.update(user);
+        return loadedUser;
     }
 
 }

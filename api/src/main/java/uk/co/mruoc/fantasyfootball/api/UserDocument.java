@@ -23,8 +23,9 @@ public class UserDocument implements JsonApiDocument {
         data.id = builder.id;
 
         data.attributes = new UserAttributes();
-        data.attributes.firstName = builder.firstName;
-        data.attributes.lastName = builder.lastName;
+        data.attributes.name = builder.name;
+        data.attributes.nickname = builder.nickname;
+        data.attributes.picture = builder.picture;
         data.attributes.type = builder.type;
         data.attributes.email = builder.email;
 
@@ -47,13 +48,18 @@ public class UserDocument implements JsonApiDocument {
     }
 
     @JsonIgnore
-    public String getFirstName() {
-        return data.getFirstName();
+    public String getName() {
+        return data.getName();
     }
 
     @JsonIgnore
-    public String getLastName() {
-        return data.getLastName();
+    public String getNickname() {
+        return data.getNickname();
+    }
+
+    @JsonIgnore
+    public String getPicture() {
+        return data.getPicture();
     }
 
     @JsonIgnore
@@ -109,13 +115,18 @@ public class UserDocument implements JsonApiDocument {
         }
 
         @JsonIgnore
-        public String getFirstName() {
-            return attributes.firstName;
+        public String getName() {
+            return attributes.name;
         }
 
         @JsonIgnore
-        public String getLastName() {
-            return attributes.lastName;
+        public String getNickname() {
+            return attributes.nickname;
+        }
+
+        @JsonIgnore
+        public String getPicture() {
+            return attributes.picture;
         }
 
         @JsonIgnore
@@ -132,26 +143,28 @@ public class UserDocument implements JsonApiDocument {
 
     private static class UserAttributes {
 
-        @NotNull
-        private String firstName;
+        private String name;
 
-        @NotNull
-        private String lastName;
+        private String nickname;
 
-        @NotNull
+        private String picture;
+
         @Pattern(regexp = "^(ADMIN|STANDARD)$")
         private String type;
 
         @Email
-        @NotNull
         private String email;
 
-        public String getFirstName() {
-            return firstName;
+        public String getName() {
+            return name;
         }
 
-        public String getLastName() {
-            return lastName;
+        public String getNickname() {
+            return nickname;
+        }
+
+        public String getPicture() {
+            return picture;
         }
 
         public String getType() {
@@ -177,8 +190,9 @@ public class UserDocument implements JsonApiDocument {
     public static class UserDocumentBuilder {
 
         private Long id;
-        private String firstName;
-        private String lastName;
+        private String name;
+        private String nickname;
+        private String picture;
         private String type;
         private String email;
 
@@ -189,13 +203,18 @@ public class UserDocument implements JsonApiDocument {
             return this;
         }
 
-        public UserDocumentBuilder setFirstName(final String firstName) {
-            this.firstName = firstName;
+        public UserDocumentBuilder setName(final String name) {
+            this.name = name;
             return this;
         }
 
-        public UserDocumentBuilder setLastName(final String lastName) {
-            this.lastName = lastName;
+        public UserDocumentBuilder setNickname(final String nickname) {
+            this.nickname = nickname;
+            return this;
+        }
+
+        public UserDocumentBuilder setPicture(final String picture) {
+            this.picture = picture;
             return this;
         }
 

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from './auth.service';
 import { environment } from '../environments/environment';
+import { User } from './user';
 
 @Component({
   selector: 'app-root',
@@ -13,20 +14,20 @@ export class AppComponent {
   apiUrl = environment.apiUrl;
 
   _subscription;
-  profile: any;
+  user: User;
 
   constructor(public authService: AuthService) {
-    this._subscription = authService.profileChange.subscribe((profile) => {
-      this.profile = profile;
+    this._subscription = authService.userChange.subscribe((user) => {
+      this.user = user;
     });
   }
 
   ngOnInit() {
-    if (this.authService.profile) {
-      this.profile = this.authService.profile;
+    if (this.authService.user) {
+      this.user = this.authService.user;
     } else {
-      this.authService.getProfile((err, profile) => {
-        this.profile = profile;
+      this.authService.getUser((err, user) => {
+        this.user = user;
       });
     }
   }

@@ -12,8 +12,9 @@ public class UserConverter {
     public User toUser(UserDocument document) {
         final User user = new User();
         user.setId(document.getId());
-        user.setFirstName(document.getFirstName());
-        user.setLastName(document.getLastName());
+        user.setName(document.getName());
+        user.setNickname(document.getNickname());
+        user.setPicture(document.getPicture());
         user.setType(UserType.valueOf(document.getUserType()));
         user.setEmail(document.getEmail());
         return user;
@@ -28,8 +29,9 @@ public class UserConverter {
     public UserDocument toDocument(User user) {
         return new UserDocumentBuilder()
                 .setId(user.getId())
-                .setFirstName(user.getFirstName())
-                .setLastName(user.getLastName())
+                .setName(user.getName())
+                .setNickname(user.getNickname())
+                .setPicture(user.getPicture())
                 .setType(user.getType().name())
                 .setEmail(user.getEmail())
                 .setSelfLink(UserLinkBuilder.build(user.getId()))
