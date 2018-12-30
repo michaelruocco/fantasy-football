@@ -1,7 +1,6 @@
 Feature: Club CRUD Operations
 
   Background:
-    Given baseUri is "http://localhost:8080/"
     When the client performs DELETE request on "/clubs"
     Then status code is 204
 
@@ -10,8 +9,8 @@ Feature: Club CRUD Operations
     And content type is "application/json"
     When the client performs POST request on "/clubs"
     Then status code is 201
-    And header "Location" contains "http://localhost:8080/clubs/1"
-    And response contains properties from file "requests/create-club-response.json"
+    And header "Location" contains "{{base-uri}}/clubs/1" replacing placeholders
+    And response contains properties from file "requests/create-club-response.json" replacing placeholders
 
   Scenario: POST should update club if club already exists
     Given request body from file "requests/create-club-request-1.json"
@@ -22,7 +21,7 @@ Feature: Club CRUD Operations
     And content type is "application/json"
     When the client performs POST request on "/clubs"
     Then status code is 200
-    And response contains properties from file "requests/update-club-response.json"
+    And response contains properties from file "requests/update-club-response.json" replacing placeholders
 
   Scenario: Update club succeeds if club exists
     Given request body from file "requests/create-club-request-1.json"
@@ -33,7 +32,7 @@ Feature: Club CRUD Operations
     And content type is "application/json"
     When the client performs PUT request on "/clubs/1"
     Then status code is 200
-    And response contains properties from file "requests/update-club-response.json"
+    And response contains properties from file "requests/update-club-response.json" replacing placeholders
 
   Scenario: Update club fails if club does not exist
     Given request body from file "requests/create-club-request-1.json"
@@ -49,7 +48,7 @@ Feature: Club CRUD Operations
 
     When the client performs GET request on "/clubs/1"
     Then status code is 200
-    And response contains properties from file "requests/create-club-response.json"
+    And response contains properties from file "requests/create-club-response.json" replacing placeholders
 
   Scenario: Get club fails if club does not exist
     When the client performs GET request on "/clubs/1"
@@ -59,7 +58,7 @@ Feature: Club CRUD Operations
   Scenario: Get all clubs returns empty array if no clubs exist
     When the client performs GET request on "/clubs"
     Then status code is 200
-    And response contains properties from file "requests/all-clubs-empty.json"
+    And response contains properties from file "requests/all-clubs-empty.json" replacing placeholders
 
   Scenario: Get all clubs returns paginated clubs
     Given request body from file "requests/create-club-request-1.json"
@@ -76,8 +75,8 @@ Feature: Club CRUD Operations
 
     When the client performs GET request on "/clubs?pageNumber=0&pageSize=2"
     Then status code is 200
-    And response contains properties from file "requests/all-clubs-page-1.json"
+    And response contains properties from file "requests/all-clubs-page-1.json" replacing placeholders
 
     When the client performs GET request on "/clubs?pageNumber=1&pageSize=2"
     Then status code is 200
-    And response contains properties from file "requests/all-clubs-page-2.json"
+    And response contains properties from file "requests/all-clubs-page-2.json" replacing placeholders

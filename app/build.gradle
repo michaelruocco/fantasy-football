@@ -31,6 +31,9 @@ dependencies {
     cucumberCompile 'io.cucumber:cucumber-java:2.3.1'
     cucumberCompile 'io.cucumber:cucumber-junit:2.3.1'
     cucumberCompile 'lv.ctco.cukes:cukes-rest:0.0.32'
+    cucumberCompile 'org.awaitility:awaitility:3.1.5'
+    cucumberCompile 'org.springframework:spring-context:5.0.9.RELEASE'
+
 }
 
 bootJar {
@@ -43,6 +46,5 @@ bootRun {
 
 cucumber {
     glueDirs = ['lv.ctco.cukes']
-    featureDirs = ['src/cucumber/resources/features']
     strict = true
 }

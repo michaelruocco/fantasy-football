@@ -29,10 +29,10 @@ be manually tested [here](http://localhost:8080/swagger-ui.html).
 
 ## Running cucumber tests locally
 
-To run the cucumber tests on your local machine you will first need to run the
-bootRun task as listed above to get the api service running (functionality will
-be added to do this automatically shortly, but for now this is how it is run.)
-Once the service is running you can run the cucumber task to run the tests
+Running the cucumber tests will start up the service using the test profile, the test
+profile is required to expose endpoints like the one to delete all clubs, this is used
+to reset data in between tests. Additionally the cucumber tests will start up the
+application automatically on any free port.
 
 ```
 ./gradlew cucumber
@@ -56,7 +56,6 @@ ng serve --open
 
 1. json api error responses from server
 2. acceptance / integration testing - first stab is in place, still need improvements
-   for starting service automatically when running tests (if required), asserting uuid
-   ids are set on json api elements, checking not found error messages with a specific
-   id, using single requests with placeholders and substituting in values.
+   for asserting uuid ids are set on json api elements, checking not found error
+   messages with a specific id.
 3. error handling in client

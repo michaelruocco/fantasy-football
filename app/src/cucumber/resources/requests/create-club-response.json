@@ -8,12 +8,12 @@
     "relationships": {
       "players": {
         "links": {
-          "related": "http://localhost:8080/clubs/1/players?pageNumber=0&pageSize=10"
+          "related": "{{base-uri}}/clubs/1/players?pageNumber=0&pageSize=10"
         }
       }
     },
     "links": {
-      "self": "http://localhost:8080/clubs/1"
+      "self": "{{base-uri}}/clubs/1"
     }
   }
 }

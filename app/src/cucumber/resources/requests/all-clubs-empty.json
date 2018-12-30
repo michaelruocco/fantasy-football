@@ -7,8 +7,8 @@
   },
   "data": [],
   "links": {
-    "self": "http://localhost:8080/clubs?pageNumber=0&pageSize=10",
-    "first": "http://localhost:8080/clubs?pageNumber=0&pageSize=10",
-    "last": "http://localhost:8080/clubs?pageNumber=0&pageSize=10"
+    "self": "{{base-uri}}/clubs?pageNumber=0&pageSize=10",
+    "first": "{{base-uri}}/clubs?pageNumber=0&pageSize=10",
+    "last": "{{base-uri}}/clubs?pageNumber=0&pageSize=10"
   }
 }

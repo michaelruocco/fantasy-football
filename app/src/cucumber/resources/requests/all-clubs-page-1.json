@@ -15,12 +15,12 @@
       "relationships": {
         "players": {
           "links": {
-            "related": "http://localhost:8080/clubs/1/players?pageNumber=0&pageSize=2"
+            "related": "{{base-uri}}/clubs/1/players?pageNumber=0&pageSize=2"
           }
         }
       },
       "links": {
-        "self": "http://localhost:8080/clubs/1"
+        "self": "{{base-uri}}/clubs/1"
       }
     },
     {
@@ -32,19 +32,19 @@
       "relationships": {
         "players": {
           "links": {
-            "related": "http://localhost:8080/clubs/2/players?pageNumber=0&pageSize=2"
+            "related": "{{base-uri}}/clubs/2/players?pageNumber=0&pageSize=2"
           }
         }
       },
       "links": {
-        "self": "http://localhost:8080/clubs/2"
+        "self": "{{base-uri}}/clubs/2"
       }
     }
   ],
   "links": {
-    "self": "http://localhost:8080/clubs?pageNumber=0&pageSize=2",
-    "first": "http://localhost:8080/clubs?pageNumber=0&pageSize=2",
-    "last": "http://localhost:8080/clubs?pageNumber=1&pageSize=2",
-    "next": "http://localhost:8080/clubs?pageNumber=1&pageSize=2"
+    "self": "{{base-uri}}/clubs?pageNumber=0&pageSize=2",
+    "first": "{{base-uri}}/clubs?pageNumber=0&pageSize=2",
+    "last": "{{base-uri}}/clubs?pageNumber=1&pageSize=2",
+    "next": "{{base-uri}}/clubs?pageNumber=1&pageSize=2"
   }
 }
