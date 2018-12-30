@@ -1,0 +1,33 @@
+{
+  "meta": {
+    "totalPages": 2,
+    "totalItems": 3,
+    "pageNumber": 1,
+    "pageSize": 2
+  },
+  "data": [
+    {
+      "id": 3,
+      "type": "clubs",
+      "attributes": {
+        "name": "Norwich City"
+      },
+      "relationships": {
+        "players": {
+          "links": {
+            "related": "http://localhost:8080/clubs/3/players?pageNumber=0&pageSize=2"
+          }
+        }
+      },
+      "links": {
+        "self": "http://localhost:8080/clubs/3"
+      }
+    }
+  ],
+  "links": {
+    "self": "http://localhost:8080/clubs?pageNumber=1&pageSize=2",
+    "first": "http://localhost:8080/clubs?pageNumber=0&pageSize=2",
+    "last": "http://localhost:8080/clubs?pageNumber=1&pageSize=2",
+    "previous": "http://localhost:8080/clubs?pageNumber=0&pageSize=2"
+  }
+}

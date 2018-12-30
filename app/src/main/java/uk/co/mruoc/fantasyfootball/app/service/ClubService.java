@@ -62,4 +62,8 @@ public class ClubService {
         return clubRepository.existsById(id);
     }
 
+    public void deleteAll() {
+        clubRepository.deleteAll();
+    }
+
 }

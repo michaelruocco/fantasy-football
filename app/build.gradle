@@ -10,6 +10,9 @@ configurations {
     cucumberRuntime {
         extendsFrom testRuntime
     }
+    cucumberCompile {
+        extendsFrom testCompile
+    }
 }
 
 dependencies {
@@ -32,6 +35,10 @@ dependencies {
 
 bootJar {
     version = project.version
+}
+
+bootRun {
+    args = ["--spring.profiles.active=test"]
 }
 
 cucumber {

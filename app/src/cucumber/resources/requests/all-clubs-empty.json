@@ -1,0 +1,14 @@
+{
+  "meta": {
+    "totalPages": 0,
+    "totalItems": 0,
+    "pageNumber": 0,
+    "pageSize": 10
+  },
+  "data": [],
+  "links": {
+    "self": "http://localhost:8080/clubs?pageNumber=0&pageSize=10",
+    "first": "http://localhost:8080/clubs?pageNumber=0&pageSize=10",
+    "last": "http://localhost:8080/clubs?pageNumber=0&pageSize=10"
+  }
+}

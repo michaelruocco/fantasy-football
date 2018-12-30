@@ -27,6 +27,17 @@ To start up the service on your local machine you can run:
 This will start the service on your local machine, once the service is started it can
 be manually tested [here](http://localhost:8080/swagger-ui.html).
 
+## Running cucumber tests locally
+
+To run the cucumber tests on your local machine you will first need to run the
+bootRun task as listed above to get the api service running (functionality will
+be added to do this automatically shortly, but for now this is how it is run.)
+Once the service is running you can run the cucumber task to run the tests
+
+```
+./gradlew cucumber
+```
+
 ## Starting the UI locally
 
 To start up the UI on your local machine you must have node JS and npm installed, if
@@ -43,7 +54,9 @@ ng serve --open
 
 ## Next steps
 
-1. add environment config in ui
-2. json api error responses from server
-3. acceptance / integration testing
-4. error handling in client
+1. json api error responses from server
+2. acceptance / integration testing - first stab is in place, still need improvements
+   for starting service automatically when running tests (if required), asserting uuid
+   ids are set on json api elements, checking not found error messages with a specific
+   id, using single requests with placeholders and substituting in values.
+3. error handling in client
