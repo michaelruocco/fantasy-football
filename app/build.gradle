@@ -1,9 +1,16 @@
 plugins {
     id 'org.springframework.boot' version '2.0.5.RELEASE'
+    id 'com.github.samueltbrown.cucumber' version '0.9'
 }
 
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testRuntime
+    }
+}
 
 dependencies {
     compile project(':api')
@@ -17,8 +24,18 @@ dependencies {
     compile 'com.h2database:h2:1.4.197'
 
     testCompile 'org.springframework.boot:spring-boot-starter-test'
+
+    cucumberCompile 'io.cucumber:cucumber-java:2.3.1'
+    cucumberCompile 'io.cucumber:cucumber-junit:2.3.1'
+    cucumberCompile 'lv.ctco.cukes:cukes-rest:0.0.32'
 }
 
 bootJar {
     version = project.version
+}
+
+cucumber {
+    glueDirs = ['lv.ctco.cukes']
+    featureDirs = ['src/cucumber/resources/features']
+    strict = true
 }
